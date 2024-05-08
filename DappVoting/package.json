@@ -1,0 +1,17 @@
+{
+  "name": "DappVoting",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ hoqua/DappVoting",
+    "create-local": "graph create --node http://localhost:8020/ hoqua/DappVoting",
+    "remove-local": "graph remove --node http://localhost:8020/ hoqua/DappVoting",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 hoqua/DappVoting",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.71.1",
+    "@graphprotocol/graph-ts": "0.32.0"
+  }
+}
