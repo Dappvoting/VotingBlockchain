@@ -25,7 +25,7 @@
             <div class="flex flex-col justify-center py-10 gap-6">
                 <div class="text-center flex flex-col gap-2 justify-center items-center">
                     <span class="text-blue-500 font-bold">Know more about</span>
-                    <span class="font-bold text-4xl text-blue-900">My mission and vison</span>
+                    <span class="font-bold text-4xl text-blue-900">Our mission and vision</span>
                     <span class="font-semiboldbold w-2/3 text-center text-gray-600">With blockchain technology, we will ensure transparency and fairness in elections.</span>
                 </div>
                 <div class="grid grid-cols-3 gap-4">
@@ -72,4 +72,75 @@
         </div>
     </div>
 
+    <div class="min-h-[450px] bg-blue-900 flex flex-col items-center justify-center text-white py-8 mt-8">
+        <div class="space-x-60 flex justify-center items-center">
+          <div class="flex flex-col items-center gap-2">
+            <i class="fa-solid fa-users text-5xl"></i>
+            <span class="font-bold text-6xl">100</span>
+            <span class="font-bold">Total user</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <i class="fa-solid fa-envelope-open-text text-5xl"></i>
+            <span class="font-bold text-6xl">100</span>
+            <span class="font-bold">Campaigns</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <i class="fa-solid fa-check-to-slot text-5xl"></i>
+            <span class="font-bold text-6xl">100</span>
+            <span class="font-bold">Votes</span>
+          </div>
+        </div>
+    </div>
+
+    <div class="min-h-[450px] bg-cover bg-center ">
+        <div class="mx-auto desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0 ">
+            <div class="flex flex-col justify-center py-10 gap-6">
+                <div class="text-center flex flex-col gap-2 justify-center items-center">
+                    <span class="text-blue-500 font-bold"></span>
+                    <span class="font-bold text-4xl text-blue-900">Popular Campaign</span>
+                    <span class="font-semiboldbold w-2/3 text-center text-gray-600">With blockchain technology, we will ensure transparency and fairness in elections.</span>
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-white rounded-lg shadow-lg">
+                        <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
+                        <img class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="">
+                        <div class="flex flex-col p-8 gap-4">
+                            <span class="font-bold text-blue-900 text-lg">Equality and fairness</span>
+                            <span class="text-sm text-gray-500">With blockchain technology, I can ensure that elections are equal and fair.</span>
+                            <div class="py-2 w-[120px] hover:text-white hover:opacity-80 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-blue-900 px-3">
+                                <span class="font-bold pl-2">Go vote</span>
+                                <i class="fa-solid fa-angle-right text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg">
+                        <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
+                        <img class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="">
+                        <div class="flex flex-col p-8 gap-4">
+                            <span class="font-bold text-blue-900 text-lg">Equality and fairness</span>
+                            <span class="text-sm text-gray-500">With blockchain technology, I can ensure that elections are equal and fair.</span>
+                            <div class="py-2 w-[120px] hover:text-white hover:opacity-80 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-blue-900 px-3">
+                                <span class="font-bold pl-2">Go vote</span>
+                                <i class="fa-solid fa-angle-right text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg">
+                        <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
+                        <img class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="">
+                        <div class="flex flex-col p-8 gap-4">
+                            <span class="font-bold text-blue-900 text-lg">Equality and fairness</span>
+                            <span class="text-sm text-gray-500">With blockchain technology, I can ensure that elections are equal and fair.</span>
+                            <div class="py-2 w-[120px] hover:text-white hover:opacity-80 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-blue-900 px-3">
+                                <span class="font-bold pl-2">Go vote</span>
+                                <i class="fa-solid fa-angle-right text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

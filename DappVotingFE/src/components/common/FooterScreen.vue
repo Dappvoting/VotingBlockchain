@@ -1,8 +1,8 @@
 <template>
     <div class="bg-blue-900">
-        <div class="mx-auto flex justify-between py-6 items-center desktop:w-[1200px] max-sm:w-full  desktop:px-0 ">
-            <span class="text-3xl font-bold text-white">It’s Election Day-Go Vote!</span>
-            <div class="py-2 w-[250px] hover:text-white hover:bg-orange transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md items-center bg-white px-2">
+        <div class="mx-auto flex justify-between py-4 items-center desktop:w-[1200px] max-sm:w-full  desktop:px-0 ">
+            <span class="text-2xl font-bold text-white">It’s Election Day-Go Vote!</span>
+            <div class="py-1 w-[250px] hover:text-white hover:bg-orange transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md items-center bg-white px-2">
                 <span class="font-bold pl-2">Go Vote Now</span>
                 <i class="fa-solid fa-square-check text-2xl"></i>
             </div>
@@ -18,7 +18,7 @@
                 <h1 class="font-bold text-3xl mb-4">Contact</h1>
                 <div class="flex flex-col">
                     <span>Email: hoquangdat001@gmail.com</span>
-                    <span>0345728105</span>
+                    <span>Phone: 0345728105</span>
                     <span>Working: 24/7 automation</span>
                 </div>
             </div>
