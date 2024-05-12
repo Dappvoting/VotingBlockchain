@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col">
-        <div class="min-h-[450px] bg-cover bg-center bg-[url('https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/about-banner.jpg')]">
+        <div class="min-h-[450px] bg-cover bg-center bg-[url('https://tbrnewsmedia.com/wp-content/uploads/2023/10/voting-scaled.jpg')]">
             <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
                 <div class="min-h-[450px] mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0 flex justify-center items-center">
                     <div class="flex flex-col gap-4 text-white">

@@ -34,6 +34,9 @@ export default {
       borderColor: {
         main: "#207bc1",
       },
+      mixBlendMode: {
+        luminosity: 'luminosity',
+      },
     },
   },
   plugins: [],

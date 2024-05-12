@@ -1,146 +1,302 @@
 <template>
-    <div class="min-h-[450px] bg-cover bg-center bg-[url('https://wp.xpeedstudio.com/electionify/wp-content/uploads/2020/01/banner-bg-img-1.jpeg')]">
-        <div class="inset-0 min-h-[450px] bg-blue-700 bg-opacity-60">
-            <div class="mx-auto min-h-[450px] flex flex-col items-center justify-center desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0 ">            
-                <div class="flex flex-col w-2/3 gap-10">
-                    <div class="flex justify-center ">
-                        <span class="font-bold text-6xl mt-2 text-white">Vote for the best candidate</span>
-                    </div>
-                    <div class="flex gap-6">
-                        <div class="flex text-right pr-6 border-r-2 border-r-2-white">
-                            <span class="text-white text-lg font-bold">With blockchain technology, we will ensure transparency and fairness in elections.</span>
-                        </div>
-                        <div class="py-2 w-[250px] hover:text-white hover:bg-orange transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md items-center text-blue-900 bg-white px-2">
-                            <span class="font-bold pl-2 ">Go Vote Now</span>
-                            <i class="fa-solid fa-square-check text-2xl"></i>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="min-h-[450px] bg-cover bg-center bg-[url('https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/campaign-right-banner.png')]">
-        <div class="mx-auto desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0 ">
-            <div class="flex flex-col justify-center py-10 gap-6">
-                <div class="text-center flex flex-col gap-2 justify-center items-center">
-                    <span class="text-blue-500 font-bold">Know more about</span>
-                    <span class="font-bold text-4xl text-blue-900">Our mission and vision</span>
-                    <span class="font-semiboldbold w-2/3 text-center text-gray-600">With blockchain technology, we will ensure transparency and fairness in elections.</span>
-                </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="bg-white rounded-lg shadow-lg">
-                        <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                        <img class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="">
-                        <div class="flex flex-col p-8 gap-4">
-                            <span class="font-bold text-blue-900 text-lg">Equality and fairness</span>
-                            <span class="text-sm text-gray-500">With blockchain technology, I can ensure that elections are equal and fair.</span>
-                            <div class="py-2 w-[150px] hover:text-white hover:bg-blue-400 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-gray-900 px-2">
-                                <span class="font-bold pl-2">Read Plan</span>
-                                <i class="fa-solid fa-square-check text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow-lg">
-                        <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                        <img class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="">
-                        <div class="flex flex-col p-8 gap-4">
-                            <span class="font-bold text-blue-900 text-lg">Equality and fairness</span>
-                            <span class="text-sm text-gray-500">With blockchain technology, I can ensure that elections are equal and fair.</span>
-                            <div class="py-2 w-[150px] hover:text-white hover:bg-blue-400 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-gray-900 px-2">
-                                <span class="font-bold pl-2">Read Plan</span>
-                                <i class="fa-solid fa-square-check text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow-lg">
-                        <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                        <img class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="">
-                        <div class="flex flex-col p-8 gap-4">
-                            <span class="font-bold text-blue-900 text-lg">Equality and fairness</span>
-                            <span class="text-sm text-gray-500">With blockchain technology, I can ensure that elections are equal and fair.</span>
-                            <div class="py-2 w-[150px] hover:text-white hover:bg-blue-400 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-gray-900 px-2">
-                                <span class="font-bold pl-2">Read Plan</span>
-                                <i class="fa-solid fa-square-check text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="min-h-[450px] bg-blue-900 flex flex-col items-center justify-center text-white py-8 mt-8">
-        <div class="space-x-60 flex justify-center items-center">
-          <div class="flex flex-col items-center gap-2">
-            <i class="fa-solid fa-users text-5xl"></i>
-            <span class="font-bold text-6xl">100</span>
-            <span class="font-bold">Total user</span>
+  <div
+    class="min-h-[450px] bg-cover bg-center bg-[url('https://wp.xpeedstudio.com/electionify/wp-content/uploads/2020/01/banner-bg-img-1.jpeg')]"
+  >
+    <div class="inset-0 min-h-[450px] bg-blue-700 bg-opacity-60">
+      <div
+        class="mx-auto min-h-[450px] flex flex-col items-center justify-center desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0"
+      >
+        <div class="flex flex-col w-2/3 gap-10">
+          <div class="flex justify-center">
+            <span class="font-bold text-6xl mt-2 text-white"
+              >Vote for the best candidate</span
+            >
           </div>
-          <div class="flex flex-col items-center gap-2">
-            <i class="fa-solid fa-envelope-open-text text-5xl"></i>
-            <span class="font-bold text-6xl">100</span>
-            <span class="font-bold">Campaigns</span>
-          </div>
-          <div class="flex flex-col items-center gap-2">
-            <i class="fa-solid fa-check-to-slot text-5xl"></i>
-            <span class="font-bold text-6xl">100</span>
-            <span class="font-bold">Votes</span>
+          <div class="flex gap-6">
+            <div class="flex text-right pr-6 border-r-2 border-r-2-white">
+              <span class="text-white text-lg font-bold"
+                >With blockchain technology, we will ensure transparency and
+                fairness in elections.</span
+              >
+            </div>
+            <div
+              class="py-2 w-[250px] hover:text-white hover:bg-orange transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md items-center text-blue-900 bg-white px-2"
+            >
+              <span class="font-bold pl-2">Go Vote Now</span>
+              <i class="fa-solid fa-square-check text-2xl"></i>
+            </div>
           </div>
         </div>
+      </div>
     </div>
-
-    <div class="min-h-[450px] bg-cover bg-center ">
-        <div class="mx-auto desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0 ">
-            <div class="flex flex-col justify-center py-10 gap-6">
-                <div class="text-center flex flex-col gap-2 justify-center items-center">
-                    <span class="text-blue-500 font-bold"></span>
-                    <span class="font-bold text-4xl text-blue-900">Popular Campaign</span>
-                    <span class="font-semiboldbold w-2/3 text-center text-gray-600">With blockchain technology, we will ensure transparency and fairness in elections.</span>
-                </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="bg-white rounded-lg shadow-lg">
-                        <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                        <img class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="">
-                        <div class="flex flex-col p-8 gap-4">
-                            <span class="font-bold text-blue-900 text-lg">Equality and fairness</span>
-                            <span class="text-sm text-gray-500">With blockchain technology, I can ensure that elections are equal and fair.</span>
-                            <div class="py-2 w-[120px] hover:text-white hover:opacity-80 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-blue-900 px-3">
-                                <span class="font-bold pl-2">Go vote</span>
-                                <i class="fa-solid fa-angle-right text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow-lg">
-                        <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                        <img class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="">
-                        <div class="flex flex-col p-8 gap-4">
-                            <span class="font-bold text-blue-900 text-lg">Equality and fairness</span>
-                            <span class="text-sm text-gray-500">With blockchain technology, I can ensure that elections are equal and fair.</span>
-                            <div class="py-2 w-[120px] hover:text-white hover:opacity-80 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-blue-900 px-3">
-                                <span class="font-bold pl-2">Go vote</span>
-                                <i class="fa-solid fa-angle-right text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow-lg">
-                        <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                        <img class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="">
-                        <div class="flex flex-col p-8 gap-4">
-                            <span class="font-bold text-blue-900 text-lg">Equality and fairness</span>
-                            <span class="text-sm text-gray-500">With blockchain technology, I can ensure that elections are equal and fair.</span>
-                            <div class="py-2 w-[120px] hover:text-white hover:opacity-80 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-blue-900 px-3">
-                                <span class="font-bold pl-2">Go vote</span>
-                                <i class="fa-solid fa-angle-right text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  </div>
+  <div
+    class="min-h-[450px] bg-cover bg-center bg-[url('https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/campaign-right-banner.png')]"
+  >
+    <div class="mx-auto desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0">
+      <div class="flex flex-col justify-center py-10 gap-6">
+        <div
+          class="text-center flex flex-col gap-2 justify-center items-center"
+        >
+          <span class="text-blue-500 font-bold">Know more about</span>
+          <span class="font-bold text-4xl text-blue-900"
+            >Our mission and vision</span
+          >
+          <span class="font-semiboldbold w-2/3 text-center text-gray-600"
+            >With blockchain technology, we will ensure transparency and
+            fairness in elections.</span
+          >
         </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="bg-white rounded-lg shadow-lg">
+            <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
+            <img
+              class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out"
+              src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png"
+              alt=""
+            />
+            <div class="flex flex-col p-8 gap-4">
+              <span class="font-bold text-blue-900 text-lg"
+                >Equality and fairness</span
+              >
+              <span class="text-sm text-gray-500"
+                >With blockchain technology, I can ensure that elections are
+                equal and fair.</span
+              >
+              <div
+                class="py-2 w-[150px] hover:text-white hover:bg-blue-400 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-gray-900 px-2"
+              >
+                <span class="font-bold pl-2">Read Plan</span>
+                <i class="fa-solid fa-square-check text-xl"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-lg">
+            <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
+            <img
+              class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out"
+              src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png"
+              alt=""
+            />
+            <div class="flex flex-col p-8 gap-4">
+              <span class="font-bold text-blue-900 text-lg"
+                >Equality and fairness</span
+              >
+              <span class="text-sm text-gray-500"
+                >With blockchain technology, I can ensure that elections are
+                equal and fair.</span
+              >
+              <div
+                class="py-2 w-[150px] hover:text-white hover:bg-blue-400 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-gray-900 px-2"
+              >
+                <span class="font-bold pl-2">Read Plan</span>
+                <i class="fa-solid fa-square-check text-xl"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-lg">
+            <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
+            <img
+              class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out"
+              src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png"
+              alt=""
+            />
+            <div class="flex flex-col p-8 gap-4">
+              <span class="font-bold text-blue-900 text-lg"
+                >Equality and fairness</span
+              >
+              <span class="text-sm text-gray-500"
+                >With blockchain technology, I can ensure that elections are
+                equal and fair.</span
+              >
+              <div
+                class="py-2 w-[150px] hover:text-white hover:bg-blue-400 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-gray-900 px-2"
+              >
+                <span class="font-bold pl-2">Read Plan</span>
+                <i class="fa-solid fa-square-check text-xl"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div
+    class="min-h-[450px] bg-blue-900 flex flex-col items-center justify-center text-white py-8 mt-8"
+  >
+    <div class="space-x-60 flex justify-center items-center">
+      <div class="flex flex-col items-center gap-2">
+        <i class="fa-solid fa-users text-5xl"></i>
+        <span class="font-bold text-6xl">100</span>
+        <span class="font-bold">Total user</span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <i class="fa-solid fa-envelope-open-text text-5xl"></i>
+        <span class="font-bold text-6xl">100</span>
+        <span class="font-bold">Campaigns</span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <i class="fa-solid fa-check-to-slot text-5xl"></i>
+        <span class="font-bold text-6xl">100</span>
+        <span class="font-bold">Votes</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="min-h-[450px] bg-cover bg-center ">
+    <div
+      class="mx-auto desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0 py-10"
+    >
+      <div class="text-center flex flex-col items-center gap-6">
+        <h2 class="text-4xl font-bold text-blue-900">Popular Campaign</h2>
+        <p class="w-2/3 text-center text-gray-500">
+          With blockchain technology, we will ensure transparency and fairness
+          in elections.
+        </p>
+      </div>
+      <div class="flex items-center justify-center mt-6">
+        <div @click="prevCampaign" class="text-blue-900 text-2xl p-2 cursor-pointer mx-2">
+            <i class="fa-solid fa-angle-left"></i>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div
+            v-for="(campaign, index) in visibleCampaigns"
+            :key="index"
+            class="bg-white rounded-lg shadow-lg p-8"
+          >
+            <img
+              :src="campaign.image"
+              alt="Campaign Image"
+              class="w-full h-[250px] rounded-lg object-cover"
+            />
+            <div class="flex flex-col gap-1 mt-2">
+                <h3 class="font-bold text-blue-900 text-lg">
+                    {{ campaign.title }}
+                  </h3>
+                  <p class="text-sm text-gray-500 line-clamp-3">{{ campaign.description }}</p>
+            </div>
+
+          </div>
+        </div>
+        <div @click="nextCampaign" class="text-blue-900 text-2xl p-2 cursor-pointer mx-2">
+            <i class="fa-solid fa-angle-right"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="mx-auto desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0 py-6">
+      <div class="w-full relative flex inset-0 bg-gray-800 mix-blend-luminosity">
+        <img class="w-full object-cover" src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2020/01/newsletter-overlay.png" alt="">
+        <div class="absolute text-white grid grid-cols-2 w-full h-full">
+          <div class="flex flex-col items-center justify-center">
+            <span class="font-bold text-4xl">Don’t miss any updates</span>
+            <span class="font-bold text-4xl">Get subscribed!</span>
+          </div>
+          <div class="flex justify-center items-center">
+            <div class="relative">
+              <input type="text" placeholder="Enter your mail" class="input text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+              <button class="absolute right-1 top-1/2 transform -translate-y-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      currentIndex: 0,
+      campaigns: [
+  {
+    title: 'Campaign for Clean Energy',
+    description: 'A campaign to promote the use of clean energy and reduce carbon emissions in our city. Vote for a greener future!',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-qkKdWyVGs7ilCdy9OBtciPxNKy6DyOxBNRBkdIKXwA&s',
+    totalVotes: 1542,
+    status: 'Active'
+  },
+  {
+    title: 'Education Reform Initiative',
+    description: 'This campaign aims to reform the educational system to provide better facilities and resources for students across the nation.',
+    image: 'https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png',
+    totalVotes: 987,
+    status: 'Active'
+  },
+  {
+    title: 'Community Healthcare Program',
+    description: 'Vote to support the community healthcare program, which aims to provide free health services to the underprivileged sections of our society.',
+    image: 'https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png',
+    totalVotes: 1203,
+    status: 'Active'
+  },
+  {
+    title: 'Public Transport Expansion',
+    description: 'A campaign to expand the public transport network, making it more efficient and accessible for everyone.',
+    image: 'https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png',
+    totalVotes: 875,
+    status: 'Active'
+  },
+  {
+    title: 'Clean and Safe Water Project',
+    description: 'Support the initiative to ensure that every household has access to clean and safe drinking water.',
+    image: 'https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png',
+    totalVotes: 1321,
+    status: 'Active'
+  }
+],
+      slideInterval: null
+    }
+  },
+  computed: {
+    visibleCampaigns() {
+      let startIndex = this.currentIndex;
+      let endIndex = (startIndex + 3) % this.campaigns.length;
+      if (endIndex > startIndex) {
+        return this.campaigns.slice(startIndex, endIndex);
+      } else {
+        return this.campaigns.slice(startIndex, this.campaigns.length).concat(this.campaigns.slice(0, endIndex));
+      }
+    }
+  },
+  methods: {
+    nextCampaign() {
+      this.currentIndex = (this.currentIndex + 1) % this.campaigns.length;
+    },
+    prevCampaign() {
+      this.currentIndex = (this.currentIndex - 1 + this.campaigns.length) % this.campaigns.length;
+    },
+    startAutoSlide() {
+      this.slideInterval = setInterval(this.nextCampaign, 3000);
+    },
+    stopAutoSlide() {
+      clearInterval(this.slideInterval);
+    }
+  },
+  mounted() {
+    this.startAutoSlide();
+  },
+  beforeDestroy() {
+    this.stopAutoSlide();
+  }
+}
+</script>
+
+<style scoped>
+.campaign-item {
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease;
+  opacity: 1; /* Ensure that the initial state is fully visible */
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+</style>

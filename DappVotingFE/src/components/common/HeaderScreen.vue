@@ -19,9 +19,17 @@
           <i class="fa-brands fa-linkedin-in text-xs cursor-pointer"></i>
           <i class="fa-brands fa-twitter text-xs cursor-pointer"></i>
         </div>
+        <div class="flex gap-4 items-center pr-4 border-r border-r-gray-600">
+          <a href="/guide">
+            <i class="fa-solid fa-circle-question cursor-pointer"></i>
+          </a>
+        </div>
+
         <div class="flex gap-4 items-center cursor-pointer">
           <i class="fa-solid fa-user text-xs"></i>
-          <span class="text-xs font-bold">Login</span>
+          <span class="text-xs font-bold">
+            <a href="/login">Login</a>
+          </span>
         </div>
       </div>
     </div>
@@ -51,12 +59,11 @@
         <div :class="linkClass('/about')" class="cursor-pointer">
           <router-link to="/about">About</router-link>
         </div>
-        <div :class="linkClass('/guide')" class="cursor-pointer">
-          <router-link to="/guide">Guide</router-link>
-        </div>
       </div>
       <div class="desktop:w-[150px]">
-        <i class="fa-regular fa-circle-user text-2xl cursor-pointer"></i>
+        <a href="/login">
+          <i class="fa-regular fa-circle-user text-2xl cursor-pointer"></i>
+        </a>
       </div>
     </div>
     <div class=""></div>
