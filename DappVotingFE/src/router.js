@@ -3,6 +3,7 @@ import HomePage from "./components/page/HomePage.vue";
 import ContactPage from "./components/page/ContactPage.vue";
 import AboutPage from "./components/page/AboutPage.vue";
 import CampaignPage from "./components/page/CampaignPage.vue";
+import DetailCampaign from "./components/campaign/DetailCampaign.vue";
 
 import LoginScreen from "./components/auth/LoginScreen.vue";
 
@@ -26,6 +27,10 @@ const routes = [
   {
     path: "/login",
     component: LoginScreen,
+  },
+  {
+    path: "/campaign/details",
+    component: DetailCampaign,
   },
 ]
 

@@ -6,9 +6,9 @@
         <form class="flex justify-center">
           <div class="flex flex-col gap-2 w-2/3">
             <div class="flex justify-center">
-                <img class="w-[130px] h-[130px]" src="/src/assets/images/login/logoLogin.webp" alt="">
+                <img class="w-[130px] h-[130px]" src="../../assets/images/HomePage/logo3.png" alt="">
             </div>
-            <h1 class="font-bold text-xl flex justify-center text-center text-blue-900">Welcome back!</h1>
+            <h1 class="font-bold text-xl flex justify-center text-center text-red-900">Welcome back!</h1>
             <span class="flex justify-center text-gray-600">Sign in to continue to NextGenVote</span>
             <div class="flex h-full w-full py-2 cursor-pointer items-center justify-between rounded bg-gradient-to-l from-[#ff5c00] to-[#ffdc24] px-4 text-base text-white hover:opacity-90 ng-tns-c307-4">
                 <img class="w-7 h-7" src="https://www.app.xoffer.io/assets/images/ui/metamask.svg" alt="">

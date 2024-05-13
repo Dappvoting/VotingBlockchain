@@ -1,6 +1,6 @@
 require('@nomiclabs/hardhat-ethers');
 require('dotenv').config();
-
+require("@nomicfoundation/hardhat-verify");
 const { API_URL, PRIVATE_KEY } = process.env;
 
 module.exports = {
@@ -21,4 +21,9 @@ module.exports = {
       accounts: [`0x${PRIVATE_KEY}`]
     }
   },
+  etherscan: {
+    apiKey: {
+      sepolia: "I5A88I2WXNQTKCUNBTQIDRHMGDK14W8R6R",
+    },
+  }
 }

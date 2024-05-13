@@ -1,4 +1,4 @@
-import { Voted as VotedEvent } from "../generated/Contract/Contract"
+import { Voted as VotedEvent } from "../generated/DappVotes/DappVotes"
 import { Voted } from "../generated/schema"
 
 export function handleVoted(event: VotedEvent): void {

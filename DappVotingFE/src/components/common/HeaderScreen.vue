@@ -40,8 +40,8 @@
     >
       <div class="">
         <img
-          class="h-20 w-full max-sm:w-[80px] sm:w-[150px] text-white z-10"
-          src="../../assets/images/HomePage/logo3.svg"
+          class="h-20 w-full max-sm:w-[50px] text-white z-10"
+          src="../../assets/images/HomePage/logo5.png"
           alt=""
         />
       </div>
@@ -79,7 +79,7 @@ export default {
     linkClass() {
       return (path) => {
         return {
-          'text-blue-900 font-bold': this.currentRoute === path,
+          'text-red-900 font-bold': this.currentRoute === path,
           '': this.currentRoute !== path
         };
       };

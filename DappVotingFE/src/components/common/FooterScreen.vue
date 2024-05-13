@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-blue-900">
+    <div class="bg-red-900">
         <div class="mx-auto flex justify-between py-4 items-center desktop:w-[1200px] max-sm:w-full  desktop:px-0 ">
             <span class="text-2xl font-bold text-white">It’s Election Day-Go Vote!</span>
-            <div class="py-1 w-[250px] hover:text-white hover:bg-orange transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md items-center bg-white px-2">
+            <div class="py-1 w-[250px] hover:text-white hover:bg-blue-900 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md items-center bg-white px-2">
                 <span class="font-bold pl-2">Go Vote Now</span>
                 <i class="fa-solid fa-square-check text-2xl"></i>
             </div>

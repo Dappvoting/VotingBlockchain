@@ -37,6 +37,9 @@ export default {
       mixBlendMode: {
         luminosity: 'luminosity',
       },
+      backgroundImage: {
+        'gradient-to-r': 'linear-gradient(to right, rgb(186, 28, 36) 0%, rgba(186, 28, 36, 0.7) 30%, rgba(20, 20, 51, 0.7) 60%, rgb(20, 20, 51) 100%)'
+      }
     },
   },
   plugins: [],

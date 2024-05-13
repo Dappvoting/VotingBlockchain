@@ -5,12 +5,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Contract
+    name: DappVotes
     network: sepolia
     source:
-      address: "0x2A124239e155817B9330B16fe1B306a165b4FDB8"
-      abi: Contract
-      startBlock: 5864595
+      address: "0x29C5c5fB395e3D9443462aB44F92F3De7BeA0Baf"
+      abi: DappVotes
+      startBlock: 5893934
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -18,9 +18,9 @@ dataSources:
       entities:
         - Voted
       abis:
-        - name: Contract
-          file: ./abis/Contract.json
+        - name: DappVotes
+          file: ./abis/DappVotes.json
       eventHandlers:
         - event: Voted(indexed address,uint256)
           handler: handleVoted
-      file: ./src/contract.ts
+      file: ./src/dapp-votes.ts

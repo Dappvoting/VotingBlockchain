@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-10">
-        <div class="min-h-[450px] bg-cover bg-center bg-[url('https://www.onlinemswprograms.com/wp-content/uploads/sites/55/2021/05/How-to-Empower-More-People-to-Vote_hero-p2.jpeg')]">
+        <div class="min-h-[450px] bg-cover bg-center bg-[url('https://caltechsites-prod.s3.amazonaws.com/scienceexchange/images/Vote_redblue2_LoRes_sttntNm.2e16d0ba.fill-1600x500-c100.jpg')]">
             <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
                 <div class="min-h-[450px] mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0 flex justify-center items-center">
                     <div class="flex flex-col gap-4 text-white">
@@ -14,7 +14,7 @@
             <div class="mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="pb-4 flex flex-col gap-6">
-                        <span class="font-bold text-3xl text-blue-900">Get In Touch With Us</span>
+                        <span class="font-bold text-3xl text-red-900">Get In Touch With Us</span>
                         <span class="font-semibold w-4/5">Our campaign has come a long way, but there is still a lot of road road ahead, donation now so I can further develop more exciting features.</span>
                         <div class="flex flex-col gap-4">
                             <input class="p-3 w-4/5 rounded focus:outline-none border" type="text" placeholder="Your Name">
@@ -22,7 +22,7 @@
                             <input class="p-3 w-4/5 rounded focus:outline-none border" type="text" placeholder="Your Email Here">
                             <textarea name="" id="" class="p-3 w-4/5 rounded focus:outline-none border resize-none" placeholder="Message" cols="30" rows="5"></textarea>
                         </div>
-                        <div class="py-2 w-[170px] hover:text-white hover:opacity-80 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-blue-900 px-2">
+                        <div class="py-2 w-[170px] hover:text-white hover:opacity-80 transition duration-300 ease-in-out cursor-pointer flex justify-between rounded-md text-sm items-center text-white bg-red-900 px-2">
                             <span class="font-bold pl-2">SEND REQUEST</span>
                             <i class="fa-solid fa-square-envelope text-xl"></i>
                         </div>
