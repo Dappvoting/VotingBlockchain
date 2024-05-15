@@ -1,7 +1,7 @@
 <template>
   <div class="bg-black py-2">
     <div
-      class="flex gap-4 justify-between items-center mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0 text-white"
+      class="flex gap-4 justify-between items-center mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0 text-white"
     >
       <div class="flex gap-4 items-center">
         <div class="flex gap-2 items-center pr-4 border-r border-r-gray-600">
@@ -36,7 +36,7 @@
   </div>
   <div class="bg-white">
     <div
-      class="flex items-center justify-between mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0"
+      class="flex items-center justify-between mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0"
     >
       <div class="">
         <img

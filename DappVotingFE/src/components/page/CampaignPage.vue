@@ -4,7 +4,7 @@
             class="min-h-[450px] bg-cover bg-center object-cover bg-[url('https://caltechsites-prod.s3.amazonaws.com/scienceexchange/images/Vote_redblue2_LoRes_sttntNm.2e16d0ba.fill-1600x500-c100.jpg')]">
             <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
                 <div
-                    class="min-h-[450px] mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0 flex justify-center items-center">
+                    class="min-h-[450px] mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0 flex justify-center items-center">
                     <div class="flex flex-col gap-4 text-white">
                         <span class="font-bold text-5xl">Campaign</span>
                         <span class="text-center font-bold">Home / Campaign</span>
@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0">
+        <div class="mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0">
             <div class="flex justify-between py-4 items-center">
                 <div class="flex gap-3 ">
                     <div class="flex gap-2">

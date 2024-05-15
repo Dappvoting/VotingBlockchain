@@ -5,6 +5,8 @@ import AboutPage from "./components/page/AboutPage.vue";
 import CampaignPage from "./components/page/CampaignPage.vue";
 import DetailCampaign from "./components/campaign/DetailCampaign.vue";
 
+import Profile from "./components/profile/Profile.vue";
+
 import LoginScreen from "./components/auth/LoginScreen.vue";
 
 const routes = [
@@ -31,6 +33,10 @@ const routes = [
   {
     path: "/campaign/details",
     component: DetailCampaign,
+  },
+  {
+    path: "/profile",
+    component: Profile,
   },
 ]
 

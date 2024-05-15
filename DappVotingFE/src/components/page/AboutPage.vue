@@ -2,7 +2,7 @@
     <div class="flex flex-col">
         <div class="min-h-[450px] bg-cover bg-center bg-[url('https://caltechsites-prod.s3.amazonaws.com/scienceexchange/images/Vote_redblue2_LoRes_sttntNm.2e16d0ba.fill-1600x500-c100.jpg')]">
             <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
-                <div class="min-h-[450px] mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0 flex justify-center items-center">
+                <div class="min-h-[450px] mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0 flex justify-center items-center">
                     <div class="flex flex-col gap-4 text-white">
                         <span class="font-bold text-5xl">About Us</span>
                         <span class="text-center font-bold">Home / About Us</span>
@@ -13,7 +13,7 @@
 
         <div class="bg-cover bg-center bg-[url('https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/campaign-right-banner.png')]">
             <div class="bg-white bg-opacity-90">
-                <div class="mx-auto desktop:w-[1200px] py-10 max-sm:w-full desktop:px-0 ">
+                <div class="mx-auto desktop:w-[1400px] py-10 max-sm:w-full desktop:px-0 ">
                     <div class="flex flex-col justify-center gap-6">
                         <div class="text-center flex flex-col gap-4 justify-center items-center">
                             <div class="flex flex-col">
@@ -52,7 +52,7 @@
         
         <div class="bg-cover bg-center bg-[url('https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/our-priorities-bg-min.jpg')]">
             <div class="bg-white bg-opacity-90">
-                <div class="mx-auto desktop:w-[1200px] py-10 max-sm:w-full desktop:px-0 ">
+                <div class="mx-auto desktop:w-[1400px] py-10 max-sm:w-full desktop:px-0 ">
                     <div class="flex flex-col justify-center py-10 gap-6">
                         <div class="text-center flex flex-col gap-2 justify-center items-center">
                             <div class="flex flex-col">

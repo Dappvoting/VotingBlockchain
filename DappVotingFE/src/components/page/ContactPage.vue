@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-10">
         <div class="min-h-[450px] bg-cover bg-center bg-[url('https://caltechsites-prod.s3.amazonaws.com/scienceexchange/images/Vote_redblue2_LoRes_sttntNm.2e16d0ba.fill-1600x500-c100.jpg')]">
             <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
-                <div class="min-h-[450px] mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0 flex justify-center items-center">
+                <div class="min-h-[450px] mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0 flex justify-center items-center">
                     <div class="flex flex-col gap-4 text-white">
                         <span class="font-bold text-5xl">Contact Me</span>
                         <span class="text-center font-bold">Home / Contact</span>
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="py-4">
-            <div class="mx-auto desktop:w-[1200px] max-sm:w-full desktop:px-0">
+            <div class="mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="pb-4 flex flex-col gap-6">
                         <span class="font-bold text-3xl text-red-900">Get In Touch With Us</span>

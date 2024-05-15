@@ -28,7 +28,7 @@
   </div>
   <div
     class="min-h-[450px] bg-cover bg-center bg-[url('https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/campaign-right-banner.png')]">
-    <div class="mx-auto desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0">
+    <div class="mx-auto desktop:w-[1400px] max-sm:w-full sm:px-3 desktop:px-0">
       <div class="flex flex-col justify-center py-10 gap-6">
         <div class="text-center flex flex-col gap-2 justify-center items-center">
           <span class="text-red-500 font-bold">Know more about</span>
@@ -118,7 +118,7 @@
   </div>
 
   <div class="min-h-[450px] bg-cover bg-center ">
-    <div class="mx-auto desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0 py-10">
+    <div class="mx-auto desktop:w-[1400px] max-sm:w-full sm:px-3 desktop:px-0 py-10">
       <div class="text-center flex flex-col items-center gap-6">
         <h2 class="text-4xl font-bold text-red-900">Popular Campaign</h2>
         <p class="w-2/3 text-center text-gray-500">
@@ -150,7 +150,7 @@
   </div>
 
   <div class="">
-    <div class="mx-auto desktop:w-[1200px] max-sm:w-full sm:px-3 desktop:px-0 py-6">
+    <div class="mx-auto desktop:w-[1400px] max-sm:w-full sm:px-3 desktop:px-0 py-6">
       <div class="w-full relative flex inset-0 bg-gray-800 mix-blend-luminosity">
         <img class="w-full object-cover"
           src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2020/01/newsletter-overlay.png" alt="">
