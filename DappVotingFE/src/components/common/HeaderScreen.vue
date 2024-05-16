@@ -28,7 +28,7 @@
         <div class="flex gap-4 items-center cursor-pointer">
           <i class="fa-solid fa-user text-xs"></i>
           <span class="text-xs font-bold">
-            <a href="/login">Login</a>
+            <a href="/profile">Login</a>
           </span>
         </div>
       </div>

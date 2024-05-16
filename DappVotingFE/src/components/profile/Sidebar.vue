@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-white p-6 rounded-lg shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+  <div class="w-full bg-white min-h-screen p-6 rounded-lg shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
     <div class="flex flex-col items-center">
       <img class="rounded-full w-24 h-24"
         src="https://xoffer-images-new.s3.amazonaws.com/dev/avatar/thumbnail/f803413aa44298237fb8273fcfff7b97.jpg"
@@ -19,6 +19,32 @@
             <span class="ml-2 text-lg">Information</span>
           </a>
         </li>
+        <!-- <li class="mb-2"
+        @click="changeContent('CreateCampaignsProfile')">
+          <a href="#"
+            class="flex items-center gap-1 p-3 text-gray-700 hover:bg-red-200 hover:font-bold hover:text-red-900 rounded-md"
+            :class="{
+              'bg-red-200 font-bold text-red-900 rounded-md':
+                currentContent === 'CreateCampaignsProfile',
+            }">
+            <i class="fa-regular fa-square-plus text-lg"></i>
+            <span class="ml-2 text-lg">Create Campaigns</span>
+          </a>
+        </li> -->
+
+        <li class="mb-2"
+        @click="changeContent('MyCampaignsProfile')">
+          <a href="#"
+            class="flex items-center gap-1 p-3 text-gray-700 hover:bg-red-200 hover:font-bold hover:text-red-900 rounded-md"
+            :class="{
+              'bg-red-200 font-bold text-red-900 rounded-md':
+                currentContent === 'MyCampaignsProfile',
+            }">
+            <i class="fa-solid fa-boxes-stacked text-lg"></i>
+            <span class="ml-2 text-lg">My Campaign</span>
+          </a>
+        </li>
+
         <li class="mb-2"
         @click="changeContent('VotedCampaignsProfile')">
           <a href="#"
@@ -31,20 +57,8 @@
             <span class="ml-2 text-lg">History Voted</span>
           </a>
         </li>
-        <li class="mb-2"
-        @click="changeContent('CreateCampaignsProfile')">
-          <a href="#"
-            class="flex items-center gap-1 p-3 text-gray-700 hover:bg-red-200 hover:font-bold hover:text-red-900 rounded-md"
-            :class="{
-              'bg-red-200 font-bold text-red-900 rounded-md':
-                currentContent === 'CreateCampaignsProfile',
-            }">
-            <i class="fa-regular fa-square-plus text-lg"></i>
-            <span class="ml-2 text-lg">Create Campaigns</span>
-          </a>
-        </li>
-        <li class="mb-2"
-        @click="changeContent('CreateCampaignsProfile')">
+        
+        <li class="mb-2">
           <a href="#"
             class="flex items-center gap-1 p-3 text-gray-700 hover:bg-red-200 hover:font-bold hover:text-red-900 rounded-md"
             :class="{
@@ -67,10 +81,10 @@
 
 <script>
 export default {
-  name: "Dashboard",
+  name: "SideBar",
   data() {
     return {
-      currentContent: "Information", // Mặc định hiển thị Dashboards
+      currentContent: "InformationProfile", // Mặc định hiển thị Dashboards
     };
   },
   methods: {

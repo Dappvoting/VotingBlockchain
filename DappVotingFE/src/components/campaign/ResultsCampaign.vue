@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-4 flex-col md:flex-row justify-between p-4 bg-white rounded-lg">
     <!-- Left section -->
-    <div class="md:w-1/2 p-4 shadow-lg  rounded-lg">
+    <div class="md:w-1/2 p-4 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]  rounded-lg">
       <div class="flex items-center mb-4">
         <img src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png" alt="Game Thumbnail" class="w-20 h-20 rounded-xl mr-4 object-cover" />
         <div>
@@ -29,7 +29,7 @@
       </div>
     </div>
     <!-- Right section -->
-    <div class="md:w-1/2 p-4 bg-gray-100 rounded-lg shadow-lg">
+    <div class="md:w-1/2 p-4  rounded-lg shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
       <h3 class="text-xl font-bold mb-4">1724 Votes</h3>
       <ul class="overflow-y-auto h-64">
         <li v-for="(user, index) in users" :key="index" class="flex justify-between items-center mb-2">

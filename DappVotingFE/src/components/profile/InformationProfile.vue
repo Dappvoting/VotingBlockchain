@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="h-screen">
       <span class="flex justify-center text-red-900 font-bold text-2xl py-5">Welcome to NextGenVote!</span>
       <div class="w-full">
         <div class="grid grid-cols-2 gap-4">
           <div class="bg-white flex flex-col justify-between p-6 rounded-lg min-h-[300px] shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
               <div>
                   <h2 class="text-xl font-bold mb-4">Connect Wallets</h2>
-                  <p>Connected to EVM Wallets:</p>
+                  <p>Connected to MetaMask</p>
               </div>
               <div class="flex gap-2 items-center">
                 <p ref="walletAddress" class="bg-gray-100 p-2 rounded mt-2 w-full">0x885a046296a0d98c908763892304d5a35497ec1</p>
@@ -26,16 +26,31 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useToast } from "vue-toastification";
+
 export default {
-methods: {
-  copyToClipboard() {
-    const walletAddress = this.$refs.walletAddress.textContent;
-    navigator.clipboard.writeText(walletAddress).then(() => {
-      alert("Copied to clipboard: " + walletAddress);
-    }).catch(err => {
-      console.error('Failed to copy: ', err);
-    });
-  }
+name: 'InformationProfile',
+setup() {
+  const toast = useToast();
+  const walletAddress = ref(null);
+
+  const copyToClipboard = () => {
+    if (walletAddress.value) {
+      navigator.clipboard.writeText(walletAddress.value.textContent).then(() => {
+        toast.success("Copied to clipboard: " + walletAddress.value.textContent);
+      }).catch(err => {
+        toast.error('Failed to copy: ' + err);
+      });
+    } else {
+      toast.error('Wallet address not found.');
+    }
+  };
+
+  return {
+    walletAddress,
+    copyToClipboard
+  };
 }
 }
 </script>

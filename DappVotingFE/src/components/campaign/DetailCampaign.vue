@@ -1,8 +1,18 @@
 <template>
+  <div class="min-h-[450px] bg-cover bg-center bg-[url('https://caltechsites-prod.s3.amazonaws.com/scienceexchange/images/Vote_redblue2_LoRes_sttntNm.2e16d0ba.fill-1600x500-c100.jpg')]">
+    <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
+        <div class="min-h-[450px] mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0 flex justify-center items-center">
+            <div class="flex flex-col gap-4 text-white">
+                <span class="font-bold text-5xl">Election of staff</span>
+                <span class="text-center font-bold">Home / Campaign / Details</span>
+            </div>
+        </div>
+    </div>
+</div>
   <div class="mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0">
     <div class="my-4 bg-white p-4">
       <div class="flex justify-center font-semibold text-3xl py-2">
-        Equality and fairness
+        Contestants
       </div>
       <div class="w-full grid grid-cols-2 text-center">
         <div
