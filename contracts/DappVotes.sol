@@ -116,7 +116,7 @@ contract DappVotes {
     for (uint i = 1; i <= totalPolls.current(); i++) {
         if(!polls[i].deleted) {
             Polls[index++] = polls[i];
-        }
+      }
     }
   }
 
