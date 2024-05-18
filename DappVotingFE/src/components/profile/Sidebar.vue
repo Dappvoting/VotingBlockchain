@@ -4,7 +4,7 @@
       <img class="rounded-full w-24 h-24"
         src="https://xoffer-images-new.s3.amazonaws.com/dev/avatar/thumbnail/f803413aa44298237fb8273fcfff7b97.jpg"
         alt="Profile Picture" />
-      <h2 class="mt-4 text-xl font-bold">0x885a04629...a35497ec1</h2>
+      <h2 class="mt-4 text-xl font-bold">{{ shortenedAddress }}</h2>
       <!-- <p class="text-gray-600">Level: <span class="text-purple-500">Platinum</span></p> -->
     </div>
     <nav class="mt-10">
@@ -85,6 +85,7 @@ export default {
   data() {
     return {
       currentContent: "InformationProfile", // Mặc định hiển thị Dashboards
+      walletAddress: localStorage.getItem('walletAddress') || null,
     };
   },
   methods: {
@@ -92,6 +93,12 @@ export default {
       this.currentContent = newContent;
       this.$emit("changeContent", newContent); // Phát ra sự kiện khi nội dung thay đổi
     },
+  },
+  computed: {
+    shortenedAddress() {
+      if (!this.walletAddress) return null;
+      return `${this.walletAddress.slice(0, 6)}...${this.walletAddress.slice(-4)}`;
+    }
   },
 };
 </script>

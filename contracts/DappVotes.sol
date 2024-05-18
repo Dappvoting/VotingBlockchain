@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
+
 contract DappVotes {
   using Counters for Counters.Counter;
   Counters.Counter private totalPolls;
@@ -15,12 +16,14 @@ contract DappVotes {
     uint votes;
     uint contestants;
     bool deleted;
+    bool isPublic;
     address director;
     uint startsAt;
     uint endsAt;
     uint timestamp;
     address[] voters;
     string[] avatars;
+    address[] authorizedVoters;
   }
 
   struct ContestantStruct {
@@ -38,14 +41,20 @@ contract DappVotes {
   mapping(uint => mapping(address => bool)) contested;
   mapping(uint => mapping(uint => ContestantStruct)) contestants;
 
-  event Voted(address indexed voter, uint timestamp);
+  event PollCreated(uint id, string title, string description, address director, uint startsAt, uint endsAt, bool isPublic);
+  event PollUpdated(uint id, string title, string description, uint startsAt, uint endsAt, bool isPublic);
+  event PollDeleted(uint id);
+  event ContestantAdded(uint pollId, uint contestantId, string name, string image, address voter);
+  event Voted(address indexed voter, uint pollId, uint contestantId, uint timestamp);
+  event AuthorizedVotersAdded(uint pollId, address[] voters);
 
   function createPoll(
     string memory image,
     string memory title,
     string memory description,
     uint startsAt,
-    uint endsAt
+    uint endsAt,
+    bool isPublic
   ) public {
     require(bytes(title).length > 0, 'Title cannot be empty');
     require(bytes(description).length > 0, 'Description cannot be empty');
@@ -62,11 +71,14 @@ contract DappVotes {
     poll.image = image;
     poll.startsAt = startsAt;
     poll.endsAt = endsAt;
+    poll.isPublic = isPublic;
     poll.director = msg.sender;
     poll.timestamp = currentTime();
 
     polls[poll.id] = poll;
     pollExist[poll.id] = true;
+
+    emit PollCreated(poll.id, title, description, msg.sender, startsAt, endsAt, isPublic);
   }
 
   function updatePoll(
@@ -75,7 +87,8 @@ contract DappVotes {
     string memory title,
     string memory description,
     uint startsAt,
-    uint endsAt
+    uint endsAt,
+    bool isPublic
   ) public {
     require(pollExist[id], 'Poll not found');
     require(polls[id].director == msg.sender, 'Unauthorized entity');
@@ -91,6 +104,9 @@ contract DappVotes {
     polls[id].startsAt = startsAt;
     polls[id].endsAt = endsAt;
     polls[id].image = image;
+    polls[id].isPublic = isPublic;
+
+    emit PollUpdated(id, title, description, startsAt, endsAt, isPublic);
   }
 
   function deletePoll(uint id) public {
@@ -98,6 +114,8 @@ contract DappVotes {
     require(polls[id].director == msg.sender, 'Unauthorized entity');
     require(polls[id].votes < 1, 'Poll has votes already');
     polls[id].deleted = true;
+
+    emit PollDeleted(id);
   }
 
   function getPoll(uint id) public view returns (PollStruct memory) {
@@ -107,15 +125,15 @@ contract DappVotes {
   function getPolls() public view returns (PollStruct[] memory Polls) {
     uint available;
     for (uint i = 1; i <= totalPolls.current(); i++) {
-        if(!polls[i].deleted) available++;
+      if (!polls[i].deleted) available++;
     }
 
     Polls = new PollStruct[](available);
     uint index;
 
     for (uint i = 1; i <= totalPolls.current(); i++) {
-        if(!polls[i].deleted) {
-            Polls[index++] = polls[i];
+      if (!polls[i].deleted) {
+        Polls[index++] = polls[i];
       }
     }
   }
@@ -139,6 +157,8 @@ contract DappVotes {
     contested[id][msg.sender] = true;
     polls[id].avatars.push(image);
     polls[id].contestants++;
+
+    emit ContestantAdded(id, contestant.id, name, image, msg.sender);
   }
 
   function getContestant(uint id, uint cid) public view returns (ContestantStruct memory) {
@@ -148,16 +168,16 @@ contract DappVotes {
   function getContestants(uint id) public view returns (ContestantStruct[] memory Contestants) {
     uint available;
     for (uint i = 1; i <= totalContestants.current(); i++) {
-        if(contestants[id][i].id == i) available++;
+      if (contestants[id][i].id == i) available++;
     }
 
     Contestants = new ContestantStruct[](available);
     uint index;
 
     for (uint i = 1; i <= totalContestants.current(); i++) {
-        if(contestants[id][i].id == i) {
-            Contestants[index++] = contestants[id][i];
-        }
+      if (contestants[id][i].id == i) {
+        Contestants[index++] = contestants[id][i];
+      }
     }
   }
 
@@ -171,6 +191,10 @@ contract DappVotes {
       'Voting must be in session'
     );
 
+    if (!polls[id].isPublic) {
+      require(isAuthorizedVoter(id, msg.sender), 'Not authorized to vote in this poll');
+    }
+
     polls[id].votes++;
     polls[id].voters.push(msg.sender);
 
@@ -178,10 +202,33 @@ contract DappVotes {
     contestants[id][cid].voters.push(msg.sender);
     voted[id][msg.sender] = true;
 
-    emit Voted(msg.sender, currentTime());
+    emit Voted(msg.sender, id, cid, currentTime());
+  }
+
+  function addAuthorizedVoters(uint id, address[] memory voters) public {
+    require(pollExist[id], 'Poll not found');
+    require(polls[id].director == msg.sender, 'Unauthorized entity');
+    require(!polls[id].deleted, 'Polling already deleted');
+    require(polls[id].votes < 1, 'Poll has votes already');
+    require(!polls[id].isPublic, 'Cannot add authorized voters to a public poll');
+
+    for (uint i = 0; i < voters.length; i++) {
+      polls[id].authorizedVoters.push(voters[i]);
+    }
+
+    emit AuthorizedVotersAdded(id, voters);
+  }
+
+  function isAuthorizedVoter(uint pollId, address voter) internal view returns (bool) {
+    for (uint i = 0; i < polls[pollId].authorizedVoters.length; i++) {
+      if (polls[pollId].authorizedVoters[i] == voter) {
+        return true;
+      }
+    }
+    return false;
   }
 
   function currentTime() internal view returns (uint256) {
-    return (block.timestamp * 1000) + 1000;
+    return block.timestamp;
   }
 }

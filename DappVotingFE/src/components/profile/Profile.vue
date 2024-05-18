@@ -7,7 +7,7 @@
 
     <!-- Main Content -->
     <div class="flex flex-col pl-6">
-      <InformationProfile v-if="content === 'InformationProfile'"></InformationProfile>
+      <InformationProfile @changeContent="changeContent" v-if="content === 'InformationProfile'"></InformationProfile>
       <CreateCampaignsProfile @changeContent="changeContent" v-if="content === 'CreateCampaignsProfile'"></CreateCampaignsProfile>
       <VotedCampaignsProfile v-if="content === 'VotedCampaignsProfile'"></VotedCampaignsProfile>
       <MyCampaignsProfile @changeContent="changeContent" v-if="content === 'MyCampaignsProfile'"></MyCampaignsProfile>
