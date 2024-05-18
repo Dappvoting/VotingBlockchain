@@ -1,0 +1,66 @@
+type AuthorizedVotersAdded @entity(immutable: true) {
+  id: Bytes!
+  pollId: BigInt! # uint256
+  voters: [Bytes!]! # address[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ContestantAdded @entity(immutable: true) {
+  id: Bytes!
+  pollId: BigInt! # uint256
+  contestantId: BigInt! # uint256
+  name: String! # string
+  image: String! # string
+  voter: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PollCreated @entity(immutable: true) {
+  id: Bytes!
+  VotingDapp_id: BigInt! # uint256
+  title: String! # string
+  description: String! # string
+  director: Bytes! # address
+  startsAt: BigInt! # uint256
+  endsAt: BigInt! # uint256
+  isPublic: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PollDeleted @entity(immutable: true) {
+  id: Bytes!
+  VotingDapp_id: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PollUpdated @entity(immutable: true) {
+  id: Bytes!
+  VotingDapp_id: BigInt! # uint256
+  title: String! # string
+  description: String! # string
+  startsAt: BigInt! # uint256
+  endsAt: BigInt! # uint256
+  isPublic: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Voted @entity(immutable: true) {
+  id: Bytes!
+  voter: Bytes! # address
+  pollId: BigInt! # uint256
+  contestantId: BigInt! # uint256
+  timestamp: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
