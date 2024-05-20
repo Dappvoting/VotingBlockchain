@@ -8,5 +8,4 @@ const apolloClient = new ApolloClient({
 });
 
 provideApolloClient(apolloClient);
-
 export default apolloClient;
