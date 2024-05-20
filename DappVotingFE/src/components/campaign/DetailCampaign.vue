@@ -3,7 +3,7 @@
     <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
         <div class="min-h-[450px] mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0 flex justify-center items-center">
             <div class="flex flex-col gap-4 text-white">
-                <span class="font-bold text-5xl">Election of staff</span>
+                <span class="font-bold text-5xl">Bầu cử Tổng thống Mỹ 2024</span>
                 <span class="text-center font-bold">Home / Campaign / Details</span>
             </div>
         </div>

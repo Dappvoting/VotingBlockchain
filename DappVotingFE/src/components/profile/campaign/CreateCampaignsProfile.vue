@@ -1,7 +1,6 @@
 <template>
   <div class="w-full bg-white min-h-screen rounded-lg shadow-[rgba(13,_38,76,_0.19)_0px_9px_20px] px-4">
-      <span class="flex justify-center text-red-900 font-bold text-2xl py-5">Create New Campaign</span>
-
+    <span class="flex justify-center text-red-900 font-bold text-2xl py-5">Create New Campaign</span>
     <div class="p-4">
       <form @submit.prevent="submitForm">
         <div class="mb-4">
@@ -57,6 +56,22 @@
 
 <script>
 import * as XLSX from 'xlsx';
+import { useMutation } from '@vue/apollo-composable';
+import gql from 'graphql-tag';
+
+const CREATE_POLL_MUTATION = gql`
+  mutation CreatePoll($name: String!, $startDate: BigInt!, $endDate: BigInt!, $imageUrl: String!, $isPublic: Boolean!, $description: String!) {
+    createPoll(name: $name, startDate: $startDate, endDate: $endDate, imageUrl: $imageUrl, isPublic: $isPublic, description: $description) {
+      id
+      name
+      startDate
+      endDate
+      imageUrl
+      isPublic
+      description
+    }
+  }
+`;
 
 export default {
   name: "CreateCampaignsProfile",
@@ -73,13 +88,20 @@ export default {
         wallets: [],
         description: ""
       },
-      walletsText: ""
+      walletsText: "",
+    };
+  },
+  setup() {
+    const { mutate: createPoll } = useMutation(CREATE_POLL_MUTATION);
+
+    return {
+      createPoll,
     };
   },
   methods: {
     changeContent(newContent) {
       this.currentContent = newContent;
-      this.$emit("changeContent", newContent); // Phát ra sự kiện khi nội dung thay đổi
+      this.$emit("changeContent", newContent);
     },
     generateVoterInputs() {
       const numVoters = parseInt(this.form.numVoters);
@@ -114,11 +136,48 @@ export default {
       this.form.wallets = wallets;
       this.walletsText = wallets.join("\n");
     },
-    submitForm() {
-      // Xử lý logic gửi form tại đây
-      console.log(this.form);
+    async submitForm() {
+      const { name, startDate, endDate, imageUrl, status, description } = this.form;
+      const isPublic = status === "public";
+
+      // Chuyển đổi các giá trị BigInt sang chuỗi để đảm bảo chúng được truyền đúng cách
+      const startDateBigInt = BigInt(new Date(startDate).getTime());
+      const endDateBigInt = BigInt(new Date(endDate).getTime());
+
+      // In log các biến trước khi gọi mutation
+      console.log("Form Data:", {
+        name,
+        startDate: startDateBigInt,
+        endDate: endDateBigInt,
+        imageUrl,
+        isPublic,
+        description,
+      });
+
+      // Kiểm tra xem các biến có được truyền đúng không
+      if (!name || !startDateBigInt || !endDateBigInt || !imageUrl || !description) {
+        console.error("Missing required fields");
+        return;
+      }
+
+      try {
+        const response = await this.createPoll({
+          variables: {
+            name: name,
+            startDate: startDateBigInt,
+            endDate: endDateBigInt,
+            imageUrl: imageUrl,
+            isPublic: isPublic,
+            description: description,
+          },
+        });
+
+        console.log(response.data);
+        this.changeContent('MyCampaignsProfile');
+      } catch (error) {
+        console.error("Error creating poll:", error);
+      }
     }
   }
 };
 </script>
-

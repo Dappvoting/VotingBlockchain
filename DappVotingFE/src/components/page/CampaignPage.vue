@@ -35,7 +35,7 @@
                 <div class="">
                     <input type="text"
                         class="focus:outline-none desktop:max-w-[350px] desktop:w-[350px] max-sm:w-[150px] focus:border-transparent py-2 px-4 focus:border-none rounded-lg shadow-lg w-full relative text-sm"
-                        placeholder="Tìm kiếm sản phẩm">
+                        placeholder="Search by name">
                 </div>
             </div>
            
@@ -43,15 +43,14 @@
             <div class="bg-white rounded-lg shadow-lg">
                 <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
                 <img class="w-full h-[250px] rounded-t-lg"
-                    src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png"
+                    src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Fsundaytimes%2Fprod%2Fweb%2Fbin%2Fb066cf06-7b1b-11ee-83ba-000db1848e33.jpg?crop=1500%2C1000%2C0%2C0"
                     alt="" />
                 <div class="flex flex-col p-4 gap-2">
-                    <span class="font-bold text-red-900 text-2xl border-b pb-4">Equality and fairness</span>
-                    <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">With blockchain technology, I can ensure that elections are
-                        equal and fair.</span>
+                    <span class="font-bold text-red-900 text-2xl border-b pb-4">Bầu cử Tổng thống Mỹ 2024</span>
+                    <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">Tham gia vào quá trình dân chủ bằng cách bỏ phiếu trong cuộc bầu cử Tổng thống Mỹ. Chọn lãnh đạo phù hợp với tầm nhìn của bạn cho tương lai của quốc gia!</span>
                     <div class="flex justify-between border-b pb-2">
                         <span class="text-sm text-gray-500">Expired time:</span>
-                        <span class="text-sm text-gray-500 font-semibold">May. 10 2024 4:06 PM</span>
+                        <span class="text-sm text-gray-500 font-semibold">May. 20 2024 4:06 PM</span>
                     </div>
                     <div class="flex justify-between pb-4">
                         <span class="text-sm text-gray-500">Status:</span>
@@ -68,15 +67,14 @@
             <div class="bg-white rounded-lg shadow-lg">
                 <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
                 <img class="w-full h-[250px] rounded-t-lg"
-                    src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png"
+                    src="https://images.squarespace-cdn.com/content/v1/5f28a5f6aa943d325be44068/1597677547143-5OF20YC0SN2I3U2HOUMV/campaign_1.png"
                     alt="" />
                 <div class="flex flex-col p-4 gap-2">
-                    <span class="font-bold text-red-900 text-2xl border-b pb-4">Equality and fairness</span>
-                    <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">With blockchain technology, I can ensure that elections are
-                        equal and fair.</span>
+                    <span class="font-bold text-red-900 text-2xl border-b pb-4">Bầu cử Ban cán sự lớp 10A</span>
+                    <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">Hãy lựa chọn những bạn học sinh tiêu biểu để đại diện cho lớp 10A trong các hoạt động học tập và vui chơi trong năm học mới!</span>
                     <div class="flex justify-between border-b pb-2">
                         <span class="text-sm text-gray-500">Expired time:</span>
-                        <span class="text-sm text-gray-500 font-semibold">May. 10 2024 4:06 PM</span>
+                        <span class="text-sm text-gray-500 font-semibold">May. 25 2024 4:06 PM</span>
                     </div>
                     <div class="flex justify-between pb-4">
                         <span class="text-sm text-gray-500">Status:</span>
@@ -93,15 +91,15 @@
             <div class="bg-white rounded-lg shadow-lg">
                 <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
                 <img class="w-full h-[250px] rounded-t-lg"
-                    src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png"
+                    src="https://png.pngtree.com/png-vector/20221104/ourmid/pngtree-election-day-political-hand-drawn-cartoon-flat-illustration-with-voters-casting-png-image_6409137.png"
                     alt="" />
                 <div class="flex flex-col p-4 gap-2">
-                    <span class="font-bold text-red-900 text-2xl border-b pb-4">Equality and fairness</span>
+                    <span class="font-bold text-red-900 text-2xl mb-4 line-clamp-1">Bầu cử Hoa khôi Trường Đại học Quy Nhơn</span>
                     <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">With blockchain technology, I can ensure that elections are
                         equal and fair.</span>
                     <div class="flex justify-between border-b pb-2">
                         <span class="text-sm text-gray-500">Expired time:</span>
-                        <span class="text-sm text-gray-500 font-semibold">May. 10 2024 4:06 PM</span>
+                        <span class="text-sm text-gray-500 font-semibold">May. 21 2024 4:06 PM</span>
                     </div>
                     <div class="flex justify-between pb-4">
                         <span class="text-sm text-gray-500">Status:</span>

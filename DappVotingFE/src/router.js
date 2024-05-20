@@ -49,7 +49,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const walletAddress = localStorage.getItem('walletAddress');
-  const publicPages = ['/', '/contact', '/about', '/campaign', '/campaign/details', '/login'];
+  const publicPages = ['/', '/home', '/contact', '/about', '/campaign', '/campaign/details', '/login'];
   const authRequired = !publicPages.includes(to.path);
 
   if (authRequired && !walletAddress) {

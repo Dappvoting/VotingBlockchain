@@ -47,9 +47,9 @@
           <div :class="linkClass('/campaign')" class="cursor-pointer">
             <router-link to="/campaign">Campaign</router-link>
           </div>
-          <div :class="linkClass('/contact')" class="cursor-pointer">
+          <!-- <div :class="linkClass('/contact')" class="cursor-pointer">
             <router-link to="/contact">Contact</router-link>
-          </div>
+          </div> -->
           <div :class="linkClass('/about')" class="cursor-pointer">
             <router-link to="/about">About</router-link>
           </div>

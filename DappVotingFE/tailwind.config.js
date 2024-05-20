@@ -30,6 +30,7 @@ export default {
         hover: "#207bc1",
         orange: "#ff7443",
         orange_hover: "#ff4200",
+        gradient_red: 'linear-gradient(90deg, #8B0000, #FF4500)'
       },
       borderColor: {
         main: "#207bc1",

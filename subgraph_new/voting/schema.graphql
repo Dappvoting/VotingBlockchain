@@ -64,3 +64,17 @@ type Voted @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type Poll @entity {
+  id: ID!
+  VotingDapp_id: BigInt!
+  title: String!
+  description: String!
+  director: Bytes!
+  startsAt: BigInt!
+  endsAt: BigInt!
+  isPublic: Boolean!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
