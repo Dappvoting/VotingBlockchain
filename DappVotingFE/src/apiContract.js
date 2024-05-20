@@ -1,12 +1,15 @@
-require('dotenv').config();
-const express = require('express');
+import 'dotenv/config';
+import express from 'express';
+import fileUpload from 'express-fileupload';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { readFileSync } from 'fs';
+import { ethers } from 'ethers';
+
 const app = express();
-const fileUpload = require('express-fileupload');
-const path = require('path');
-const ethers = require('ethers');
 
 app.use(fileUpload());
-app.use(express.static(__dirname));
+app.use(express.static(path.dirname(fileURLToPath(import.meta.url))));
 app.use(express.json());
 
 const port = 3000;
@@ -15,10 +18,33 @@ const API_URL = process.env.API_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const CONSTRACT_ADDRESS = process.env.CONSTRACT_ADDRESS;
 
-const { abi } = require('../../artifacts/contracts/DappVotes.sol/DappVotes.json');
-const provider = new ethers.providers.JsonRpcProvider(API_URL);
-const signer = new ethers.Wallet(PRIVATE_KEY, provider);
-const contractInstance = new ethers.Contract(CONSTRACT_ADDRESS, abi, signer);
+if (!API_URL || !PRIVATE_KEY || !CONSTRACT_ADDRESS) {
+  console.error("Missing environment variables. Please check your .env file.");
+  process.exit(1);
+}
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const abiPath = path.resolve(__dirname, '../../artifacts/contracts/DappVotes.sol/DappVotes.json');
+let abi;
+
+try {
+  const abiFile = readFileSync(abiPath, 'utf8');
+  abi = JSON.parse(abiFile).abi;
+} catch (error) {
+  console.error("Error reading ABI file:", error);
+  process.exit(1);
+}
+
+let provider, signer, contractInstance;
+
+try {
+  provider = new ethers.providers.JsonRpcProvider(API_URL);
+  signer = new ethers.Wallet(PRIVATE_KEY, provider);
+  contractInstance = new ethers.Contract(CONSTRACT_ADDRESS, abi, signer);
+} catch (error) {
+  console.error("Error initializing ethers:", error);
+  process.exit(1);
+}
 
 // Create Poll
 app.post('/createPoll', async (req, res) => {
