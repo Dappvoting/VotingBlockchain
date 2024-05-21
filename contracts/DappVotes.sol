@@ -24,6 +24,7 @@ contract DappVotes {
     address[] voters;
     string[] avatars;
     address[] authorizedVoters;
+    address token;
   }
 
   struct ContestantStruct {
@@ -41,8 +42,8 @@ contract DappVotes {
   mapping(uint => mapping(address => bool)) contested;
   mapping(uint => mapping(uint => ContestantStruct)) contestants;
 
-  event PollCreated(uint id, string title, string description, address director, uint startsAt, uint endsAt, bool isPublic);
-  event PollUpdated(uint id, string title, string description, uint startsAt, uint endsAt, bool isPublic);
+  event PollCreated(uint id, string title, string description, address director, uint startsAt, uint endsAt, bool isPublic, string image);
+  event PollUpdated(uint id, string title, string description, uint startsAt, uint endsAt, bool isPublic, string image);
   event PollDeleted(uint id);
   event ContestantAdded(uint pollId, uint contestantId, string name, string image, address voter);
   event Voted(address indexed voter, uint pollId, uint contestantId, uint timestamp);
@@ -55,6 +56,7 @@ contract DappVotes {
     uint startsAt,
     uint endsAt,
     bool isPublic
+    // address token,
   ) public {
     require(bytes(title).length > 0, 'Title cannot be empty');
     require(bytes(description).length > 0, 'Description cannot be empty');
@@ -74,11 +76,12 @@ contract DappVotes {
     poll.isPublic = isPublic;
     poll.director = msg.sender;
     poll.timestamp = currentTime();
+    // poll.token = token;
 
     polls[poll.id] = poll;
     pollExist[poll.id] = true;
 
-    emit PollCreated(poll.id, title, description, msg.sender, startsAt, endsAt, isPublic);
+    emit PollCreated(poll.id, title, description, msg.sender, startsAt, endsAt, isPublic, image);
   }
 
   function updatePoll(
@@ -106,7 +109,7 @@ contract DappVotes {
     polls[id].image = image;
     polls[id].isPublic = isPublic;
 
-    emit PollUpdated(id, title, description, startsAt, endsAt, isPublic);
+    emit PollUpdated(id, title, description, startsAt, endsAt, isPublic, image);
   }
 
   function deletePoll(uint id) public {
@@ -194,7 +197,9 @@ contract DappVotes {
     if (!polls[id].isPublic) {
       require(isAuthorizedVoter(id, msg.sender), 'Not authorized to vote in this poll');
     }
-
+    // approve token 
+    // transfer token to contract 
+    // transfer token with amount
     polls[id].votes++;
     polls[id].voters.push(msg.sender);
 
@@ -204,7 +209,7 @@ contract DappVotes {
 
     emit Voted(msg.sender, id, cid, currentTime());
   }
-
+  // withdrawToken when poll end
   function addAuthorizedVoters(uint id, address[] memory voters) public {
     require(pollExist[id], 'Poll not found');
     require(polls[id].director == msg.sender, 'Unauthorized entity');

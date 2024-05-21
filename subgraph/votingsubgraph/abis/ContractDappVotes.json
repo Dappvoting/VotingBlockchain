@@ -99,6 +99,12 @@
         "internalType": "bool",
         "name": "isPublic",
         "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "image",
+        "type": "string"
       }
     ],
     "name": "PollCreated",
@@ -155,6 +161,12 @@
         "internalType": "bool",
         "name": "isPublic",
         "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "image",
+        "type": "string"
       }
     ],
     "name": "PollUpdated",
@@ -193,8 +205,16 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "id", "type": "uint256" },
-      { "internalType": "address[]", "name": "voters", "type": "address[]" }
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "voters",
+        "type": "address[]"
+      }
     ],
     "name": "addAuthorizedVoters",
     "outputs": [],
@@ -203,9 +223,21 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "id", "type": "uint256" },
-      { "internalType": "string", "name": "name", "type": "string" },
-      { "internalType": "string", "name": "image", "type": "string" }
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "image",
+        "type": "string"
+      }
     ],
     "name": "contest",
     "outputs": [],
@@ -214,12 +246,36 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "image", "type": "string" },
-      { "internalType": "string", "name": "title", "type": "string" },
-      { "internalType": "string", "name": "description", "type": "string" },
-      { "internalType": "uint256", "name": "startsAt", "type": "uint256" },
-      { "internalType": "uint256", "name": "endsAt", "type": "uint256" },
-      { "internalType": "bool", "name": "isPublic", "type": "bool" }
+      {
+        "internalType": "string",
+        "name": "image",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startsAt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endsAt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isPublic",
+        "type": "bool"
+      }
     ],
     "name": "createPoll",
     "outputs": [],
@@ -227,7 +283,13 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
     "name": "deletePoll",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -235,19 +297,51 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "id", "type": "uint256" },
-      { "internalType": "uint256", "name": "cid", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cid",
+        "type": "uint256"
+      }
     ],
     "name": "getContestant",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "id", "type": "uint256" },
-          { "internalType": "string", "name": "image", "type": "string" },
-          { "internalType": "string", "name": "name", "type": "string" },
-          { "internalType": "address", "name": "voter", "type": "address" },
-          { "internalType": "uint256", "name": "votes", "type": "uint256" },
-          { "internalType": "address[]", "name": "voters", "type": "address[]" }
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "image",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "voter",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "votes",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address[]",
+            "name": "voters",
+            "type": "address[]"
+          }
         ],
         "internalType": "struct DappVotes.ContestantStruct",
         "name": "",
@@ -258,17 +352,47 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
     "name": "getContestants",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "id", "type": "uint256" },
-          { "internalType": "string", "name": "image", "type": "string" },
-          { "internalType": "string", "name": "name", "type": "string" },
-          { "internalType": "address", "name": "voter", "type": "address" },
-          { "internalType": "uint256", "name": "votes", "type": "uint256" },
-          { "internalType": "address[]", "name": "voters", "type": "address[]" }
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "image",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "voter",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "votes",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address[]",
+            "name": "voters",
+            "type": "address[]"
+          }
         ],
         "internalType": "struct DappVotes.ContestantStruct[]",
         "name": "Contestants",
@@ -279,37 +403,96 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
     "name": "getPoll",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "id", "type": "uint256" },
-          { "internalType": "string", "name": "image", "type": "string" },
-          { "internalType": "string", "name": "title", "type": "string" },
-          { "internalType": "string", "name": "description", "type": "string" },
-          { "internalType": "uint256", "name": "votes", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "image",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "votes",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "contestants",
             "type": "uint256"
           },
-          { "internalType": "bool", "name": "deleted", "type": "bool" },
-          { "internalType": "bool", "name": "isPublic", "type": "bool" },
-          { "internalType": "address", "name": "director", "type": "address" },
-          { "internalType": "uint256", "name": "startsAt", "type": "uint256" },
-          { "internalType": "uint256", "name": "endsAt", "type": "uint256" },
-          { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
+          {
+            "internalType": "bool",
+            "name": "deleted",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isPublic",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "director",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startsAt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endsAt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
           {
             "internalType": "address[]",
             "name": "voters",
             "type": "address[]"
           },
-          { "internalType": "string[]", "name": "avatars", "type": "string[]" },
+          {
+            "internalType": "string[]",
+            "name": "avatars",
+            "type": "string[]"
+          },
           {
             "internalType": "address[]",
             "name": "authorizedVoters",
             "type": "address[]"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
           }
         ],
         "internalType": "struct DappVotes.PollStruct",
@@ -326,32 +509,85 @@
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "id", "type": "uint256" },
-          { "internalType": "string", "name": "image", "type": "string" },
-          { "internalType": "string", "name": "title", "type": "string" },
-          { "internalType": "string", "name": "description", "type": "string" },
-          { "internalType": "uint256", "name": "votes", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "image",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "votes",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "contestants",
             "type": "uint256"
           },
-          { "internalType": "bool", "name": "deleted", "type": "bool" },
-          { "internalType": "bool", "name": "isPublic", "type": "bool" },
-          { "internalType": "address", "name": "director", "type": "address" },
-          { "internalType": "uint256", "name": "startsAt", "type": "uint256" },
-          { "internalType": "uint256", "name": "endsAt", "type": "uint256" },
-          { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
+          {
+            "internalType": "bool",
+            "name": "deleted",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isPublic",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "director",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startsAt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endsAt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
           {
             "internalType": "address[]",
             "name": "voters",
             "type": "address[]"
           },
-          { "internalType": "string[]", "name": "avatars", "type": "string[]" },
+          {
+            "internalType": "string[]",
+            "name": "avatars",
+            "type": "string[]"
+          },
           {
             "internalType": "address[]",
             "name": "authorizedVoters",
             "type": "address[]"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
           }
         ],
         "internalType": "struct DappVotes.PollStruct[]",
@@ -364,13 +600,41 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "id", "type": "uint256" },
-      { "internalType": "string", "name": "image", "type": "string" },
-      { "internalType": "string", "name": "title", "type": "string" },
-      { "internalType": "string", "name": "description", "type": "string" },
-      { "internalType": "uint256", "name": "startsAt", "type": "uint256" },
-      { "internalType": "uint256", "name": "endsAt", "type": "uint256" },
-      { "internalType": "bool", "name": "isPublic", "type": "bool" }
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "image",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startsAt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endsAt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isPublic",
+        "type": "bool"
+      }
     ],
     "name": "updatePoll",
     "outputs": [],
@@ -379,8 +643,16 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "id", "type": "uint256" },
-      { "internalType": "uint256", "name": "cid", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cid",
+        "type": "uint256"
+      }
     ],
     "name": "vote",
     "outputs": [],

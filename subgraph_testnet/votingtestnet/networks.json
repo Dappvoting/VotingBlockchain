@@ -1,8 +1,0 @@
-{
-  "sepolia": {
-    "DappVotes": {
-      "address": "0x29C5c5fB395e3D9443462aB44F92F3De7BeA0Baf",
-      "startBlock": 5893934
-    }
-  }
-}

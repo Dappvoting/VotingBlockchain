@@ -1,0 +1,41 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: DappContract
+    network: sepolia
+    source:
+      address: "0xD41c27022F0e44E8c620bfe82b803515d207bD1d"
+      abi: DappContract
+      startBlock: 5944943
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AuthorizedVotersAdded
+        - ContestantAdded
+        - PollCreated
+        - PollDeleted
+        - PollUpdated
+        - Voted
+      abis:
+        - name: DappContract
+          file: ./abis/DappContract.json
+      eventHandlers:
+        - event: AuthorizedVotersAdded(uint256,address[])
+          handler: handleAuthorizedVotersAdded
+        - event: ContestantAdded(uint256,uint256,string,string,address)
+          handler: handleContestantAdded
+        - event: PollCreated(uint256,string,string,address,uint256,uint256,bool,string)
+          handler: handlePollCreated
+        - event: PollDeleted(uint256)
+          handler: handlePollDeleted
+        - event: PollUpdated(uint256,string,string,uint256,uint256,bool,string)
+          handler: handlePollUpdated
+        - event: Voted(indexed address,uint256,uint256,uint256)
+          handler: handleVoted
+      file: ./src/dapp-contract.ts

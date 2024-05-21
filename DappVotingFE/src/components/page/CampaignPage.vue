@@ -1,148 +1,98 @@
 <template>
     <div>
-        <div
-            class="min-h-[450px] bg-cover bg-center object-cover bg-[url('https://caltechsites-prod.s3.amazonaws.com/scienceexchange/images/Vote_redblue2_LoRes_sttntNm.2e16d0ba.fill-1600x500-c100.jpg')]">
-            <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
-                <div
-                    class="min-h-[450px] mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0 flex justify-center items-center">
-                    <div class="flex flex-col gap-4 text-white">
-                        <span class="font-bold text-5xl">Campaign</span>
-                        <span class="text-center font-bold">Home / Campaign</span>
-                    </div>
-                </div>
+      <div class="min-h-[450px] bg-cover bg-center object-cover bg-[url('https://caltechsites-prod.s3.amazonaws.com/scienceexchange/images/Vote_redblue2_LoRes_sttntNm.2e16d0ba.fill-1600x500-c100.jpg')]">
+        <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
+          <div class="min-h-[450px] mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0 flex justify-center items-center">
+            <div class="flex flex-col gap-4 text-white">
+              <span class="font-bold text-5xl">Campaign</span>
+              <span class="text-center font-bold">Home / Campaign</span>
             </div>
+          </div>
         </div>
-        <div class="mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0">
-            <div class="flex justify-between py-4 items-center">
-                <div class="flex gap-3 ">
-                    <div class="flex gap-2">
-                        <input class="cursor-pointer" type="radio">
-                        <span class="font-semibold">Active</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <input class="cursor-pointer" type="radio">
-                        <span class="font-semibold">Voted</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <input class="cursor-pointer" type="radio">
-                        <span class="font-semibold">Ended</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <input class="cursor-pointer" type="radio">
-                        <span class="font-semibold">All</span>
-                    </div>
-                </div>
-                <div class="">
-                    <input type="text"
-                        class="focus:outline-none desktop:max-w-[350px] desktop:w-[350px] max-sm:w-[150px] focus:border-transparent py-2 px-4 focus:border-none rounded-lg shadow-lg w-full relative text-sm"
-                        placeholder="Search by name">
-                </div>
+      </div>
+      <div class="mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0">
+        <div class="flex justify-between py-4 items-center">
+          <div class="flex gap-3 ">
+            <div class="flex gap-2">
+              <input class="cursor-pointer" type="radio">
+              <span class="font-semibold">Active</span>
             </div>
-           
+            <div class="flex gap-2">
+              <input class="cursor-pointer" type="radio">
+              <span class="font-semibold">Voted</span>
+            </div>
+            <div class="flex gap-2">
+              <input class="cursor-pointer" type="radio">
+              <span class="font-semibold">Ended</span>
+            </div>
+            <div class="flex gap-2">
+              <input class="cursor-pointer" type="radio">
+              <span class="font-semibold">All</span>
+            </div>
+          </div>
+          <div class="">
+            <input type="text" class="focus:outline-none desktop:max-w-[350px] desktop:w-[350px] max-sm:w-[150px] focus:border-transparent py-2 px-4 focus:border-none rounded-lg shadow-lg w-full relative text-sm" placeholder="Search by name">
+          </div>
+        </div>
         <div class="grid grid-cols-3 gap-6 py-4">
-            <div class="bg-white rounded-lg shadow-lg">
-                <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                <img class="w-full h-[250px] rounded-t-lg"
-                    src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Fsundaytimes%2Fprod%2Fweb%2Fbin%2Fb066cf06-7b1b-11ee-83ba-000db1848e33.jpg?crop=1500%2C1000%2C0%2C0"
-                    alt="" />
-                <div class="flex flex-col p-4 gap-2">
-                    <span class="font-bold text-red-900 text-2xl border-b pb-4">Bầu cử Tổng thống Mỹ 2024</span>
-                    <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">Tham gia vào quá trình dân chủ bằng cách bỏ phiếu trong cuộc bầu cử Tổng thống Mỹ. Chọn lãnh đạo phù hợp với tầm nhìn của bạn cho tương lai của quốc gia!</span>
-                    <div class="flex justify-between border-b pb-2">
-                        <span class="text-sm text-gray-500">Expired time:</span>
-                        <span class="text-sm text-gray-500 font-semibold">May. 20 2024 4:06 PM</span>
-                    </div>
-                    <div class="flex justify-between pb-4">
-                        <span class="text-sm text-gray-500">Status:</span>
-                        <span class="text-sm px-4 py-1 text-green-500 border border-green-400 bg-green-100 rounded-2xl font-semibold">Active</span>
-                    </div>
-                    <a href="/campaign/details"
-                        class="py-3 w-full hover:text-white  hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-2xl text-sm items-center text-white bg-red-900 px-2">
-                            <span class="font-bold">View Campaign</span>
-                        <!-- <i class="fa-solid fa-square-check text-xl"></i> -->
-                    </a>
-                </div>
+          <div v-for="poll in polls" :key="poll.id" class="bg-white rounded-lg shadow-lg">
+            <img class="w-full h-[250px] rounded-t-lg" :src="poll.image || 'default-image-url'" alt="" />
+            <div class="flex flex-col p-4 gap-2">
+              <span class="font-bold text-red-900 text-2xl border-b pb-4">{{ poll.title }}</span>
+              <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">{{ poll.description }}</span>
+              <div class="flex justify-between border-b pb-2">
+                <span class="text-sm text-gray-500">Expired time:</span>
+                <span class="text-sm text-gray-500 font-semibold">{{ formatDate(poll.endsAt) }}</span>
+              </div>
+              <div class="flex justify-between pb-4">
+                <span class="text-sm text-gray-500">Status:</span>
+                <span class="text-sm px-4 py-1 text-green-500 border border-green-400 bg-green-100 rounded-2xl font-semibold">Active</span>
+              </div>
+              <a href="/campaign/details" class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-2xl text-sm items-center text-white bg-red-900 px-2">
+                <span class="font-bold">View Campaign</span>
+              </a>
             </div>
-
-            <div class="bg-white rounded-lg shadow-lg">
-                <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                <img class="w-full h-[250px] rounded-t-lg"
-                    src="https://images.squarespace-cdn.com/content/v1/5f28a5f6aa943d325be44068/1597677547143-5OF20YC0SN2I3U2HOUMV/campaign_1.png"
-                    alt="" />
-                <div class="flex flex-col p-4 gap-2">
-                    <span class="font-bold text-red-900 text-2xl border-b pb-4">Bầu cử Ban cán sự lớp 10A</span>
-                    <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">Hãy lựa chọn những bạn học sinh tiêu biểu để đại diện cho lớp 10A trong các hoạt động học tập và vui chơi trong năm học mới!</span>
-                    <div class="flex justify-between border-b pb-2">
-                        <span class="text-sm text-gray-500">Expired time:</span>
-                        <span class="text-sm text-gray-500 font-semibold">May. 25 2024 4:06 PM</span>
-                    </div>
-                    <div class="flex justify-between pb-4">
-                        <span class="text-sm text-gray-500">Status:</span>
-                        <span class="text-sm px-4 py-1 text-green-500 border border-green-400 bg-green-100 rounded-2xl font-semibold">Active</span>
-                    </div>
-                    <div
-                        class="py-3 w-full hover:text-white  hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-2xl text-sm items-center text-white bg-red-900 px-2">
-                        <span class="font-bold">View Campaign</span>
-                        <!-- <i class="fa-solid fa-square-check text-xl"></i> -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg">
-                <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                <img class="w-full h-[250px] rounded-t-lg"
-                    src="https://png.pngtree.com/png-vector/20221104/ourmid/pngtree-election-day-political-hand-drawn-cartoon-flat-illustration-with-voters-casting-png-image_6409137.png"
-                    alt="" />
-                <div class="flex flex-col p-4 gap-2">
-                    <span class="font-bold text-red-900 text-2xl mb-4 line-clamp-1">Bầu cử Hoa khôi Trường Đại học Quy Nhơn</span>
-                    <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">With blockchain technology, I can ensure that elections are
-                        equal and fair.</span>
-                    <div class="flex justify-between border-b pb-2">
-                        <span class="text-sm text-gray-500">Expired time:</span>
-                        <span class="text-sm text-gray-500 font-semibold">May. 21 2024 4:06 PM</span>
-                    </div>
-                    <div class="flex justify-between pb-4">
-                        <span class="text-sm text-gray-500">Status:</span>
-                        <span class="text-sm px-4 py-1 text-green-500 border border-green-400 bg-green-100 rounded-2xl font-semibold">Active</span>
-                    </div>
-                    <div
-                        class="py-3 w-full hover:text-white  hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-2xl text-sm items-center text-white bg-red-900 px-2">
-                        <span class="font-bold">View Campaign</span>
-                        <!-- <i class="fa-solid fa-square-check text-xl"></i> -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg">
-                <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-                <img class="w-full h-[250px] rounded-t-lg"
-                    src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png"
-                    alt="" />
-                <div class="flex flex-col p-4 gap-2">
-                    <span class="font-bold text-red-900 text-2xl border-b pb-4">Equality and fairness</span>
-                    <span class="text-sm text-gray-500 border-b pb-2 line-clamp-2 font-semibold">With blockchain technology, I can ensure that elections are
-                        equal and fair.</span>
-                    <div class="flex justify-between border-b pb-2">
-                        <span class="text-sm text-gray-500">Expired time:</span>
-                        <span class="text-sm text-gray-500 font-semibold">May. 10 2024 4:06 PM</span>
-                    </div>
-                    <div class="flex justify-between pb-4">
-                        <span class="text-sm text-gray-500">Status:</span>
-                        <span class="text-sm px-4 py-1 text-green-500 border border-green-400 bg-green-100 rounded-2xl font-semibold">Active</span>
-                    </div>
-                    <div
-                        class="py-3 w-full hover:text-white  hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-2xl text-sm items-center text-white bg-red-900 px-2">
-                        <span class="font-bold">View Campaign</span>
-                        <!-- <i class="fa-solid fa-square-check text-xl"></i> -->
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-
         <div class="flex justify-center">
-            <span class="w-[200px] text-center bg-red-900 rounded-lg px-2 py-3 my-4 text-white cursor-pointer font-bold hover:bg-red-300 hover:text-red-900 border border-red-900">Load more</span>
+          <span class="w-[200px] text-center bg-red-900 rounded-lg px-2 py-3 my-4 text-white cursor-pointer font-bold hover:bg-red-300 hover:text-red-900 border border-red-900">Load more</span>
         </div>
-        </div>
-
+      </div>
     </div>
-</template>
+  </template>
+  
+  <script>
+  import { ref, onMounted } from 'vue';
+  import { loadAllPollTest } from '../../apollo';
+  
+  export default {
+    setup() {
+      const polls = ref([]);
+  
+      const dispatch = (action) => {
+        switch (action.type) {
+          case 'POLL_CREATED_LOADED':
+            polls.value = action.pollCreateds;
+            console.log(polls.value);
+            break;
+          // Bạn có thể thêm các case khác ở đây nếu cần thiết
+        }
+      };
+  
+      const formatDate = (timestamp) => {
+        const date = new Date(timestamp * 1000);
+        return date.toLocaleString();
+      };
+  
+      onMounted(() => {
+        loadAllPollTest(dispatch);
+      });
+  
+      return {
+        polls,
+        formatDate,
+      };
+    },
+  };
+  </script>
+  

@@ -1,8 +1,8 @@
 {
   "sepolia": {
     "ContractDappVotes": {
-      "address": "0x02697378a1Cc1b29296225359a4BA231d54D6D4a",
-      "startBlock": 5928097
+      "address": "0x12e463c00D9E06e48148E443303842f8E5d276f6",
+      "startBlock": 5940672
     }
   }
 }

@@ -1,0 +1,8 @@
+{
+  "sepolia": {
+    "DappContract": {
+      "address": "0xD41c27022F0e44E8c620bfe82b803515d207bD1d",
+      "startBlock": 5944943
+    }
+  }
+}
