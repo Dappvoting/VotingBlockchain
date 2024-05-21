@@ -106,8 +106,8 @@ app.get('/getPolls', async (req, res) => {
 // Contest a Poll
 app.post('/contest', async (req, res) => {
   try {
-    const { id, name, image } = req.body;
-    const tx = await contractInstance.contest(id, name, image);
+    const { pollId, name, image } = req.body;
+    const tx = await contractInstance.contest(pollId, name, image);
     await tx.wait();
     res.send({ status: 'Contestant added successfully' });
   } catch (error) {

@@ -29,7 +29,7 @@ const routes = [
     component: LoginScreen,
   },
   {
-    path: "/campaign/details",
+    path: "/campaign/details/:id",
     component: DetailCampaign,
   },
   {

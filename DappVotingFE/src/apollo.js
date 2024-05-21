@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client/core';
 import { provideApolloClient } from '@vue/apollo-composable';
 
 const apolloClient = new ApolloClient({
-  uri: 'https://api.studio.thegraph.com/query/74144/votingsubgraph/v0.0.3', // Thay thế bằng URL subgraph của bạn
+  uri: 'https://api.studio.thegraph.com/query/74144/votingsubgraph/v0.0.4', // Thay thế bằng URL subgraph của bạn
   cache: new InMemoryCache()
 });
 
@@ -42,17 +42,18 @@ export const pollCreatedsQuery = () => {
   const queryString = `
   query {
     pollCreateds {
-      
-      blockNumber
-      blockTimestamp
-      description
-      director
-      endsAt
-      id
-      isPublic
-      startsAt
-      title
       transactionHash
+      title
+      startsAt
+      isPublic
+      image
+      id
+      endsAt
+      director
+      description
+      blockTimestamp
+      blockNumber
+      DappContract_id
     }
   }`;
   return gql(queryString);
@@ -106,7 +107,7 @@ export const pollDeletedsQuery = () => {
   const queryString = `
   query {
     pollDeleteds {
-      
+      DappContract_id
       blockNumber
       blockTimestamp
       id
@@ -133,7 +134,7 @@ export const pollUpdatedsQuery = () => {
   const queryString = `
   query {
     pollUpdateds {
-      
+      DappContract_id
       blockNumber
       blockTimestamp
       description
@@ -203,8 +204,8 @@ export function loadAllPollTest(dispatch) {
 
   async function getPollContestantAddedsQueryData() {
     const data = await getPollContestantAddedsQuery(apolloClient);
-    const pollContestantAddeds = data.contestantAddeds;
-    dispatch({ type: 'POLL_CONTESTANTADDEDS_LOADED', pollContestantAddeds });
+    const contestantAddeds = data.contestantAddeds;
+    dispatch({ type: 'POLL_CONTESTANTADDEDS_LOADED', contestantAddeds });
   }
 
   async function getPollDeletedsQueryData() {
