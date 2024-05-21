@@ -15,10 +15,9 @@ app.use(express.json());
 const port = 3000;
 
 const API_URL = process.env.API_URL;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const CONSTRACT_ADDRESS = process.env.CONSTRACT_ADDRESS;
 
-if (!API_URL || !PRIVATE_KEY || !CONSTRACT_ADDRESS) {
+if (!API_URL || !CONSTRACT_ADDRESS) {
   console.error("Missing environment variables. Please check your .env file.");
   process.exit(1);
 }
@@ -35,109 +34,15 @@ try {
   process.exit(1);
 }
 
-let provider, signer, contractInstance;
+let provider, contractInstance;
 
 try {
   provider = new ethers.providers.JsonRpcProvider(API_URL);
-  signer = new ethers.Wallet(PRIVATE_KEY, provider);
-  contractInstance = new ethers.Contract(CONSTRACT_ADDRESS, abi, signer);
+  contractInstance = new ethers.Contract(CONSTRACT_ADDRESS, abi, provider);
 } catch (error) {
   console.error("Error initializing ethers:", error);
   process.exit(1);
 }
-
-// Create Poll
-app.post('/createPoll', async (req, res) => {
-  try {
-    const { image, title, description, startsAt, endsAt, isPublic } = req.body;
-    const tx = await contractInstance.createPoll(image, title, description, startsAt, endsAt, isPublic);
-    await tx.wait();
-    res.send({ status: 'Poll created successfully' });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Update Poll
-app.post('/updatePoll', async (req, res) => {
-  try {
-    const { id, image, title, description, startsAt, endsAt, isPublic } = req.body;
-    const tx = await contractInstance.updatePoll(id, image, title, description, startsAt, endsAt, isPublic);
-    await tx.wait();
-    res.send({ status: 'Poll updated successfully' });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Delete Poll
-app.post('/deletePoll', async (req, res) => {
-  try {
-    const { id } = req.body;
-    const tx = await contractInstance.deletePoll(id);
-    await tx.wait();
-    res.send({ status: 'Poll deleted successfully' });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Get Poll
-app.get('/getPoll', async (req, res) => {
-  try {
-    const { id } = req.query;
-    const poll = await contractInstance.getPoll(id);
-    res.send(poll);
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Get All Polls
-app.get('/getPolls', async (req, res) => {
-  try {
-    const polls = await contractInstance.getPolls();
-    res.send(polls);
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Contest a Poll
-app.post('/contest', async (req, res) => {
-  try {
-    const { pollId, name, image } = req.body;
-    const tx = await contractInstance.contest(pollId, name, image);
-    await tx.wait();
-    res.send({ status: 'Contestant added successfully' });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Vote for a Contestant
-app.post('/vote', async (req, res) => {
-  try {
-    const { id, cid } = req.body;
-    const tx = await contractInstance.vote(id, cid);
-    await tx.wait();
-    res.send({ status: 'Vote cast successfully' });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Add Authorized Voters
-app.post('/addAuthorizedVoters', async (req, res) => {
-  try {
-    const { id, voters } = req.body;
-    const tx = await contractInstance.addAuthorizedVoters(id, voters);
-    await tx.wait();
-    res.send({ status: 'Authorized voters added successfully' });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
 
 app.listen(port, function () {
   console.log(`App is listening on port ${port}`);

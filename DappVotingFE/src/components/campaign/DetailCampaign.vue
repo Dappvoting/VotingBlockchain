@@ -3,7 +3,7 @@
     <div class="inset-0 min-h-[450px] bg-black bg-opacity-50">
         <div class="min-h-[450px] mx-auto desktop:w-[1400px] max-sm:w-full desktop:px-0 flex justify-center items-center">
             <div class="flex flex-col gap-4 text-white">
-                <span class="font-bold text-5xl">Bầu cử Tổng thống Mỹ 2024</span>
+                <span class="font-bold text-5xl">{{ polls.title }}</span>
                 <span class="text-center font-bold">Home / Campaign / Details</span>
             </div>
         </div>
@@ -53,6 +53,9 @@
 <script>
 import CandidatesCampaign from "./CandidatesCampaign.vue";
 import ResultsCampaign from "./ResultsCampaign.vue";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { loadAllPollTest } from "../../apollo";
 
 export default {
   name: "App",
@@ -77,6 +80,29 @@ export default {
       this.content = newContent;
       this.activeTab = newContent;
     },
+  },
+  setup() {
+    const polls = ref([]);
+
+    const route = useRoute();
+    const campaignId = route.params.id;
+
+    const dispatch = (action) => {
+      switch (action.type) {
+        case "POLL_CREATED_LOADED":
+          polls.value = action.pollCreateds;
+          polls.value = polls.value.find(p => p.DappContract_id === campaignId);
+          break;
+      }
+    };
+
+    onMounted(() => {
+      loadAllPollTest(dispatch);
+    });
+
+    return {
+      polls
+    };
   },
 };
 </script>
