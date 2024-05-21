@@ -21,13 +21,14 @@ type ContestantAdded @entity(immutable: true) {
 
 type PollCreated @entity(immutable: true) {
   id: Bytes!
-  VotingDapp_id: BigInt! # uint256
+  Contract_id: BigInt! # uint256
   title: String! # string
   description: String! # string
   director: Bytes! # address
   startsAt: BigInt! # uint256
   endsAt: BigInt! # uint256
   isPublic: Boolean! # bool
+  image: String! # string
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -35,7 +36,7 @@ type PollCreated @entity(immutable: true) {
 
 type PollDeleted @entity(immutable: true) {
   id: Bytes!
-  VotingDapp_id: BigInt! # uint256
+  Contract_id: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -43,12 +44,13 @@ type PollDeleted @entity(immutable: true) {
 
 type PollUpdated @entity(immutable: true) {
   id: Bytes!
-  VotingDapp_id: BigInt! # uint256
+  Contract_id: BigInt! # uint256
   title: String! # string
   description: String! # string
   startsAt: BigInt! # uint256
   endsAt: BigInt! # uint256
   isPublic: Boolean! # bool
+  image: String! # string
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -60,20 +62,6 @@ type Voted @entity(immutable: true) {
   pollId: BigInt! # uint256
   contestantId: BigInt! # uint256
   timestamp: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type Poll @entity {
-  id: ID!
-  VotingDapp_id: BigInt!
-  title: String!
-  description: String!
-  director: Bytes!
-  startsAt: BigInt!
-  endsAt: BigInt!
-  isPublic: Boolean!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

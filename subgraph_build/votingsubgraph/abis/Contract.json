@@ -99,6 +99,12 @@
         "internalType": "bool",
         "name": "isPublic",
         "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "image",
+        "type": "string"
       }
     ],
     "name": "PollCreated",
@@ -155,6 +161,12 @@
         "internalType": "bool",
         "name": "isPublic",
         "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "image",
+        "type": "string"
       }
     ],
     "name": "PollUpdated",
@@ -310,7 +322,8 @@
             "internalType": "address[]",
             "name": "authorizedVoters",
             "type": "address[]"
-          }
+          },
+          { "internalType": "address", "name": "token", "type": "address" }
         ],
         "internalType": "struct DappVotes.PollStruct",
         "name": "",
@@ -352,7 +365,8 @@
             "internalType": "address[]",
             "name": "authorizedVoters",
             "type": "address[]"
-          }
+          },
+          { "internalType": "address", "name": "token", "type": "address" }
         ],
         "internalType": "struct DappVotes.PollStruct[]",
         "name": "Polls",

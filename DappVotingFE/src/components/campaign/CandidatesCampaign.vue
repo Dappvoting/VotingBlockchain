@@ -6,7 +6,6 @@
     <div v-else>
       <span class="font-bold text-xl">Description</span>
       <div v-if="poll" class="p-6 mb-6 mt-4 border rounded-md bg-blue-200 border-blue-900">
-
         <span class="text-blue-900 font-bold">
           {{ poll.description }}
         </span>
@@ -31,11 +30,11 @@
             <div class="flex flex-col gap-2">
               <span class="flex justify-center font-bold text-xl">{{ contestant.name }}</span>
             </div>
-            <span class="flex justify-center w-full cursor-pointer items-center py-2 px-4 rounded-md bg-blue-900 text-white hover:opacity-70">Vote</span>
+            <span @click="handleVote(contestant.contestantId)" class="flex justify-center w-full cursor-pointer items-center py-2 px-4 rounded-md bg-blue-900 text-white hover:opacity-70">Vote</span>
             <div class="flex justify-center items-center gap-2">
               <i class="fa-solid fa-arrow-up bg-blue-200 p-2 rounded-lg text-blue-900"></i>
-              <span class="text-blue-900 font-bold">5</span>
-              <span class="text-blue-900 font-bold">vote</span>
+              <span class="text-blue-900 font-bold">{{ contestant.votes }}</span>
+              <span class="text-blue-900 font-bold">votes</span>
             </div>
           </div>
         </div>
@@ -48,6 +47,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { loadAllPollTest } from "../../apollo";
+import { vote } from "../../clientFunctions"; // Đường dẫn tới file clientFunctions.js
 
 export default {
   name: "Candidates",
@@ -70,6 +70,7 @@ export default {
           break;
         case "POLL_CONTESTANTADDEDS_LOADED":
           contestants.value = action.contestantAddeds.filter(c => c.pollId === campaignId);
+          console.log(contestants.value);
           break;
       }
     };
@@ -77,6 +78,18 @@ export default {
     const formatDate = (timestamp) => {
       const date = new Date(timestamp * 1000);
       return date.toLocaleString();
+    };
+
+    const handleVote = async (contestantId) => {
+      try {
+        if (isNaN(contestantId)) {
+          throw new Error("Invalid contestant ID");
+        }
+        console.log(campaignId, parseInt(contestantId))
+        await vote(campaignId, parseInt(contestantId));
+      } catch (error) {
+        console.error('Error casting vote:', error);
+      }
     };
 
     onMounted(() => {
@@ -88,6 +101,7 @@ export default {
       contestants,
       formatDate,
       loading,
+      handleVote,
     };
   },
 };

@@ -112,6 +112,14 @@ export default {
         alert('MetaMask không được cài đặt. Vui lòng cài đặt MetaMask và thử lại.');
       }
     },
+    async  setupContract() {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contractAddress = "YOUR_CONTRACT_ADDRESS";
+  const dappVotesContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+  return dappVotesContract;
+}
   },
 };
 </script>

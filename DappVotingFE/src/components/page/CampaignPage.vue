@@ -18,30 +18,15 @@
       <div class="flex justify-between py-4 items-center">
         <div class="flex gap-3">
           <div class="flex gap-2">
-            <input
-              class="cursor-pointer"
-              type="radio"
-              id="active"
-              name="status"
-            />
+            <input class="cursor-pointer" type="radio" id="active" name="status" />
             <label class="font-semibold" for="active">Active</label>
           </div>
           <div class="flex gap-2">
-            <input
-              class="cursor-pointer"
-              type="radio"
-              id="voted"
-              name="status"
-            />
+            <input class="cursor-pointer" type="radio" id="voted" name="status" />
             <label class="font-semibold" for="voted">Voted</label>
           </div>
           <div class="flex gap-2">
-            <input
-              class="cursor-pointer"
-              type="radio"
-              id="ended"
-              name="status"
-            />
+            <input class="cursor-pointer" type="radio" id="ended" name="status" />
             <label class="font-semibold" for="ended">Ended</label>
           </div>
           <div class="flex gap-2">
@@ -50,20 +35,13 @@
           </div>
         </div>
       </div>
-      <div
-        v-if="loading"
-        class="col-span-3 flex justify-center items-center py-10"
-      >
+      <div v-if="loading" class="col-span-3 flex justify-center items-center py-10">
         <div
           class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"
         ></div>
       </div>
       <div v-else class="grid grid-cols-3 gap-6 py-4">
-        <div
-          v-for="poll in polls"
-          :key="poll.id"
-          class="bg-white rounded-lg shadow-lg"
-        >
+        <div v-for="poll in polls" :key="poll.id" class="bg-white rounded-lg shadow-lg">
           <img
             class="w-full h-[250px] rounded-t-lg"
             :src="poll.image || 'default-image-url'"
@@ -118,27 +96,31 @@ export default {
     const polls = ref([]);
     const loading = ref(true);
 
-    const dispatch = async (action) => {
+    const dispatch = (action) => {
       switch (action.type) {
+        case "POLL_UPDATEDS_LOADED":
+          updatePolls(action.pollUpdateds);
+          break;
         case "POLL_CREATED_LOADED":
           polls.value = action.pollCreateds;
           break;
-        case "POLL_UPDATEDS_LOADED":
-          await updatePolls(action.pollUpdateds);
-          break;
+
         // Bạn có thể thêm các case khác ở đây nếu cần thiết
       }
-      loading.value = false;
     };
 
-    const updatePolls = async (updatedPolls) => {
-      updatedPolls.forEach(updatedPoll => {
-        const index = polls.value.findIndex(poll => poll.DappContract_id === updatedPoll.DappContract_id);
+    const updatePolls = (updatedPolls) => {
+      updatedPolls.forEach((updatedPoll) => {
+        const index = polls.value.findIndex(
+          (poll) => poll.DappContract_id === updatedPoll.DappContract_id
+        );
+        console.log(index);
         if (index !== -1) {
-          // Thay thế dữ liệu của poll cũ bằng dữ liệu mới
           polls.value[index] = updatedPoll;
         }
       });
+
+      loading.value = false;
     };
 
     const formatDate = (timestamp) => {

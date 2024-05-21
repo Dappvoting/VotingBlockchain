@@ -7,7 +7,7 @@ import {
   PollDeleted,
   PollUpdated,
   Voted
-} from "../generated/VotingDapp/VotingDapp"
+} from "../generated/Contract/Contract"
 
 export function createAuthorizedVotersAddedEvent(
   pollId: BigInt,
@@ -69,7 +69,8 @@ export function createPollCreatedEvent(
   director: Address,
   startsAt: BigInt,
   endsAt: BigInt,
-  isPublic: boolean
+  isPublic: boolean,
+  image: string
 ): PollCreated {
   let pollCreatedEvent = changetype<PollCreated>(newMockEvent())
 
@@ -102,6 +103,9 @@ export function createPollCreatedEvent(
   pollCreatedEvent.parameters.push(
     new ethereum.EventParam("isPublic", ethereum.Value.fromBoolean(isPublic))
   )
+  pollCreatedEvent.parameters.push(
+    new ethereum.EventParam("image", ethereum.Value.fromString(image))
+  )
 
   return pollCreatedEvent
 }
@@ -124,7 +128,8 @@ export function createPollUpdatedEvent(
   description: string,
   startsAt: BigInt,
   endsAt: BigInt,
-  isPublic: boolean
+  isPublic: boolean,
+  image: string
 ): PollUpdated {
   let pollUpdatedEvent = changetype<PollUpdated>(newMockEvent())
 
@@ -153,6 +158,9 @@ export function createPollUpdatedEvent(
   )
   pollUpdatedEvent.parameters.push(
     new ethereum.EventParam("isPublic", ethereum.Value.fromBoolean(isPublic))
+  )
+  pollUpdatedEvent.parameters.push(
+    new ethereum.EventParam("image", ethereum.Value.fromString(image))
   )
 
   return pollUpdatedEvent
