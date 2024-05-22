@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="grid grid-cols-[400px_1fr] py-5 desktop:w-[1600px] max-sm:w-full desktop:px-0 mx-auto"
-  >
+  <div class="grid grid-cols-[400px_1fr] py-5 desktop:w-[1600px] max-sm:w-full desktop:px-0 mx-auto">
     <!-- Sidebar -->
     <Sidebar @changeContent="changeContent"></Sidebar>
 
@@ -11,7 +9,7 @@
       <CreateCampaignsProfile @changeContent="changeContent" v-if="content === 'CreateCampaignsProfile'"></CreateCampaignsProfile>
       <VotedCampaignsProfile v-if="content === 'VotedCampaignsProfile'"></VotedCampaignsProfile>
       <MyCampaignsProfile @changeContent="changeContent" v-if="content === 'MyCampaignsProfile'"></MyCampaignsProfile>
-      <ContestantsCampaigns @changeContent="changeContent" v-if="content === 'ContestantsCampaigns'"></ContestantsCampaigns>
+      <ContestantsCampaigns @changeContent="changeContent" v-if="content === 'ContestantsCampaigns'" :pollId="pollId"></ContestantsCampaigns>
     </div>
   </div>
 </template>
@@ -37,11 +35,15 @@ export default {
   data() {
     return {
       content: "InformationProfile",
+      pollId: null,
     };
   },
   methods: {
-    changeContent(newContent) {
+    changeContent(newContent, params = {}) {
       this.content = newContent;
+      if (params.pollId) {
+        this.pollId = params.pollId;
+      }
     },
   },
 };

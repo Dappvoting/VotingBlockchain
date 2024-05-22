@@ -2,7 +2,7 @@
   <div class="w-full bg-white min-h-screen p-6 rounded-lg shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
     <div class="flex flex-col items-center">
       <img class="rounded-full w-24 h-24"
-        src="https://xoffer-images-new.s3.amazonaws.com/dev/avatar/thumbnail/f803413aa44298237fb8273fcfff7b97.jpg"
+        src="../../assets/images/HomePage/defaultav.png"
         alt="Profile Picture" />
       <h2 class="mt-4 text-xl font-bold">{{ shortenedAddress }}</h2>
       <!-- <p class="text-gray-600">Level: <span class="text-purple-500">Platinum</span></p> -->

@@ -69,7 +69,7 @@ export default {
           checkAllDataLoaded();
           break;
         case "VOTED_LOADED":
-          voted.value = action.voteds;
+          voted.value = action.voteds.filter(vote => vote.pollId === campaignId); // Filter votes by campaignId
           dataLoaded.value.votes = true;
           updateResults();
           checkAllDataLoaded();

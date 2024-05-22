@@ -1,6 +1,7 @@
 <template>
-  <div class="w-full bg-white min-h-screen rounded-lg shadow-[rgba(13,_38,76,_0.19)_0px_9px_20px] px-4">
+  <div class="w-full bg-white min-h-screen rounded-lg shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] px-4">
     <span class="flex justify-center text-red-900 font-bold text-2xl py-5">Create New Campaign</span>
+    
     <div class="p-4">
       <form @submit.prevent="submitForm">
         <div class="mb-4">
@@ -56,22 +57,7 @@
 
 <script>
 import * as XLSX from 'xlsx';
-import { useMutation } from '@vue/apollo-composable';
-import gql from 'graphql-tag';
-
-const CREATE_POLL_MUTATION = gql`
-  mutation CreatePoll($name: String!, $startDate: BigInt!, $endDate: BigInt!, $imageUrl: String!, $isPublic: Boolean!, $description: String!) {
-    createPoll(name: $name, startDate: $startDate, endDate: $endDate, imageUrl: $imageUrl, isPublic: $isPublic, description: $description) {
-      id
-      name
-      startDate
-      endDate
-      imageUrl
-      isPublic
-      description
-    }
-  }
-`;
+import { createPoll, addAuthorizedVoters } from '../../../clientFunctions';
 
 export default {
   name: "CreateCampaignsProfile",
@@ -84,32 +70,16 @@ export default {
         endDate: "",
         imageUrl: "",
         status: "public",
-        numVoters: 1,
         wallets: [],
         description: ""
       },
-      walletsText: "",
-    };
-  },
-  setup() {
-    const { mutate: createPoll } = useMutation(CREATE_POLL_MUTATION);
-
-    return {
-      createPoll,
+      walletsText: ""
     };
   },
   methods: {
     changeContent(newContent) {
       this.currentContent = newContent;
-      this.$emit("changeContent", newContent);
-    },
-    generateVoterInputs() {
-      const numVoters = parseInt(this.form.numVoters);
-      if (isNaN(numVoters) || numVoters < 1) {
-        this.form.wallets = [];
-      } else {
-        this.form.wallets = Array(numVoters).fill("");
-      }
+      this.$emit("changeContent", newContent); // Emit event when content changes
     },
     handleFileUpload(event) {
       const file = event.target.files[0];
@@ -129,7 +99,7 @@ export default {
       const wallets = [];
       data.forEach((row, index) => {
         if (index > 0) { // Skip header row
-          const wallet = row[1]; // Chọn đúng cột chứa địa chỉ ví (giả sử cột thứ 2 chứa địa chỉ ví)
+          const wallet = row[1]; // Assume the wallet address is in the second column
           if (wallet) wallets.push(wallet.trim());
         }
       });
@@ -137,47 +107,27 @@ export default {
       this.walletsText = wallets.join("\n");
     },
     async submitForm() {
-      const { name, startDate, endDate, imageUrl, status, description } = this.form;
-      const isPublic = status === "public";
-
-      // Chuyển đổi các giá trị BigInt sang chuỗi để đảm bảo chúng được truyền đúng cách
-      const startDateBigInt = BigInt(new Date(startDate).getTime());
-      const endDateBigInt = BigInt(new Date(endDate).getTime());
-
-      // In log các biến trước khi gọi mutation
-      console.log("Form Data:", {
-        name,
-        startDate: startDateBigInt,
-        endDate: endDateBigInt,
-        imageUrl,
-        isPublic,
-        description,
-      });
-
-      // Kiểm tra xem các biến có được truyền đúng không
-      if (!name || !startDateBigInt || !endDateBigInt || !imageUrl || !description) {
-        console.error("Missing required fields");
-        return;
-      }
-
       try {
-        const response = await this.createPoll({
-          variables: {
-            name: name,
-            startDate: startDateBigInt,
-            endDate: endDateBigInt,
-            imageUrl: imageUrl,
-            isPublic: isPublic,
-            description: description,
-          },
-        });
-
-        console.log(response.data);
+        const { name, startDate, endDate, imageUrl, status, wallets, description } = this.form;
+        const isPublic = status === 'public';
+        
+        // Call createPoll function
+        await createPoll(imageUrl, name, description, new Date(startDate).getTime() / 1000, new Date(endDate).getTime() / 1000, isPublic);
+        
+        // Display success message
+        alert('Campaign created successfully');
+        
+        // Redirect to MyCampaignsProfile
         this.changeContent('MyCampaignsProfile');
       } catch (error) {
-        console.error("Error creating poll:", error);
+        console.error('Error creating campaign:', error);
+        alert('Error creating campaign. Please try again.');
       }
     }
   }
 };
 </script>
+
+<style scoped>
+/* Add any custom styles if necessary */
+</style>

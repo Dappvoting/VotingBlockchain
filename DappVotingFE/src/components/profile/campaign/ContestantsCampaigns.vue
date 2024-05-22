@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white min-h-screen rounded-xl p-6 shadow-[rgba(13,_38,76,0.19)_0px_9px_20px]">
+  <div class="bg-white min-h-screen rounded-xl p-6 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
     <div class="flex justify-between py-5">
       <span class="w-[170px]"></span>
       <span class="flex justify-center text-red-900 font-bold text-2xl">Contestants</span>
@@ -12,88 +12,41 @@
     <div class="flex justify-between py-6">
       <div class="flex gap-4">
         <span class="text-gray-500 font-semibold">Start Date:</span>
-        <span class="font-semibold">May 20 2024 3:10 PM</span>
+        <span class="font-semibold">{{ formatDate(startDate) }}</span>
       </div>
       <div class="flex gap-4">
         <span class="text-gray-500 font-semibold">End Date:</span>
-        <span class="font-semibold">May 25 2024 3:10 PM</span>
+        <span class="font-semibold">{{ formatDate(endDate) }}</span>
       </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-6">
-        <div class="grid grid-cols-2 gap-2">
-        <div
-          class="bg-white rounded-xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]"
-        >
-          <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-          <img
-            class="w-full h-[200px] rounded-lg transition duration-300 ease-in-out"
-            src="https://c.ndtvimg.com/2023-12/4plm17lo_donald-trump-afp_625x300_20_December_23.jpeg"
-            alt=""
-          />
-        </div>
-        <div
-          class="flex flex-col justify-between p-4 bg-white rounded-xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]"
-        >
-          <div class="flex flex-col gap-2">
-            <span class="flex justify-center font-bold text-xl"
-              >Donald Trump</span
-            >
-            <!-- <span class="text-sm text-gray-500">Lớp phó học tập</span> -->
-          </div>
-          <!-- <span
-            class="flex justify-center w-full cursor-pointer items-center py-2 px-4 rounded-md bg-blue-900 text-white hover:opacity-70"
-            >Vote</span
-          >
-          <div class="flex justify-center items-center gap-2">
-            <i
-              class="fa-solid fa-arrow-up bg-blue-200 p-2 rounded-lg text-blue-900"
-            ></i>
-            <span class="text-blue-900 font-bold">0</span>
-            <span class="text-blue-900 font-bold">vote</span>
-          </div> -->
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-2">
-        <div
-          class="bg-white rounded-xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]"
-        >
-          <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
-          <img
-            class="w-full h-[200px] rounded-lg transition duration-300 ease-in-out"
-            src="https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F200630133336-01-biden-0630.jpg"
-            alt=""
-          />
-        </div>
-        <div
-          class="flex flex-col justify-between p-4 bg-white rounded-xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]"
-        >
-          <div class="flex flex-col gap-2">
-            <span class="flex justify-center font-bold text-xl"
-              >Joe Biden</span
-            >
-            <!-- <span class="text-sm text-gray-500">Lớp phó học tập</span> -->
-          </div>
-          <!-- <span
-            class="flex justify-center w-full cursor-pointer items-center py-2 px-4 rounded-md bg-blue-900 text-white hover:opacity-70"
-            >Vote</span
-          >
-          <div class="flex justify-center items-center gap-2">
-            <i
-              class="fa-solid fa-arrow-up bg-blue-200 p-2 rounded-lg text-blue-900"
-            ></i>
-            <span class="text-blue-900 font-bold">0</span>
-            <span class="text-blue-900 font-bold">vote</span>
-          </div> -->
-        </div>
-      </div>
-
-      
+    <!-- Spinner -->
+    <div v-if="loading" class="flex justify-center items-center py-10">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div>
     </div>
+
+    <!-- No Contestants Message -->
+    <div v-else-if="contestants.length === 0" class="flex flex-col justify-center items-center py-10">
+      <span class="text-gray-300 text-3xl font-bold">No contestants available.</span>
+    </div>
+
+    <!-- Contestants List -->
+    <div v-else class="grid grid-cols-2 gap-6">
+      <div v-for="contestant in contestants" :key="contestant.contestantId" class="grid grid-cols-2 gap-2">
+        <div class="bg-white rounded-xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+          <img class="w-full h-[200px] rounded-lg transition duration-300 ease-in-out" :src="contestant.image" alt="" />
+        </div>
+        <div class="flex flex-col justify-between p-4 bg-white rounded-xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+          <div class="flex flex-col gap-2">
+            <span class="flex justify-center font-bold text-xl">{{ contestant.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="flex justify-end gap-2 mt-6">
-      <button @click="changeContent('CreateCampaignsProfile')" type="submit" class="px-4 py-2 bg-gray-600 hover:opacity-75 text-white rounded">Back</button>
-      <button @click="changeContent('MyCampaignsProfile')" type="submit" class="px-4 py-2 bg-blue-900 hover:opacity-75 text-white rounded">Save</button>
+      <button @click="changeContent('MyCampaignsProfile')" type="submit" class="px-4 py-2 bg-gray-600 hover:opacity-75 text-white rounded">Back</button>
+      <button @click="changeContent('MyCampaignsProfile')" type="submit" class="px-4 py-2 bg-blue-900 hover:opacity-75 text-white rounded">Done</button>
     </div>
 
     <!-- Popup form -->
@@ -126,10 +79,18 @@
   </div>
 </template>
 
-
 <script>
+import { contest } from '../../../clientFunctions'; // Import contest function
+import { loadAllPollTest } from '../../../apollo';
+
 export default {
   name: "ContestantsCampaigns",
+  props: {
+    pollId: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       currentContent: "CreateCampaignsProfile",
@@ -138,22 +99,67 @@ export default {
         name: "",
         description: "",
         image: ""
-      }
+      },
+      contestants: [],
+      loading: true,
+      startDate: null,
+      endDate: null,
     };
   },
   methods: {
     changeContent(newContent) {
       this.currentContent = newContent;
-      this.$emit("changeContent", newContent); // Phát ra sự kiện khi nội dung thay đổi
+      this.$emit("changeContent", newContent); // Emit event when content changes
     },
-    addContestant() {
-      // Xử lý logic thêm ứng viên mới tại đây
-      console.log(this.newContestant);
-      // Sau khi thêm thành công, đóng popup và reset form
-      this.showPopup = false;
-      this.newContestant = { name: "", description: "", image: "" };
+    async addContestant() {
+      try {
+        const { name, description, image } = this.newContestant;
+        await contest(this.pollId, name, image); // Call the contest function with pollId
+        console.log('Contestant added successfully');
+        // Hiển thị thông báo thành công
+        alert('Contestant added successfully');
+        this.loadContestants(); // Reload contestants after adding a new one
+      } catch (error) {
+        console.error('Error adding contestant:', error);
+        alert('Error adding contestant. Please try again.');
+      } finally {
+        // Sau khi thêm thành công, đóng popup và reset form
+        this.showPopup = false;
+        this.newContestant = { name: "", description: "", image: "" };
+      }
+    },
+    dispatchPolls(action) {
+      switch (action.type) {
+        case "POLL_CONTESTANTADDEDS_LOADED":
+          this.contestants = action.contestantAddeds.filter(c => c.pollId === this.pollId);
+          this.loading = false;
+          break;
+        case "POLL_CREATED_LOADED":
+          const poll = action.pollCreateds.find(p => p.Contract_id === this.pollId);
+          if (poll) {
+            this.startDate = poll.startsAt;
+            this.endDate = poll.endsAt;
+          }
+          break;
+        default:
+          break;
+      }
+    },
+    loadContestants() {
+      this.loading = true;
+      loadAllPollTest(this.dispatchPolls);
+    },
+    formatDate(timestamp) {
+      const date = new Date(timestamp * 1000);
+      return date.toLocaleString();
     }
+  },
+  mounted() {
+    this.loadContestants(); // Fetch contestants when component mounts
   }
 };
 </script>
 
+<style scoped>
+/* Add any custom styles if necessary */
+</style>

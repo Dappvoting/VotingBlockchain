@@ -48,11 +48,11 @@
             alt=""
           />
           <div class="flex flex-col p-4 gap-2">
-            <span class="font-bold text-red-900 text-2xl mb-4 line-clamp-1">{{
+            <span class="font-bold text-red-900 text-2xl mb-2 line-clamp-1">{{
               poll.title
             }}</span>
             <span
-              class="text-sm text-gray-500 border-b mb-4 line-clamp-3 font-semibold"
+              class="text-sm text-gray-500 mb-4 line-clamp-3 font-semibold min-h-[60px]"
               >{{ poll.description }}</span
             >
             <div class="flex justify-between border-b pb-2">
