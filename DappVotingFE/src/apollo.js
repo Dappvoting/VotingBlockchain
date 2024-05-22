@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client/core';
 import { provideApolloClient } from '@vue/apollo-composable';
 
 const apolloClient = new ApolloClient({
-  uri: 'https://api.studio.thegraph.com/query/74144/votingsubgraph/v0.0.4', // Thay thế bằng URL subgraph của bạn
+  uri: 'https://api.studio.thegraph.com/query/74144/votingsubgraph/v0.0.6', // Thay thế bằng URL subgraph của bạn
   cache: new InMemoryCache()
 });
 
@@ -21,6 +21,7 @@ export const authorizedVotersAddedQuery = () => {
       blockNumber
       blockTimestamp
       transactionHash
+    }
   }`;
   return gql(queryString);
 };
@@ -42,18 +43,18 @@ export const pollCreatedsQuery = () => {
   const queryString = `
   query {
     pollCreateds {
-      transactionHash
-      title
-      startsAt
-      isPublic
-      image
-      id
-      endsAt
-      director
-      description
-      blockTimestamp
       blockNumber
       Contract_id
+      blockTimestamp
+      director
+      description
+      endsAt
+      id
+      image
+      startsAt
+      isPublic
+      title
+      transactionHash
     }
   }`;
   return gql(queryString);
@@ -76,15 +77,15 @@ export const contestantAddedsQuery = () => {
   const queryString = `
   query {
     contestantAddeds {
-      blockNumber
-      blockTimestamp
-      contestantId
       id
-      image
-      name
       pollId
+      contestantId
+      name
+      image
       transactionHash
       voter
+      blockTimestamp
+      blockNumber
     }
   }`;
   return gql(queryString);
@@ -140,6 +141,7 @@ export const pollUpdatedsQuery = () => {
       description
       endsAt
       id
+      image
       isPublic
       startsAt
       title
@@ -172,6 +174,8 @@ export const votedsQuery = () => {
       id
       pollId
       timestamp
+      transactionHash
+      voter
     }
   }`;
   return gql(queryString);
