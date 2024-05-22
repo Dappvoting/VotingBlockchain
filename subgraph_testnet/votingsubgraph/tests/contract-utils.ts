@@ -7,7 +7,7 @@ import {
   PollDeleted,
   PollUpdated,
   Voted
-} from "../generated/DappContract/DappContract"
+} from "../generated/Contract/Contract"
 
 export function createAuthorizedVotersAddedEvent(
   pollId: BigInt,

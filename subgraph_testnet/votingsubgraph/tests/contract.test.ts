@@ -8,9 +8,9 @@ import {
 } from "matchstick-as/assembly/index"
 import { BigInt, Address } from "@graphprotocol/graph-ts"
 import { AuthorizedVotersAdded } from "../generated/schema"
-import { AuthorizedVotersAdded as AuthorizedVotersAddedEvent } from "../generated/DappContract/DappContract"
-import { handleAuthorizedVotersAdded } from "../src/dapp-contract"
-import { createAuthorizedVotersAddedEvent } from "./dapp-contract-utils"
+import { AuthorizedVotersAdded as AuthorizedVotersAddedEvent } from "../generated/Contract/Contract"
+import { handleAuthorizedVotersAdded } from "../src/contract"
+import { createAuthorizedVotersAddedEvent } from "./contract-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0

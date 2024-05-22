@@ -53,7 +53,7 @@ export const pollCreatedsQuery = () => {
       description
       blockTimestamp
       blockNumber
-      DappContract_id
+      Contract_id
     }
   }`;
   return gql(queryString);
@@ -107,7 +107,7 @@ export const pollDeletedsQuery = () => {
   const queryString = `
   query {
     pollDeleteds {
-      DappContract_id
+      Contract_id
       blockNumber
       blockTimestamp
       id
@@ -134,7 +134,7 @@ export const pollUpdatedsQuery = () => {
   const queryString = `
   query {
     pollUpdateds {
-      DappContract_id
+      Contract_id
       blockNumber
       blockTimestamp
       description

@@ -146,7 +146,7 @@ contract DappVotes {
     require(bytes(name).length > 0, 'name cannot be empty');
     require(bytes(image).length > 0, 'image cannot be empty');
     require(polls[id].votes < 1, 'Poll has votes already');
-    require(!contested[id][msg.sender], 'Already contested');
+    // require(!contested[id][msg.sender], 'Already contested');
 
     totalContestants.increment();
 
@@ -157,7 +157,7 @@ contract DappVotes {
     contestant.id = totalContestants.current();
 
     contestants[id][contestant.id] = contestant;
-    contested[id][msg.sender] = true;
+    // contested[id][msg.sender] = true;
     polls[id].avatars.push(image);
     polls[id].contestants++;
 

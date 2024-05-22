@@ -69,7 +69,7 @@
               >
             </div>
             <a
-              :href="`/campaign/details/${poll.DappContract_id}`"
+              :href="`/campaign/details/${poll.Contract_id}`"
               class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-2xl text-sm items-center text-white bg-red-900 px-2"
             >
               <span class="font-bold">View Campaign</span>
@@ -112,7 +112,7 @@ export default {
     const updatePolls = (updatedPolls) => {
       updatedPolls.forEach((updatedPoll) => {
         const index = polls.value.findIndex(
-          (poll) => poll.DappContract_id === updatedPoll.DappContract_id
+          (poll) => poll.Contract_id === updatedPoll.Contract_id
         );
         console.log(index);
         if (index !== -1) {

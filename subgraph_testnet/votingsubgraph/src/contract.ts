@@ -5,7 +5,7 @@ import {
   PollDeleted as PollDeletedEvent,
   PollUpdated as PollUpdatedEvent,
   Voted as VotedEvent
-} from "../generated/DappContract/DappContract"
+} from "../generated/Contract/Contract"
 import {
   AuthorizedVotersAdded,
   ContestantAdded,
@@ -14,8 +14,6 @@ import {
   PollUpdated,
   Voted
 } from "../generated/schema"
-import { Bytes } from "@graphprotocol/graph-ts"
-
 
 export function handleAuthorizedVotersAdded(
   event: AuthorizedVotersAddedEvent
@@ -24,10 +22,8 @@ export function handleAuthorizedVotersAdded(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.pollId = event.params.pollId
-  let votersBytes: Bytes[] = []
-  for (let i = 0; i < event.params.voters.length; i++) {
-    votersBytes.push(Bytes.fromHexString(event.params.voters[i].toHexString()))
-  }
+  entity.voters = event.params.voters
+
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
   entity.transactionHash = event.transaction.hash
@@ -56,7 +52,7 @@ export function handlePollCreated(event: PollCreatedEvent): void {
   let entity = new PollCreated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.DappContract_id = event.params.id
+  entity.Contract_id = event.params.id
   entity.title = event.params.title
   entity.description = event.params.description
   entity.director = event.params.director
@@ -76,7 +72,7 @@ export function handlePollDeleted(event: PollDeletedEvent): void {
   let entity = new PollDeleted(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.DappContract_id = event.params.id
+  entity.Contract_id = event.params.id
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -89,7 +85,7 @@ export function handlePollUpdated(event: PollUpdatedEvent): void {
   let entity = new PollUpdated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.DappContract_id = event.params.id
+  entity.Contract_id = event.params.id
   entity.title = event.params.title
   entity.description = event.params.description
   entity.startsAt = event.params.startsAt

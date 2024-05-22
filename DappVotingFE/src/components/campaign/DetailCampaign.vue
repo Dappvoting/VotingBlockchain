@@ -91,7 +91,7 @@ export default {
       switch (action.type) {
         case "POLL_CREATED_LOADED":
           polls.value = action.pollCreateds;
-          polls.value = polls.value.find(p => p.DappContract_id === campaignId);
+          polls.value = polls.value.find(p => p.Contract_id === campaignId);
           break;
       }
     };

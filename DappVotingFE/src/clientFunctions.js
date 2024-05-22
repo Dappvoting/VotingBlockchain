@@ -5,7 +5,7 @@ import contractAbi from '../../artifacts/contracts/DappVotes.sol/DappVotes.json'
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 await provider.send("eth_requestAccounts", []);
 const signer = provider.getSigner();
-const contractAddress = '0xD41c27022F0e44E8c620bfe82b803515d207bD1d'; // Thay thế bằng địa chỉ hợp đồng của bạn
+const contractAddress = '0x5374eEe532631C99Bcf35b84e7ee1536fCcC0bA9'; // Thay thế bằng địa chỉ hợp đồng của bạn
 
 // Tạo một instance của hợp đồng
 const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
