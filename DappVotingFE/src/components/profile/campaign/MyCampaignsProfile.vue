@@ -111,7 +111,8 @@ export default {
       deleteSuccess: false,
       pollToDelete: null,
       pollId: null, // Thêm biến để lưu pollId hiện tại
-      deletedPollIds: []  // Track deleted poll IDs
+      deletedPollIds: [],  // Track deleted poll IDs
+      updatedPolls: []  // Track updated poll IDs
     };
   },
   computed: {
@@ -128,8 +129,8 @@ export default {
       const date = new Date(timestamp * 1000);
       return date.toLocaleString();
     },
-    fetchPolls() {
-      loadAllPollTest(this.dispatchPolls);
+    async fetchPolls() {
+      await loadAllPollTest(this.dispatchPolls);
     },
     dispatchPolls(action) {
       switch (action.type) {
@@ -139,7 +140,6 @@ export default {
             return poll;
           });
           this.updateStatus();
-          this.loading = false;
           break;
         case "VOTED_LOADED":
           this.votedPolls = action.voteds.filter(vote => vote.voter.toLowerCase() === this.walletAddress.toLowerCase());
@@ -148,9 +148,18 @@ export default {
         case "POLL_DELETEDS_LOADED":
           this.deletedPollIds = action.pollDeleteds.map(poll => poll.Contract_id);
           break;
+        case "POLL_UPDATEDS_LOADED":
+          this.updatedPolls = action.pollUpdateds;
+          break;
         default:
           break;
       }
+
+      if (this.updatedPolls.length > 0) {
+        this.updatePollData();
+      }
+
+      this.loading = false;
     },
     updateStatus() {
       const currentTime = Math.floor(Date.now() / 1000);
@@ -160,6 +169,13 @@ export default {
         } else if (poll.endsAt < currentTime) {
           poll.status = 'Ended';
         }
+      });
+    },
+    updatePollData() {
+      // Update polls data if they are in updatedPolls
+      this.polls = this.polls.map(poll => {
+        const updatedPoll = this.updatedPolls.find(updPoll => updPoll.Contract_id === poll.Contract_id);
+        return updatedPoll ? { ...poll, ...updatedPoll } : poll;
       });
     },
     showDeletePopup(pollId) {
@@ -192,12 +208,11 @@ export default {
       this.$emit('changeContent', 'ContestantsCampaigns', { pollId });
     },
     editPoll(pollId) {
-      this.pollId = pollId;
-      this.changeContent('UpdateCampaignsProfile');
+      this.$emit('changeContent', 'UpdateCampaignsProfile', { pollId });
     }
   },
-  mounted() {
-    this.fetchPolls();
+  async mounted() {
+    await this.fetchPolls();
   }
 };
 </script>

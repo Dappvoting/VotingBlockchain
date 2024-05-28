@@ -58,7 +58,7 @@
           <div v-if="menuVisible" class="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-50">
             <ul>
               <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer" @click="goToProfile">Profile</li>
-              <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer" @click="logout">Logout</li>
+              <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer" @click="logout">Disconnect</li>
             </ul>
           </div>
         </div>

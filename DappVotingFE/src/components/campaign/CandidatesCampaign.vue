@@ -28,7 +28,14 @@
             <div class="flex flex-col gap-2">
               <span class="flex justify-center font-bold text-xl">{{ contestant.name }}</span>
             </div>
-            <span @click="handleVote(contestant.contestantId)" class="flex justify-center w-full cursor-pointer items-center py-2 px-4 rounded-md bg-blue-900 text-white hover:opacity-70">Vote</span>
+            <span
+              @click="handleVote(contestant.contestantId)"
+              class="flex justify-center w-full cursor-pointer items-center py-2 px-4 rounded-md bg-blue-900 text-white hover:opacity-70"
+              :class="{ 'opacity-50 cursor-not-allowed': isPollEnded }"
+              :disabled="isPollEnded"
+            >
+              Vote
+            </span>
             <div class="flex justify-center items-center gap-2">
               <i class="fa-solid fa-arrow-up bg-blue-200 p-2 rounded-lg text-blue-900"></i>
               <span class="text-blue-900 font-bold">{{ contestant.votes }}</span>
@@ -56,7 +63,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { loadAllPollTest } from "../../apollo";
 import { vote } from "../../clientFunctions"; // Đường dẫn tới file clientFunctions.js
@@ -96,9 +103,8 @@ export default {
           checkAllDataLoaded();
           break;
         case "VOTED_LOADED":
-          voted.value = action.voteds;
+          voted.value = action.voteds.filter(vote => vote.pollId === campaignId);
           dataLoaded.value.votes = true;
-          updateVotes();
           checkAllDataLoaded();
           break;
       }
@@ -106,6 +112,7 @@ export default {
 
     const checkAllDataLoaded = () => {
       if (dataLoaded.value.polls && dataLoaded.value.contestants && dataLoaded.value.votes) {
+        updateVotes();
         loading.value = false;
       }
     };
@@ -131,6 +138,10 @@ export default {
     };
 
     const handleVote = async (contestantId) => {
+      if (isPollEnded.value) {
+        return; // Prevent voting if the poll has ended
+      }
+
       try {
         showPopup.value = true;
         voteSuccess.value = false;
@@ -151,6 +162,14 @@ export default {
       }
     };
 
+    const isPollEnded = computed(() => {
+      if (poll.value) {
+        const currentTime = Math.floor(Date.now() / 1000);
+        return poll.value.endsAt < currentTime;
+      }
+      return true;
+    });
+
     onMounted(() => {
       loadAllPollTest(dispatch);
     });
@@ -165,6 +184,7 @@ export default {
       handleVote,
       showPopup,
       voteSuccess,
+      isPollEnded
     };
   },
 };

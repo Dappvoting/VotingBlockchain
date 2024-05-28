@@ -97,42 +97,49 @@ export default {
     const statusFilter = ref('all');
     const walletAddress = ref(localStorage.getItem('walletAddress'));
     const votedPolls = ref([]);
-    const deletedPollIds = ref([]); // Thêm biến để theo dõi các poll đã xóa
+    const deletedPollIds = ref([]);
+    const updatedPolls = ref([]);
+    const contestantPollIds = ref([]); // Thêm biến để lưu trữ pollId của các campaign có contest
 
     const dispatch = (action) => {
       switch (action.type) {
         case "POLL_UPDATEDS_LOADED":
-          updatePolls(action.pollUpdateds);
+          updatedPolls.value = action.pollUpdateds;
           break;
         case "POLL_CREATED_LOADED":
           polls.value = action.pollCreateds.map(poll => {
-            poll.status = 'Active'; // Mặc định tất cả là Active
+            poll.status = 'Active';
             return poll;
           });
-          updateStatus();
           break;
         case "VOTED_LOADED":
           votedPolls.value = action.voteds.filter(vote => vote.voter.toLowerCase() === walletAddress.value.toLowerCase());
-          updateStatus();
           break;
         case "POLL_DELETEDS_LOADED":
           deletedPollIds.value = action.pollDeleteds.map(poll => poll.Contract_id);
           break;
+        case "POLL_CONTESTANTADDEDS_LOADED":
+          contestantPollIds.value = action.contestantAddeds.map(contest => contest.pollId);
+          break;
         default:
           break;
       }
+      updatePollData();
     };
 
-    const updatePolls = (updatedPolls) => {
-      updatedPolls.forEach((updatedPoll) => {
-        const index = polls.value.findIndex(
-          (poll) => poll.Contract_id === updatedPoll.Contract_id
-        );
-        if (index !== -1) {
-          polls.value[index] = updatedPoll;
-        }
-      });
+    const updatePollData = () => {
+      if (updatedPolls.value.length > 0) {
+        polls.value = polls.value.map(poll => {
+          const updatedPoll = updatedPolls.value.find(updPoll => updPoll.Contract_id === poll.Contract_id);
+          return updatedPoll ? { ...poll, ...updatedPoll } : poll;
+        });
+      }
 
+      if (contestantPollIds.value.length > 0) {
+        polls.value = polls.value.filter(poll => contestantPollIds.value.includes(poll.Contract_id));
+      }
+
+      updateStatus();
       loading.value = false;
     };
 
@@ -158,12 +165,14 @@ export default {
 
     const filteredPolls = computed(() => {
       const activePolls = polls.value.filter(poll => !deletedPollIds.value.includes(poll.Contract_id));
-      if (statusFilter.value === 'all') return activePolls;
-      return activePolls.filter(poll => poll.status.toLowerCase() === statusFilter.value);
+      const contestedPolls = activePolls.filter(poll => contestantPollIds.value.includes(poll.Contract_id)); // Chỉ giữ các campaign có contest
+
+      if (statusFilter.value === 'all') return contestedPolls;
+      return contestedPolls.filter(poll => poll.status.toLowerCase() === statusFilter.value);
     });
 
-    onMounted(() => {
-      loadAllPollTest(dispatch);
+    onMounted(async () => {
+      await loadAllPollTest(dispatch);
       AOS.init({
         duration: 800,
         once: true,

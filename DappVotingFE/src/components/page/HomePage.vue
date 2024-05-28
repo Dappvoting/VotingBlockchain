@@ -158,9 +158,7 @@
   </div>
 
   <div class="min-h-[450px] bg-cover bg-center">
-    <div
-      class="mx-auto desktop:w-[1400px] max-sm:w-full sm:px-3 desktop:px-0 py-10"
-    >
+    <div class="mx-auto desktop:w-[1400px] max-sm:w-full sm:px-3 desktop:px-0 py-10">
       <div class="text-center flex flex-col items-center gap-6">
         <h2 class="text-4xl font-bold text-red-900" data-aos="fade-up">Popular Campaign</h2>
         <p class="w-2/3 text-center text-gray-500" data-aos="fade-up">
@@ -169,24 +167,12 @@
         </p>
       </div>
       <div class="flex items-center justify-center mt-6" data-aos="fade-up">
-        <div
-          @click="prevCampaign"
-          class="text-red-900 text-2xl p-2 cursor-pointer mx-2"
-        >
+        <div @click="prevCampaign" class="text-red-900 text-2xl p-2 cursor-pointer mx-2">
           <i class="fa-solid fa-angle-left"></i>
         </div>
         <div class="grid grid-cols-3 gap-4">
-          <div
-            v-for="(campaign, index) in visibleCampaigns"
-            :key="index"
-            class="bg-white rounded-lg shadow-lg p-8"
-            data-aos="fade-up"
-          >
-            <img
-              :src="campaign.image"
-              alt="Campaign Image"
-              class="w-full h-[250px] rounded-lg object-cover"
-            />
+          <div v-for="(campaign, index) in visibleCampaigns" :key="index" class="bg-white rounded-lg shadow-lg p-8" data-aos="fade-up">
+            <img :src="campaign.image" alt="Campaign Image" class="w-full h-[250px] rounded-lg object-cover" />
             <div class="flex flex-col gap-1 mt-2">
               <h3 class="font-bold text-red-900 text-lg">
                 {{ campaign.title }}
@@ -197,10 +183,7 @@
             </div>
           </div>
         </div>
-        <div
-          @click="nextCampaign"
-          class="text-red-900 text-2xl p-2 cursor-pointer mx-2"
-        >
+        <div @click="nextCampaign" class="text-red-900 text-2xl p-2 cursor-pointer mx-2">
           <i class="fa-solid fa-angle-right"></i>
         </div>
       </div>
@@ -418,66 +401,14 @@
   </div>
 </template>
 <script>
+import { ref, computed, onMounted } from 'vue';
+import { loadAllPollTest } from "../../apollo";
+
 export default {
   data() {
     return {
       currentIndex: 0,
-      campaigns: [
-        {
-          title: "Bầu cử Tổng thống Mỹ 2024",
-          description:
-            "Tham gia vào quá trình dân chủ bằng cách bỏ phiếu trong cuộc bầu cử Tổng thống Mỹ. Chọn lãnh đạo phù hợp với tầm nhìn của bạn cho tương lai của quốc gia!",
-          image:
-            "https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Fsundaytimes%2Fprod%2Fweb%2Fbin%2Fb066cf06-7b1b-11ee-83ba-000db1848e33.jpg?crop=1500%2C1000%2C0%2C0",
-          totalVotes: 3201,
-          status: "Active",
-        },
-        {
-          title: "Bầu cử Ban cán sự lớp 10A",
-          description:
-            "Hãy lựa chọn những bạn học sinh tiêu biểu để đại diện cho lớp 10A trong các hoạt động học tập và vui chơi trong năm học mới!",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIJ-wHKOeDK0FC1NPUo2L_puHzNf-w_F_cubrLgC5rPQ&s",
-          totalVotes: 867,
-          status: "Active",
-        },
-        {
-          title: "Bầu cử Hoa khôi Trường Đại học Quy Nhơn",
-          description:
-            "Bỏ phiếu chọn ra Hoa khôi duyên dáng và tài năng nhất của Trường Đại học Quy Nhơn. Sự kiện này không chỉ là dịp để tôn vinh vẻ đẹp mà còn là cơ hội để các bạn sinh viên thể hiện tài năng và sự tự tin.",
-          image:
-            "https://png.pngtree.com/png-vector/20221104/ourmid/pngtree-election-day-political-hand-drawn-cartoon-flat-illustration-with-voters-casting-png-image_6409137.png",
-          totalVotes: 1203,
-          status: "Active",
-        },
-        {
-          title: "Bầu cử Tổng thống Mỹ 2024",
-          description:
-            "Tham gia vào quá trình dân chủ bằng cách bỏ phiếu trong cuộc bầu cử Tổng thống Mỹ. Chọn lãnh đạo phù hợp với tầm nhìn của bạn cho tương lai của quốc gia!",
-          image:
-            "https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Fsundaytimes%2Fprod%2Fweb%2Fbin%2Fb066cf06-7b1b-11ee-83ba-000db1848e33.jpg?crop=1500%2C1000%2C0%2C0",
-          totalVotes: 3201,
-          status: "Active",
-        },
-        {
-          title: "Bầu cử Ban cán sự lớp 10A",
-          description:
-            "Empower our education system by electing dedicated individuals to our school board. Your vote can shape the future of education in our district!",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIJ-wHKOeDK0FC1NPUo2L_puHzNf-w_F_cubrLgC5rPQ&s",
-          totalVotes: 867,
-          status: "Active",
-        },
-        {
-          title: "Bầu cử Hoa khôi Trường Đại học Quy Nhơn",
-          description:
-            "Bỏ phiếu chọn ra Hoa khôi duyên dáng và tài năng nhất của Trường Đại học Quy Nhơn. Sự kiện này không chỉ là dịp để tôn vinh vẻ đẹp mà còn là cơ hội để các bạn sinh viên thể hiện tài năng và sự tự tin.",
-          image:
-            "https://png.pngtree.com/png-vector/20221104/ourmid/pngtree-election-day-political-hand-drawn-cartoon-flat-illustration-with-voters-casting-png-image_6409137.png",
-          totalVotes: 1203,
-          status: "Active",
-        },
-      ],
+      campaigns: [],
       slideInterval: null,
     };
   },
@@ -499,8 +430,7 @@ export default {
       this.currentIndex = (this.currentIndex + 1) % this.campaigns.length;
     },
     prevCampaign() {
-      this.currentIndex =
-        (this.currentIndex - 1 + this.campaigns.length) % this.campaigns.length;
+      this.currentIndex = (this.currentIndex - 1 + this.campaigns.length) % this.campaigns.length;
     },
     startAutoSlide() {
       this.slideInterval = setInterval(this.nextCampaign, 3000);
@@ -508,8 +438,44 @@ export default {
     stopAutoSlide() {
       clearInterval(this.slideInterval);
     },
+    async loadData() {
+      const updatedPolls = ref([]);
+      const deletedPollIds = ref([]);
+      const dispatch = (action) => {
+        switch (action.type) {
+          case "POLL_UPDATEDS_LOADED":
+            updatedPolls.value = action.pollUpdateds;
+            break;
+          case "POLL_CREATED_LOADED":
+            this.campaigns = action.pollCreateds.map(poll => ({
+              ...poll,
+              status: 'Active'
+            }));
+            break;
+          case "POLL_DELETEDS_LOADED":
+            deletedPollIds.value = action.pollDeleteds.map(poll => poll.Contract_id);
+            break;
+          default:
+            break;
+        }
+        this.updateCampaigns(updatedPolls.value, deletedPollIds.value);
+      };
+      await loadAllPollTest(dispatch);
+    },
+    updateCampaigns(updatedPolls, deletedPollIds) {
+      // Cập nhật dữ liệu campaign với các polls đã cập nhật
+      if (updatedPolls.length > 0) {
+        this.campaigns = this.campaigns.map(poll => {
+          const updatedPoll = updatedPolls.find(updPoll => updPoll.Contract_id === poll.Contract_id);
+          return updatedPoll ? { ...poll, ...updatedPoll } : poll;
+        });
+      }
+      // Loại bỏ các campaigns đã bị xóa
+      this.campaigns = this.campaigns.filter(poll => !deletedPollIds.includes(poll.Contract_id));
+    }
   },
-  mounted() {
+  async mounted() {
+    await this.loadData();
     this.startAutoSlide();
   },
   beforeDestroy() {
@@ -522,7 +488,6 @@ export default {
 .campaign-item {
   transition: transform 0.5s ease-in-out, opacity 0.5s ease;
   opacity: 1;
-  /* Ensure that the initial state is fully visible */
 }
 
 .fade-enter-active,
@@ -531,9 +496,7 @@ export default {
 }
 
 .fade-enter,
-.fade-leave-to
-
-/* .fade-leave-active in <2.1.8 */ {
+.fade-leave-to {
   opacity: 0;
 }
 </style>

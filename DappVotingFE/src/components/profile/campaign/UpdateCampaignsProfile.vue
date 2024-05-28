@@ -52,6 +52,20 @@
         </div>
       </form>
     </div>
+
+    <!-- Updating Spinner and Success Message -->
+    <div v-if="updateProcessing || updateSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg flex items-center">
+        <div v-if="!updateSuccess" class="flex justify-center items-center">
+          <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div>
+          <span class="ml-4">Updating in progress...</span>
+        </div>
+        <div v-else class="w-[200px] h-[100px] flex flex-col gap-4 justify-center items-center">
+          <i class="fa-solid fa-circle-check text-green-500 font-bold text-xl"></i>
+          <span class="text-green-500 font-bold text-xl">Updated Successfully</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -81,8 +95,19 @@ export default {
         description: ""
       },
       walletsText: "",
-      polls: [] // Lưu trữ các polls để lấy chi tiết
+      originalForm: {}, // Lưu trữ bản gốc của form để kiểm tra thay đổi
+      polls: [], // Lưu trữ các polls để lấy chi tiết
+      updateProcessing: false,
+      updateSuccess: false
     };
+  },
+  watch: {
+    pollId: {
+      immediate: true,
+      handler() {
+        this.fetchPollDetails();
+      }
+    }
   },
   methods: {
     changeContent(newContent) {
@@ -116,7 +141,7 @@ export default {
     },
     async fetchPollDetails() {
       try {
-        // Fetch data from POLL_CREATED_LOADED and POLL_UPDATEDS_LOADED
+        // Fetch data từ Apollo và cập nhật polls
         loadAllPollTest(this.dispatchPolls);
       } catch (error) {
         console.error('Error fetching poll details:', error);
@@ -143,28 +168,41 @@ export default {
         this.form.startDate = new Date(pollData.startsAt * 1000).toISOString().substr(0, 10);
         this.form.endDate = new Date(pollData.endsAt * 1000).toISOString().substr(0, 10);
         this.form.imageUrl = pollData.image;
-        this.form.status = pollData.status;
+        this.form.status = pollData.isPublic ? 'public' : 'private';
         this.form.description = pollData.description;
         this.form.wallets = pollData.wallets || [];
         this.walletsText = this.form.wallets.join("\n");
+
+        // Lưu trữ bản gốc của form
+        this.originalForm = { ...this.form };
       }
     },
     async submitForm() {
+      // Kiểm tra xem form có thay đổi không
+      if (JSON.stringify(this.form) === JSON.stringify(this.originalForm)) {
+        this.changeContent('MyCampaignsProfile');
+        return;
+      }
+
+      this.updateProcessing = true;
       try {
         const { name, startDate, endDate, imageUrl, status, wallets, description } = this.form;
         const isPublic = status === 'public';
         
-        // Call updatePoll function
+        // Gọi hàm updatePoll
         await updatePoll(this.pollId, imageUrl, name, description, new Date(startDate).getTime() / 1000, new Date(endDate).getTime() / 1000, isPublic);
 
-        // Display success message
-        alert('Campaign updated successfully');
-        
-        // Redirect to MyCampaignsProfile
-        this.changeContent('MyCampaignsProfile');
+        // Hiển thị thông báo thành công
+        this.updateSuccess = true;
+        setTimeout(() => {
+          this.updateSuccess = false;
+          this.changeContent('MyCampaignsProfile');
+        }, 2000);
       } catch (error) {
         console.error('Error updating campaign:', error);
         alert('Error updating campaign. Please try again.');
+      } finally {
+        this.updateProcessing = false;
       }
     }
   },

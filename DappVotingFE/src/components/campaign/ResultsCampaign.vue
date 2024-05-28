@@ -32,7 +32,7 @@
         <li v-for="(user, index) in users" :key="index" class="flex justify-between items-center mb-2">
           <div class="flex items-center">
             <img src="../../assets/images/HomePage/defaultav.png" alt="User Avatar" class="w-8 h-8 rounded-full mr-2" />
-            <p>{{ user.name }}</p>
+            <p class="font-bold">{{ shortenedAddress(user.name) }}</p>
           </div>
           <p class="font-bold">{{ user.vote }}</p>
         </li>
@@ -66,13 +66,10 @@ export default {
         case "POLL_CONTESTANTADDEDS_LOADED":
           contestants.value = action.contestantAddeds.filter(c => c.pollId === campaignId);
           dataLoaded.value.contestants = true;
-          checkAllDataLoaded();
           break;
         case "VOTED_LOADED":
           voted.value = action.voteds.filter(vote => vote.pollId === campaignId); // Filter votes by campaignId
           dataLoaded.value.votes = true;
-          updateResults();
-          checkAllDataLoaded();
           break;
         case "POLL_CREATED_LOADED":
           const loadedPoll = action.pollCreateds.find(p => p.Contract_id === campaignId);
@@ -80,15 +77,16 @@ export default {
             poll.value = loadedPoll;
           }
           dataLoaded.value.poll = true;
-          checkAllDataLoaded();
           break;
         default:
           break;
       }
+      checkAllDataLoaded();
     };
 
     const checkAllDataLoaded = () => {
       if (dataLoaded.value.contestants && dataLoaded.value.votes && dataLoaded.value.poll) {
+        updateResults();
         loading.value = false; // All data loaded, stop the spinner
       }
     };
@@ -135,7 +133,12 @@ export default {
       poll,
       loading
     };
-  }
+  },
+  methods: {
+    shortenedAddress(walletAddress) {
+      return `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
+    }
+  },
 };
 </script>
 

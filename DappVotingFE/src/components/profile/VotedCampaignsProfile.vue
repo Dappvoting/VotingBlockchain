@@ -38,62 +38,71 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { loadAllPollTest } from '../../apollo';
 
 export default {
   name: "HistoryVoted",
-  data() {
-    return {
-      votes: [], // To store all votes
-      polls: [], // To store all polls
-      walletAddress: localStorage.getItem('walletAddress'), // Get wallet address from localStorage
-      loading: true, // State to track loading
-    };
-  },
-  computed: {
-    filteredVotes() {
-      // Filter votes by voter (wallet address)
-      return this.votes.filter(vote => vote.voter.toLowerCase() === this.walletAddress.toLowerCase());
-    }
-  },
-  methods: {
-    formatDate(timestamp) {
-      const date = new Date(timestamp * 1000);
-      return date.toLocaleString();
-    },
-    fetchVotes() {
-      loadAllPollTest(this.dispatchData);
-    },
-    dispatchData(action) {
+  setup() {
+    const votes = ref([]);
+    const polls = ref([]);
+    const walletAddress = ref(localStorage.getItem('walletAddress'));
+    const loading = ref(true);
+    const dataLoaded = ref({ votes: false, polls: false });
+
+    const filteredVotes = computed(() => {
+      return votes.value.filter(vote => vote.voter.toLowerCase() === walletAddress.value.toLowerCase());
+    });
+
+    const dispatchData = (action) => {
       switch (action.type) {
         case "VOTED_LOADED":
-          this.votes = action.voteds;
-          console.log(this.votes)
-          this.fetchPolls();
+          votes.value = action.voteds;
+          dataLoaded.value.votes = true;
+          checkAllDataLoaded();
           break;
         case "POLL_CREATED_LOADED":
-          this.polls = action.pollCreateds;
-          this.loading = false; // Data loaded, stop the spinner
-          this.mapVotesToPolls();
+          polls.value = action.pollCreateds;
+          dataLoaded.value.polls = true;
+          checkAllDataLoaded();
           break;
         default:
           break;
       }
-    },
-    fetchPolls() {
-      loadAllPollTest(this.dispatchData);
-    },
-    mapVotesToPolls() {
-      // Map votes to their corresponding polls
-      this.votes = this.votes.map(vote => {
-        vote.poll = this.polls.find(poll => poll.Contract_id === vote.pollId);
+    };
+
+    const checkAllDataLoaded = () => {
+      if (dataLoaded.value.votes && dataLoaded.value.polls) {
+        mapVotesToPolls();
+        loading.value = false;
+      }
+    };
+
+    const mapVotesToPolls = () => {
+      votes.value = votes.value.map(vote => {
+        vote.poll = polls.value.find(poll => poll.Contract_id === vote.pollId);
         return vote;
       });
-    }
-  },
-  mounted() {
-    this.fetchVotes(); // Fetch votes when component mounts
+    };
+
+    const formatDate = (timestamp) => {
+      const date = new Date(timestamp * 1000);
+      return date.toLocaleString();
+    };
+
+    const fetchVotes = () => {
+      loadAllPollTest(dispatchData);
+    };
+
+    onMounted(() => {
+      fetchVotes();
+    });
+
+    return {
+      filteredVotes,
+      formatDate,
+      loading,
+    };
   }
 };
 </script>

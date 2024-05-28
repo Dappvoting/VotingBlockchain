@@ -58,7 +58,7 @@
           </a>
         </li>
         
-        <li class="mb-2">
+        <li class="mb-2" @click="logout">
           <a href="#"
             class="flex items-center gap-1 p-3 text-gray-700 hover:bg-red-200 hover:font-bold hover:text-red-900 rounded-md"
             :class="{
@@ -66,7 +66,7 @@
                 currentContent === 'Logout',
             }">
             <i class="fa-solid fa-arrow-right-from-bracket text-lg"></i>
-            <span class="ml-2 text-lg">Logout</span>
+            <span class="ml-2 text-lg">Disconnect</span>
           </a>
         </li>
       </ul>
@@ -92,6 +92,12 @@ export default {
     changeContent(newContent) {
       this.currentContent = newContent;
       this.$emit("changeContent", newContent); // Phát ra sự kiện khi nội dung thay đổi
+    },
+    logout() {
+      localStorage.removeItem('walletAddress');
+      this.walletAddress = null;
+      this.$router.push('/login');
+      this.menuVisible = false;
     },
   },
   computed: {
