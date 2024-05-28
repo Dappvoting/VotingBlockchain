@@ -27,6 +27,7 @@
 
     <!-- No Contestants Message -->
     <div v-else-if="contestants.length === 0" class="flex flex-col justify-center items-center py-10">
+      <img class="w-[400px] h-[400px] object-cover opacity-50" src="../../../assets/images/profile/nopoll2.png" alt="">
       <span class="text-gray-300 text-3xl font-bold">No contestants available.</span>
     </div>
 

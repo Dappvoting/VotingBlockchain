@@ -37,26 +37,54 @@
           </div>
           <div class="flex justify-between pb-4">
             <span class="text-sm text-gray-500">Status:</span>
-            <span class="text-sm px-4 py-1 text-green-500 border border-green-400 bg-green-100 rounded-2xl font-semibold">Actived</span>
+            <span
+              :class="{
+                'text-green-500 border-green-400 bg-green-100': poll.status === 'Active',
+                'text-yellow-500 border-yellow-400 bg-yellow-100': poll.status === 'Voted',
+                'text-red-500 border-red-400 bg-red-100': poll.status === 'Ended'
+              }"
+              class="text-sm px-4 py-1 border rounded-2xl font-semibold"
+            >{{ poll.status }}</span>
           </div>
           <div class="flex gap-1 justify-center items-center">
-
-              <a
+            <a
               :href="'/campaign/details/' + poll.Contract_id"
               class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-red-900 px-2"
             >
-              <span class="font-bold ">View Campaign</span>
-              </a>
-              <button @click="addContest(poll.Contract_id)" class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-blue-900 px-2 gap-2 font-bold">
-                <i class="fa-solid fa-plus"></i>
-                <span>Contest</span>
-              </button>
-
-
-            <i class="fa-solid fa-pen-to-square hover:opacity-75 text-red-900 text-2xl cursor-pointer"></i>
-            <i class="fa-solid fa-trash-can hover:opacity-75 text-red-900 text-2xl cursor-pointer"></i>
-
+              <span class="font-bold">View Campaign</span>
+            </a>
+            <button @click="addContest(poll.Contract_id)" class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-blue-900 px-2 gap-2 font-bold">
+              <i class="fa-solid fa-plus"></i>
+              <span>Contest</span>
+            </button>
+            <i @click="editPoll(poll.Contract_id)" class="fa-solid fa-pen-to-square hover:opacity-75 text-red-900 text-2xl cursor-pointer"></i>
+            <i @click="showDeletePopup(poll.Contract_id)" class="fa-solid fa-trash-can hover:opacity-75 text-red-900 text-2xl cursor-pointer"></i>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Popup -->
+    <div v-if="showDeleteConfirmation" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <p class="text-lg font-bold mb-4">Are you sure you want to delete this poll?</p>
+        <div class="flex justify-end gap-4">
+          <button @click="confirmDeletePoll" class="bg-red-500 text-white px-4 py-2 rounded-lg">Yes</button>
+          <button @click="cancelDeletePoll" class="bg-gray-300 text-black px-4 py-2 rounded-lg">No</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deleting Spinner and Success Message -->
+    <div v-if="deleteProcessing || deleteSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg flex items-center">
+        <div v-if="!deleteSuccess" class="flex justify-center items-center">
+          <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div>
+          <span class="ml-4">Deleting in progress...</span>
+        </div>
+        <div v-else class="w-[200px] h-[100px] flex flex-col gap-4 justify-center items-center">
+          <i class="fa-solid fa-circle-check text-green-500 font-bold text-xl"></i>
+          <span class="text-green-500 font-bold text-xl">Deleted Successfully</span>
         </div>
       </div>
     </div>
@@ -66,28 +94,35 @@
 <script>
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { deletePoll } from '../../../clientFunctions'; 
 import { loadAllPollTest } from '../../../apollo';
 
 export default {
   name: "Dashboard",
   data() {
     return {
-      currentContent: "InformationProfile", // Mặc định hiển thị Dashboards
-      polls: [], // To store all polls
-      walletAddress: localStorage.getItem('walletAddress'), // Get wallet address from localStorage
-      loading: true, // State to track loading
+      currentContent: "InformationProfile",
+      polls: [],
+      walletAddress: localStorage.getItem('walletAddress'),
+      loading: true,
+      votedPolls: [],
+      showDeleteConfirmation: false,
+      deleteProcessing: false,
+      deleteSuccess: false,
+      pollToDelete: null,
+      pollId: null, // Thêm biến để lưu pollId hiện tại
+      deletedPollIds: []  // Track deleted poll IDs
     };
   },
   computed: {
     filteredPolls() {
-      // Filter polls by director (wallet address)
-      return this.polls.filter(poll => poll.director.toLowerCase() === this.walletAddress.toLowerCase());
+      return this.polls.filter(poll => poll.director.toLowerCase() === this.walletAddress.toLowerCase() && !this.deletedPollIds.includes(poll.Contract_id));
     }
   },
   methods: {
     changeContent(newContent) {
       this.currentContent = newContent;
-      this.$emit("changeContent", newContent); // Phát ra sự kiện khi nội dung thay đổi
+      this.$emit("changeContent", newContent);
     },
     formatDate(timestamp) {
       const date = new Date(timestamp * 1000);
@@ -97,18 +132,72 @@ export default {
       loadAllPollTest(this.dispatchPolls);
     },
     dispatchPolls(action) {
-      if (action.type === "POLL_CREATED_LOADED") {
-        this.polls = action.pollCreateds;
-        this.loading = false; // Data loaded, stop the spinner
+      switch (action.type) {
+        case "POLL_CREATED_LOADED":
+          this.polls = action.pollCreateds.map(poll => {
+            poll.status = 'Active';
+            return poll;
+          });
+          this.updateStatus();
+          this.loading = false;
+          break;
+        case "VOTED_LOADED":
+          this.votedPolls = action.voteds.filter(vote => vote.voter.toLowerCase() === this.walletAddress.toLowerCase());
+          this.updateStatus();
+          break;
+        case "POLL_DELETEDS_LOADED":
+          this.deletedPollIds = action.pollDeleteds.map(poll => poll.Contract_id);
+          break;
+        default:
+          break;
       }
     },
+    updateStatus() {
+      const currentTime = Math.floor(Date.now() / 1000);
+      this.polls.forEach(poll => {
+        if (this.votedPolls.find(vote => vote.pollId === poll.Contract_id)) {
+          poll.status = 'Voted';
+        } else if (poll.endsAt < currentTime) {
+          poll.status = 'Ended';
+        }
+      });
+    },
+    showDeletePopup(pollId) {
+      this.pollToDelete = pollId;
+      this.showDeleteConfirmation = true;
+    },
+    async confirmDeletePoll() {
+      this.deleteProcessing = true;
+      this.showDeleteConfirmation = false;
+      try {
+        await deletePoll(this.pollToDelete);
+        this.polls = this.polls.filter(poll => poll.Contract_id !== this.pollToDelete);
+        this.deletedPollIds.push(this.pollToDelete); // Add to deletedPollIds
+        this.deleteSuccess = true;
+        setTimeout(() => {
+          this.deleteSuccess = false;
+        }, 2000);
+        console.log('Poll deleted successfully');
+      } catch (error) {
+        console.error('Error deleting poll:', error);
+      } finally {
+        this.deleteProcessing = false;
+      }
+    },
+    cancelDeletePoll() {
+      this.showDeleteConfirmation = false;
+      this.pollToDelete = null;
+    },
     addContest(pollId) {
-      // Chuyển qua trang ContestantsCampaigns và truyền pollId
       this.$emit('changeContent', 'ContestantsCampaigns', { pollId });
+    },
+    editPoll(pollId) {
+      this.pollId = pollId;
+      this.changeContent('UpdateCampaignsProfile');
     }
   },
   mounted() {
-    this.fetchPolls(); // Fetch polls when component mounts
+    this.fetchPolls();
   }
 };
 </script>

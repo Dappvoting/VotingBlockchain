@@ -26,18 +26,18 @@
           class="bg-white p-6 flex flex-col justify-between rounded-lg shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]"
         >
           <div>
-            <h2 class="text-xl font-bold mb-4">New voting campaigns?</h2>
+            <h2 class="text-xl font-bold mb-4">Sepolia Testnet</h2>
             <p>
-              Are you planning a general meeting, a board election or another
-              type of voting project? Create it now using the green button
-              below.
+              Our website utilizes the Sepolia testnet for voting. If you don't have tokens yet, click on the 'Faucet Now' button to get started!
             </p>
           </div>
-          <button @click="changeContent('MyCampaignsProfile')"
-            class="mt-4 bg-red-900 hover:opacity-80 text-white p-2 rounded"
+          <a href="https://www.alchemy.com/faucets/ethereum-sepolia" class="mt-4 bg-red-900 hover:opacity-80 text-white p-2 rounded flex justify-center">
+            <button 
           >
-            Create Campaign
+            Faucet Now
           </button>
+          </a>
+
         </div>
       </div>
     </div>

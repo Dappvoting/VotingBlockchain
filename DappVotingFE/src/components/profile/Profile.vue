@@ -10,6 +10,7 @@
       <VotedCampaignsProfile v-if="content === 'VotedCampaignsProfile'"></VotedCampaignsProfile>
       <MyCampaignsProfile @changeContent="changeContent" v-if="content === 'MyCampaignsProfile'"></MyCampaignsProfile>
       <ContestantsCampaigns @changeContent="changeContent" v-if="content === 'ContestantsCampaigns'" :pollId="pollId"></ContestantsCampaigns>
+      <UpdateCampaignsProfile @changeContent="changeContent" v-if="content === 'UpdateCampaignsProfile'" :pollId="pollId"></UpdateCampaignsProfile>
     </div>
   </div>
 </template>
@@ -21,6 +22,7 @@ import CreateCampaignsProfile from "./campaign/CreateCampaignsProfile.vue";
 import VotedCampaignsProfile from "./VotedCampaignsProfile.vue";
 import MyCampaignsProfile from "./campaign/MyCampaignsProfile.vue";
 import ContestantsCampaigns from "./campaign/ContestantsCampaigns.vue";
+import UpdateCampaignsProfile from "./campaign/UpdateCampaignsProfile.vue";
 
 export default {
   name: "Profile",
@@ -30,7 +32,8 @@ export default {
     CreateCampaignsProfile,
     VotedCampaignsProfile,
     MyCampaignsProfile,
-    ContestantsCampaigns
+    ContestantsCampaigns,
+    UpdateCampaignsProfile
   },
   data() {
     return {

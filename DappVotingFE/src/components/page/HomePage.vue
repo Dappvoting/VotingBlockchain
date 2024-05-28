@@ -16,7 +16,7 @@
       <div
         class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-60"
       >
-        <div class="text-center">
+        <div class="text-center" data-aos="fade-up">
           <h1 class="text-white font-bold text-6xl mb-4">
             Vote for the best candidate
           </h1>
@@ -34,13 +34,16 @@
       </div>
     </div>
   </div>
+
   <div
     class="min-h-[450px] bg-cover bg-center bg-[url('https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/campaign-right-banner.png')]"
+    data-aos="fade-up"
   >
     <div class="mx-auto desktop:w-[1400px] max-sm:w-full sm:px-3 desktop:px-0">
       <div class="flex flex-col justify-center py-10 gap-6">
         <div
           class="text-center flex flex-col gap-2 justify-center items-center"
+          data-aos="fade-up"
         >
           <span class="text-red-500 font-bold">Know more about</span>
           <span class="font-bold text-4xl text-red-900"
@@ -52,8 +55,7 @@
           >
         </div>
         <div class="grid grid-cols-3 gap-4">
-          <div class="bg-white rounded-lg shadow-lg">
-            <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
+          <div class="bg-white rounded-lg shadow-lg" data-aos="fade-up">
             <img
               class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out"
               src="../../assets/images/HomePage/fairness.webp"
@@ -76,8 +78,7 @@
             </div>
           </div>
 
-          <div class="bg-white rounded-lg shadow-lg">
-            <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
+          <div class="bg-white rounded-lg shadow-lg" data-aos="fade-up">
             <img
               class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out"
               src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2019/12/mission-and-vission-1.png"
@@ -101,8 +102,7 @@
             </div>
           </div>
 
-          <div class="bg-white rounded-lg shadow-lg">
-            <!-- Sửa lớp img: thêm grayscale và hover:grayscale-0 để chuyển từ trắng đen sang màu khi hover -->
+          <div class="bg-white rounded-lg shadow-lg" data-aos="fade-up">
             <img
               class="w-full h-[250px] rounded-t-lg grayscale hover:grayscale-0 transition duration-300 ease-in-out"
               src="../../assets/images/HomePage/adoption.webp"
@@ -132,6 +132,7 @@
 
   <div
     class="min-h-[450px] bg-[url('https://metropolitanhost.com/themes/themeforest/html/vitto/assets/img/innerbanner2.jpg')] flex flex-col items-center justify-center text-white mt-8"
+    data-aos="fade-up"
   >
     <div
       class="bg-gradient-to-r bg-opacity-60 inset-0 min-h-[450px] w-full flex justify-center items-center"
@@ -161,13 +162,13 @@
       class="mx-auto desktop:w-[1400px] max-sm:w-full sm:px-3 desktop:px-0 py-10"
     >
       <div class="text-center flex flex-col items-center gap-6">
-        <h2 class="text-4xl font-bold text-red-900">Popular Campaign</h2>
-        <p class="w-2/3 text-center text-gray-500">
+        <h2 class="text-4xl font-bold text-red-900" data-aos="fade-up">Popular Campaign</h2>
+        <p class="w-2/3 text-center text-gray-500" data-aos="fade-up">
           With blockchain technology, we will ensure transparency and fairness
           in elections.
         </p>
       </div>
-      <div class="flex items-center justify-center mt-6">
+      <div class="flex items-center justify-center mt-6" data-aos="fade-up">
         <div
           @click="prevCampaign"
           class="text-red-900 text-2xl p-2 cursor-pointer mx-2"
@@ -179,6 +180,7 @@
             v-for="(campaign, index) in visibleCampaigns"
             :key="index"
             class="bg-white rounded-lg shadow-lg p-8"
+            data-aos="fade-up"
           >
             <img
               :src="campaign.image"
@@ -210,12 +212,12 @@
       class="mx-auto desktop:w-[1400px] max-sm:w-full sm:px-3 desktop:px-0 py-6"
     >
       <div class="text-center flex flex-col items-center gap-6">
-        <h2 class="text-4xl font-bold text-red-900">Chain support</h2>
-        <p class="w-2/3 text-center text-gray-500">
+        <h2 class="text-4xl font-bold text-red-900" data-aos="fade-up">Chain support</h2>
+        <p class="w-2/3 text-center text-gray-500" data-aos="fade-up">
           NextGenVote is live on Sepolia testnet.
         </p>
       </div>
-      <div class="flex justify-center">
+      <div class="flex justify-center" data-aos="fade-up">
         <img
           class="w-15 h-15 object-cover"
           src="../../assets/images/HomePage/sepologo.png"
@@ -231,31 +233,26 @@
     >
       <div
         class="w-full relative flex inset-0 bg-gray-800 mix-blend-luminosity"
+        data-aos="fade-up"
       >
         <img
           class="w-full object-cover"
           src="https://wp.xpeedstudio.com/electionify/wp-content/uploads/2020/01/newsletter-overlay.png"
           alt=""
         />
-        <div class="absolute text-white grid grid-cols-2 w-full h-full">
+        <div class="absolute text-white grid grid-cols-2 w-full h-full" data-aos="fade-up">
           <div class="flex flex-col items-center justify-center">
             <span class="font-bold text-4xl">Don’t miss any updates</span>
             <span class="font-bold text-4xl">Get subscribed!</span>
           </div>
-          <!-- <div class="flex justify-center items-center">
-            <div class="relative">
-              <input type="text" placeholder="Enter your mail"
-                class="input text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50" />
-              <button
-                class="absolute right-1 top-1/2 transform -translate-y-1/2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Send</button>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
   </div>
+
   <div
     class="min-h-[450px] bg-[url('https://metropolitanhost.com/themes/themeforest/html/vitto/assets/img/innerbanner2.jpg')] flex flex-col items-center justify-center text-white mt-8"
+    data-aos="fade-up"
   >
     <div
       class="bg-gradient-to-r inset-0 min-h-[450px] w-full flex justify-center"
@@ -264,12 +261,13 @@
         <span class="font-bold text-5xl justify-center flex">How it work</span>
         <div class="grid grid-cols-2 gap-20 pt-5">
           <div class="flex flex-col">
-            <span class="font-bold text-2xl text-gradient-to-r"
+            <span class="font-bold text-2xl text-gradient-to-r" data-aos="fade-up"
               >Create campaigns simply and quickly</span
             >
-            <div class="pt-2 flex flex-col gap-2">
+            <div class="pt-2 flex flex-col gap-2" data-aos="fade-up">
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -280,6 +278,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -292,6 +291,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -302,6 +302,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -312,6 +313,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -322,6 +324,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -335,12 +338,13 @@
             </div>
           </div>
           <div class="">
-            <span class="font-bold text-2xl text-gradient-to-r"
+            <span class="font-bold text-2xl text-gradient-to-r" data-aos="fade-up"
               >Start voting in minutes</span
             >
-            <div class="pt-2 flex flex-col gap-2">
+            <div class="pt-2 flex flex-col gap-2" data-aos="fade-up">
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -351,6 +355,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -363,6 +368,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -373,6 +379,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -383,6 +390,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
@@ -393,6 +401,7 @@
               </div>
               <div
                 class="flex items-center gap-2 p-4 rounded-lg hover:bg-red-400 hover:rounded-lg cursor-pointer transition duration-300 ease-in-out"
+                data-aos="fade-up"
               >
                 <div
                   class="w-10 h-10 flex justify-center items-center rounded-full bg-white font-bold text-lg text-red-900 border border-gradient-to-r"
