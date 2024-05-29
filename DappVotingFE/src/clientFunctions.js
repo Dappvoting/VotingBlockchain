@@ -5,7 +5,7 @@ let provider;
 let signer;
 let contract;
 
-const contractAddress = '0xEefA791f9b3ed89B48Ee6cc63664f9d01D88fb5c'; // Replace with your contract address
+const contractAddress = '0xf9Edc891dB620758E688102da9021a8Bc5E5298f'; // Replace with your contract address
 
 async function initializeContract() {
   if (typeof window.ethereum !== 'undefined') {
