@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client/core';
 import { provideApolloClient } from '@vue/apollo-composable';
 
 const apolloClient = new ApolloClient({
-  uri: 'https://api.studio.thegraph.com/query/74144/votingsubgraph/v0.0.7', // Thay thế bằng URL subgraph của bạn
+  uri: 'https://api.studio.thegraph.com/query/74144/votingsubgraph/v0.0.8', // Thay thế bằng URL subgraph của bạn
   cache: new InMemoryCache()
 });
 
@@ -197,7 +197,7 @@ export function loadAllPollTest(dispatch) {
   async function getAuthorizedVotersAddedQueryData() {
     const data = await getAuthorizedVotersAddedQuery(apolloClient);
     const authorizedVotersAdded = data.authorizedVotersAddeds;
-    dispatch({ type: 'AuthorizedVotersAdded_LOADED', authorizedVotersAdded });
+    dispatch({ type: 'AUTHORIZED_VOTERS_ADDED_LOADED', authorizedVotersAdded });
   }
 
   async function getPollCreatedsQueryData() {

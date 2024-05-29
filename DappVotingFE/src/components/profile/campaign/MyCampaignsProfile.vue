@@ -39,7 +39,7 @@
             <span class="text-sm text-gray-500">Visibility:</span>
             <span class="text-sm text-gray-500 font-semibold">{{ poll.isPublic ? 'public' : 'private' }}</span>
           </div>
-          <div class="flex justify-between pb-4">
+          <!-- <div class="flex justify-between pb-4">
             <span class="text-sm text-gray-500">Status:</span>
             <span
               :class="{
@@ -49,31 +49,26 @@
               }"
               class="text-sm px-4 py-1 border rounded-2xl font-semibold"
             >{{ poll.status }}</span>
-          </div>
+          </div> -->
           <div class="flex gap-1 justify-center items-center">
-            <!-- <a
-              :href="'/campaign/details/' + poll.Contract_id"
-              class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-red-900 px-2"
-            >
-              <span class="font-bold">View Campaign</span>
-            </a> -->
             <button 
-              @click="addContest(poll.Contract_id)" 
+              @click="checkAddContest(poll)" 
               class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-blue-900 px-2 gap-2 font-bold">
               <i class="fa-solid fa-plus"></i>
               <span>Contest</span>
             </button>
-            <!-- Nút "Add Voters" chỉ hiển thị khi Visibility là private -->
             <button 
               v-if="!poll.isPublic" 
               @click="goToAuthorizedVoters(poll.Contract_id)" 
-              :disabled="poll.authorizedVoters && poll.authorizedVoters.length > 0" 
+              :disabled="poll.hasAuthorizedVoters" 
+              :class="{'opacity-50 cursor-not-allowed': poll.hasAuthorizedVoters}" 
               class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-green-600 px-2 gap-2 font-bold"
-              :class="{'opacity-50 cursor-not-allowed': poll.authorizedVoters && poll.authorizedVoters.length > 0}">
+              :title="poll.hasAuthorizedVoters ? 'This campaign has already added voters and cannot be edited.' : ''"
+            >
               <i class="fa-solid fa-users"></i>
               <span>Add Voters</span>
             </button>
-            <i @click="editPoll(poll.Contract_id)" class="fa-solid fa-pen-to-square hover:opacity-75 text-red-900 text-2xl cursor-pointer"></i>
+            <i @click="checkEditPoll(poll)" class="fa-solid fa-pen-to-square hover:opacity-75 text-red-900 text-2xl cursor-pointer"></i>
             <i @click="showDeletePopup(poll.Contract_id)" class="fa-solid fa-trash-can hover:opacity-75 text-red-900 text-2xl cursor-pointer"></i>
           </div>
         </div>
@@ -104,6 +99,22 @@
         </div>
       </div>
     </div>
+
+    <!-- Edit Disabled Popup -->
+    <div v-if="showEditDisabledPopup" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+        <p class="text-lg font-bold mb-4">This campaign has already received votes and cannot be edited.</p>
+        <button @click="showEditDisabledPopup = false" class="bg-blue-600 text-white px-4 py-2 rounded-lg">OK</button>
+      </div>
+    </div>
+    
+    <!-- Add Contest Disabled Popup -->
+    <div v-if="showAddContestDisabledPopup" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+        <p class="text-lg font-bold mb-4">This campaign has already received votes and cannot be edited.</p>
+        <button @click="showAddContestDisabledPopup = false" class="bg-blue-600 text-white px-4 py-2 rounded-lg">OK</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -125,10 +136,13 @@ export default {
       showDeleteConfirmation: false,
       deleteProcessing: false,
       deleteSuccess: false,
+      showEditDisabledPopup: false,
+      showAddContestDisabledPopup: false,
       pollToDelete: null,
       pollId: null,
       deletedPollIds: [],
-      updatedPolls: []
+      updatedPolls: [],
+      authorizedVoters: []
     };
   },
   computed: {
@@ -146,7 +160,12 @@ export default {
       return date.toLocaleString();
     },
     async fetchPolls() {
-      await loadAllPollTest(this.dispatchPolls);
+      this.loading = true;
+      await Promise.all([
+        loadAllPollTest(this.dispatchPolls),
+        new Promise(resolve => setTimeout(resolve, 1000)) // Ensure async completion
+      ]);
+      this.loading = false;
     },
     dispatchPolls(action) {
       switch (action.type) {
@@ -155,17 +174,20 @@ export default {
             poll.status = 'Active';
             return poll;
           });
-          this.updateStatus();
           break;
         case "VOTED_LOADED":
-          this.votedPolls = action.voteds.filter(vote => vote.voter.toLowerCase() === this.walletAddress.toLowerCase());
-          this.updateStatus();
+          this.votedPolls = action.voteds;
+          console.log("VTTT",this.votedPolls)
+          this.updatePollsWithVotes();
           break;
         case "POLL_DELETEDS_LOADED":
           this.deletedPollIds = action.pollDeleteds.map(poll => poll.Contract_id);
           break;
         case "POLL_UPDATEDS_LOADED":
           this.updatedPolls = action.pollUpdateds;
+          break;
+        case "AUTHORIZED_VOTERS_ADDED_LOADED":
+          this.authorizedVoters = action.authorizedVotersAdded;
           break;
         default:
           break;
@@ -174,15 +196,26 @@ export default {
       if (this.updatedPolls.length > 0) {
         this.updatePollData();
       }
+      this.updateStatus();
+      this.updateAuthorizedVotersStatus();
+    },
+    updatePollsWithVotes() {
+      console.log("POLL",this.polls)
+      console.log("Voted",this.votedPolls)
 
-      this.loading = false;
+      this.polls.forEach(poll => {
+        if (this.votedPolls.find(vote => vote.pollId === poll.Contract_id)) {
+          poll.status = 'Voted';
+          poll.hasVotes = true; // thêm cờ để kiểm tra trong `checkEditPoll` và `checkAddContest`
+        } else {
+          poll.hasVotes = false;
+        }
+      });
     },
     updateStatus() {
       const currentTime = Math.floor(Date.now() / 1000);
       this.polls.forEach(poll => {
-        if (this.votedPolls.find(vote => vote.pollId === poll.Contract_id)) {
-          poll.status = 'Voted';
-        } else if (poll.endsAt < currentTime) {
+        if (!poll.hasVotes && poll.endsAt < currentTime) {
           poll.status = 'Ended';
         }
       });
@@ -191,6 +224,13 @@ export default {
       this.polls = this.polls.map(poll => {
         const updatedPoll = this.updatedPolls.find(updPoll => updPoll.Contract_id === poll.Contract_id);
         return updatedPoll ? { ...poll, ...updatedPoll } : poll;
+      });
+    },
+    updateAuthorizedVotersStatus() {
+      this.polls = this.polls.map(poll => {
+        const authorizedVoter = this.authorizedVoters.find(voter => voter.pollId === poll.Contract_id);
+        poll.hasAuthorizedVoters = !!authorizedVoter;
+        return poll;
       });
     },
     showDeletePopup(pollId) {
@@ -219,8 +259,22 @@ export default {
       this.showDeleteConfirmation = false;
       this.pollToDelete = null;
     },
+    checkAddContest(poll) {
+      if (poll.hasVotes) {
+        this.showAddContestDisabledPopup = true;
+      } else {
+        this.addContest(poll.Contract_id);
+      }
+    },
     addContest(pollId) {
       this.$emit('changeContent', 'ContestantsCampaigns', { pollId });
+    },
+    checkEditPoll(poll) {
+      if (poll.hasVotes) {
+        this.showEditDisabledPopup = true;
+      } else {
+        this.editPoll(poll.Contract_id);
+      }
     },
     editPoll(pollId) {
       this.$emit('changeContent', 'UpdateCampaignsProfile', { pollId });

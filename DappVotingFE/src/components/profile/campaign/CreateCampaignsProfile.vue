@@ -43,6 +43,20 @@
         </div>
       </form>
     </div>
+    
+    <!-- Spinner and Success Message -->
+    <div v-if="creatingCampaign || creationSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg flex items-center">
+        <div v-if="!creationSuccess" class="flex justify-center items-center">
+          <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div>
+          <span class="ml-4">Creating campaign in progress...</span>
+        </div>
+        <div v-else class="w-[200px] h-[100px] flex flex-col gap-4 justify-center items-center">
+          <i class="fa-solid fa-circle-check text-green-500 font-bold text-xl"></i>
+          <span class="text-green-500 font-bold text-xl">Campaign Created Successfully</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,7 +76,9 @@ export default {
         status: "public",
         wallets: [],
         description: ""
-      }
+      },
+      creatingCampaign: false,
+      creationSuccess: false
     };
   },
   methods: {
@@ -71,6 +87,9 @@ export default {
       this.$emit("changeContent", newContent);
     },
     async submitForm() {
+      this.creatingCampaign = true;
+      this.creationSuccess = false;
+
       try {
         const { name, startDate, endDate, imageUrl, status, description } = this.form;
         const isPublic = status === 'public';
@@ -79,13 +98,16 @@ export default {
         await createPoll(imageUrl, name, description, new Date(startDate).getTime() / 1000, new Date(endDate).getTime() / 1000, isPublic);
         
         // Display success message
-        alert('Campaign created successfully');
-        
-        // Redirect to MyCampaignsProfile
-        this.changeContent('MyCampaignsProfile');
+        this.creationSuccess = true;
+        setTimeout(() => {
+          this.changeContent('MyCampaignsProfile');
+          this.creationSuccess = false;
+        }, 2000);
       } catch (error) {
         console.error('Error creating campaign:', error);
         alert('Error creating campaign. Please try again.');
+      } finally {
+        this.creatingCampaign = false;
       }
     }
   }

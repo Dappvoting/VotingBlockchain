@@ -29,12 +29,16 @@
               <span class="flex justify-center font-bold text-xl">{{ contestant.name }}</span>
             </div>
             <span
+              v-if="!hasVoted"
               @click="handleVote(contestant.contestantId)"
               class="flex justify-center w-full cursor-pointer items-center py-2 px-4 rounded-md bg-blue-900 text-white hover:opacity-70"
-              :class="{ 'opacity-50 cursor-not-allowed': isPollEnded }"
-              :disabled="isPollEnded"
+              :class="{ 'opacity-50 cursor-not-allowed': isPollEnded || !canVote }"
+              :disabled="isPollEnded || !canVote"
             >
               Vote
+            </span>
+            <span v-else class="flex justify-center w-full py-2 px-4 rounded-md bg-gray-400 text-white cursor-not-allowed">
+              Already voted
             </span>
             <div class="flex justify-center items-center gap-2">
               <i class="fa-solid fa-arrow-up bg-blue-200 p-2 rounded-lg text-blue-900"></i>
@@ -59,6 +63,14 @@
         </div>
       </div>
     </div>
+
+    <!-- Alert Modal -->
+    <div v-if="showAlert" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div class="bg-white p-8 rounded-md shadow-md text-center flex flex-col">
+        <span class="text-red-500 font-bold text-xl">You are not authorized to vote in this poll.</span>
+        <button @click="showAlert = false" class="mt-4 px-4 py-2 bg-blue-900 text-white rounded-md">Close</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -79,11 +91,14 @@ export default {
     const loading = ref(true);
     const showPopup = ref(false);
     const voteSuccess = ref(false);
+    const authorizedVoters = ref([]);
+    const showAlert = ref(false);
 
     const route = useRoute();
     const campaignId = route.params.id;
+    const walletAddress = localStorage.getItem('walletAddress'); // Assume user's wallet address is stored in localStorage
 
-    const dataLoaded = ref({ polls: false, contestants: false, votes: false });
+    const dataLoaded = ref({ polls: false, contestants: false, votes: false, authorizedVoters: false });
 
     const dispatch = (action) => {
       switch (action.type) {
@@ -95,7 +110,6 @@ export default {
           break;
         case "POLL_CONTESTANTADDEDS_LOADED":
           contestants.value = action.contestantAddeds.filter((c) => c.pollId === campaignId);
-          // Initialize vote counts
           contestants.value.forEach((c) => {
             c.votes = 0;
           });
@@ -107,23 +121,26 @@ export default {
           dataLoaded.value.votes = true;
           checkAllDataLoaded();
           break;
+        case "AUTHORIZED_VOTERS_ADDED_LOADED":
+          authorizedVoters.value = action.authorizedVotersAdded.filter(voter => voter.pollId === campaignId);
+          dataLoaded.value.authorizedVoters = true;
+          checkAllDataLoaded();
+          break;
       }
     };
 
     const checkAllDataLoaded = () => {
-      if (dataLoaded.value.polls && dataLoaded.value.contestants && dataLoaded.value.votes) {
+      if (dataLoaded.value.polls && dataLoaded.value.contestants && dataLoaded.value.votes && dataLoaded.value.authorizedVoters) {
         updateVotes();
         loading.value = false;
       }
     };
 
     const updateVotes = () => {
-      // Reset votes
       contestants.value.forEach((c) => {
         c.votes = 0;
       });
 
-      // Tally votes from voted array
       voted.value.forEach((vote) => {
         const contestant = contestants.value.find((c) => c.contestantId == vote.contestantId);
         if (contestant) {
@@ -139,7 +156,12 @@ export default {
 
     const handleVote = async (contestantId) => {
       if (isPollEnded.value) {
-        return; // Prevent voting if the poll has ended
+        return;
+      }
+
+      if (!canVote.value) {
+        showAlert.value = true;
+        return;
       }
 
       try {
@@ -170,11 +192,23 @@ export default {
       return true;
     });
 
+    const hasVoted = computed(() => {
+      return voted.value.some(vote => vote.voter === walletAddress);
+    });
+
+    const canVote = computed(() => {
+      if (poll.value && poll.value.isPublic) {
+        return true;
+      }
+      if (authorizedVoters.value.length > 0) {
+        return authorizedVoters.value.some(voter => voter.voters.includes(walletAddress));
+      }
+      return false;
+    });
+
     onMounted(() => {
       loadAllPollTest(dispatch);
     });
-
-    watch(voted, updateVotes);
 
     return {
       poll,
@@ -184,7 +218,10 @@ export default {
       handleVote,
       showPopup,
       voteSuccess,
-      isPollEnded
+      isPollEnded,
+      canVote,
+      showAlert,
+      hasVoted
     };
   },
 };
