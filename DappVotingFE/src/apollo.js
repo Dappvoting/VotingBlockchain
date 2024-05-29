@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client/core';
 import { provideApolloClient } from '@vue/apollo-composable';
 
 const apolloClient = new ApolloClient({
-  uri: 'https://api.studio.thegraph.com/query/74144/votingsubgraph/v0.0.6', // Thay thế bằng URL subgraph của bạn
+  uri: 'https://api.studio.thegraph.com/query/74144/votingsubgraph/v0.0.7', // Thay thế bằng URL subgraph của bạn
   cache: new InMemoryCache()
 });
 

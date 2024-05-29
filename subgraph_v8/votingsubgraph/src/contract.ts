@@ -14,8 +14,6 @@ import {
   PollUpdated,
   Voted
 } from "../generated/schema"
-import { Bytes } from '@graphprotocol/graph-ts';
-
 
 export function handleAuthorizedVotersAdded(
   event: AuthorizedVotersAddedEvent
@@ -24,11 +22,7 @@ export function handleAuthorizedVotersAdded(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.pollId = event.params.pollId
-  let votersBytes: Bytes[] = []
-  for (let i = 0; i < event.params.voters.length; i++) {
-    votersBytes.push(event.params.voters[i] as Bytes)
-  }
-  entity.voters = votersBytes
+  entity.voters = event.params.voters
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
