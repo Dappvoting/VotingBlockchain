@@ -32,15 +32,6 @@
           </select>
         </div>
         
-        <div v-if="form.status === 'private'" class="mb-4">
-          <label for="fileInput" class="block text-gray-700 font-bold mt-4">Upload Excel File</label>
-          <input type="file" id="fileInput" @change="handleFileUpload" class="w-full mt-2 focus:outline-none p-2 border rounded">
-          <div class="mt-4">
-            <label for="walletsArea" class="block text-gray-700 font-bold">Wallet Addresses</label>
-            <textarea id="walletsArea" v-model="walletsText" class="w-full mt-2 focus:outline-none p-2 border rounded" disabled></textarea>
-          </div>
-        </div>
-        
         <div class="mb-4">
           <label for="description" class="block text-gray-700 font-bold">Description</label>
           <textarea id="description" placeholder="Description about your campaign" v-model="form.description" class="w-full mt-2 focus:outline-none resize-none p-2 border rounded"></textarea>
@@ -56,8 +47,7 @@
 </template>
 
 <script>
-import * as XLSX from 'xlsx';
-import { createPoll, addAuthorizedVoters } from '../../../clientFunctions';
+import { createPoll } from '../../../clientFunctions';
 
 export default {
   name: "CreateCampaignsProfile",
@@ -72,43 +62,17 @@ export default {
         status: "public",
         wallets: [],
         description: ""
-      },
-      walletsText: ""
+      }
     };
   },
   methods: {
     changeContent(newContent) {
       this.currentContent = newContent;
-      this.$emit("changeContent", newContent); // Emit event when content changes
-    },
-    handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const data = new Uint8Array(e.target.result);
-          const workbook = XLSX.read(data, { type: 'array' });
-          const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-          const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-          this.processExcelData(jsonData);
-        };
-        reader.readAsArrayBuffer(file);
-      }
-    },
-    processExcelData(data) {
-      const wallets = [];
-      data.forEach((row, index) => {
-        if (index > 0) { // Skip header row
-          const wallet = row[1]; // Assume the wallet address is in the second column
-          if (wallet) wallets.push(wallet.trim());
-        }
-      });
-      this.form.wallets = wallets;
-      this.walletsText = wallets.join("\n");
+      this.$emit("changeContent", newContent);
     },
     async submitForm() {
       try {
-        const { name, startDate, endDate, imageUrl, status, wallets, description } = this.form;
+        const { name, startDate, endDate, imageUrl, status, description } = this.form;
         const isPublic = status === 'public';
         
         // Call createPoll function

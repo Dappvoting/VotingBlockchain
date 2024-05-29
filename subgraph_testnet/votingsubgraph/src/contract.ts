@@ -28,6 +28,7 @@ export function handleAuthorizedVotersAdded(
     votersBytes.push(Bytes.fromHexString(event.params.voters[i].toHexString()))
   }
 
+  entity.voters = votersBytes
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
   entity.transactionHash = event.transaction.hash

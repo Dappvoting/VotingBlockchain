@@ -11,6 +11,7 @@
       <MyCampaignsProfile @changeContent="changeContent" v-if="content === 'MyCampaignsProfile'"></MyCampaignsProfile>
       <ContestantsCampaigns @changeContent="changeContent" v-if="content === 'ContestantsCampaigns'" :pollId="pollId"></ContestantsCampaigns>
       <UpdateCampaignsProfile @changeContent="changeContent" v-if="content === 'UpdateCampaignsProfile'" :pollId="pollId"></UpdateCampaignsProfile>
+      <AuthorizedVoters @changeContent="changeContent" v-if="content === 'AuthorizedVoters'" :pollId="pollId"></AuthorizedVoters>
     </div>
   </div>
 </template>
@@ -23,6 +24,8 @@ import VotedCampaignsProfile from "./VotedCampaignsProfile.vue";
 import MyCampaignsProfile from "./campaign/MyCampaignsProfile.vue";
 import ContestantsCampaigns from "./campaign/ContestantsCampaigns.vue";
 import UpdateCampaignsProfile from "./campaign/UpdateCampaignsProfile.vue";
+import AuthorizedVoters from "./campaign/AuthorizedVoters.vue";
+
 
 export default {
   name: "Profile",
@@ -33,7 +36,8 @@ export default {
     VotedCampaignsProfile,
     MyCampaignsProfile,
     ContestantsCampaigns,
-    UpdateCampaignsProfile
+    UpdateCampaignsProfile,
+    AuthorizedVoters
   },
   data() {
     return {

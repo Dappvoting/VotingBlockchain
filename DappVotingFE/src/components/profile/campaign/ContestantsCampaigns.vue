@@ -77,6 +77,20 @@
         </form>
       </div>
     </div>
+
+    <!-- Processing Popup -->
+    <div v-if="updateProcessing || updateSuccess" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-60">
+      <div class="bg-white p-6 rounded-lg shadow-lg flex items-center">
+        <div v-if="!updateSuccess" class="flex justify-center items-center">
+          <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div>
+          <span class="ml-4">Adding in progress...</span>
+        </div>
+        <div v-else class="w-[200px] h-[100px] flex flex-col gap-4 justify-center items-center">
+          <i class="fa-solid fa-circle-check text-green-500 font-bold text-xl"></i>
+          <span class="text-green-500 font-bold text-xl">Added Successfully</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -105,6 +119,8 @@ export default {
       loading: true,
       startDate: null,
       endDate: null,
+      updateProcessing: false, // New data property for processing state
+      updateSuccess: false, // New data property for success state
     };
   },
   methods: {
@@ -113,18 +129,22 @@ export default {
       this.$emit("changeContent", newContent); // Emit event when content changes
     },
     async addContestant() {
+      this.updateProcessing = true;
+      this.updateSuccess = false;
       try {
         const { name, description, image } = this.newContestant;
         await contest(this.pollId, name, image); // Call the contest function with pollId
         console.log('Contestant added successfully');
-        // Hiển thị thông báo thành công
-        alert('Contestant added successfully');
+        this.updateSuccess = true; // Set success state to true
         this.loadContestants(); // Reload contestants after adding a new one
+        setTimeout(() => {
+          this.updateSuccess = false;
+        }, 2000); // Hide success message after 2 seconds
       } catch (error) {
         console.error('Error adding contestant:', error);
-        alert('Error adding contestant. Please try again.');
       } finally {
-        // Sau khi thêm thành công, đóng popup và reset form
+        this.updateProcessing = false;
+        // After successful addition, close popup and reset form
         this.showPopup = false;
         this.newContestant = { name: "", description: "", image: "" };
       }

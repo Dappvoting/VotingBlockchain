@@ -35,6 +35,10 @@
             <span class="text-sm text-gray-500">Expired time:</span>
             <span class="text-sm text-gray-500 font-semibold">{{ formatDate(poll.endsAt) }}</span>
           </div>
+          <div class="flex justify-between pb-2">
+            <span class="text-sm text-gray-500">Visibility:</span>
+            <span class="text-sm text-gray-500 font-semibold">{{ poll.isPublic ? 'public' : 'private' }}</span>
+          </div>
           <div class="flex justify-between pb-4">
             <span class="text-sm text-gray-500">Status:</span>
             <span
@@ -47,15 +51,27 @@
             >{{ poll.status }}</span>
           </div>
           <div class="flex gap-1 justify-center items-center">
-            <a
+            <!-- <a
               :href="'/campaign/details/' + poll.Contract_id"
               class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-red-900 px-2"
             >
               <span class="font-bold">View Campaign</span>
-            </a>
-            <button @click="addContest(poll.Contract_id)" class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-blue-900 px-2 gap-2 font-bold">
+            </a> -->
+            <button 
+              @click="addContest(poll.Contract_id)" 
+              class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-blue-900 px-2 gap-2 font-bold">
               <i class="fa-solid fa-plus"></i>
               <span>Contest</span>
+            </button>
+            <!-- Nút "Add Voters" chỉ hiển thị khi Visibility là private -->
+            <button 
+              v-if="!poll.isPublic" 
+              @click="goToAuthorizedVoters(poll.Contract_id)" 
+              :disabled="poll.authorizedVoters && poll.authorizedVoters.length > 0" 
+              class="py-3 w-full hover:text-white hover:opacity-75 transition duration-300 ease-in-out cursor-pointer flex justify-center rounded-lg text-sm items-center text-white bg-green-600 px-2 gap-2 font-bold"
+              :class="{'opacity-50 cursor-not-allowed': poll.authorizedVoters && poll.authorizedVoters.length > 0}">
+              <i class="fa-solid fa-users"></i>
+              <span>Add Voters</span>
             </button>
             <i @click="editPoll(poll.Contract_id)" class="fa-solid fa-pen-to-square hover:opacity-75 text-red-900 text-2xl cursor-pointer"></i>
             <i @click="showDeletePopup(poll.Contract_id)" class="fa-solid fa-trash-can hover:opacity-75 text-red-900 text-2xl cursor-pointer"></i>
@@ -110,9 +126,9 @@ export default {
       deleteProcessing: false,
       deleteSuccess: false,
       pollToDelete: null,
-      pollId: null, // Thêm biến để lưu pollId hiện tại
-      deletedPollIds: [],  // Track deleted poll IDs
-      updatedPolls: []  // Track updated poll IDs
+      pollId: null,
+      deletedPollIds: [],
+      updatedPolls: []
     };
   },
   computed: {
@@ -172,7 +188,6 @@ export default {
       });
     },
     updatePollData() {
-      // Update polls data if they are in updatedPolls
       this.polls = this.polls.map(poll => {
         const updatedPoll = this.updatedPolls.find(updPoll => updPoll.Contract_id === poll.Contract_id);
         return updatedPoll ? { ...poll, ...updatedPoll } : poll;
@@ -188,7 +203,7 @@ export default {
       try {
         await deletePoll(this.pollToDelete);
         this.polls = this.polls.filter(poll => poll.Contract_id !== this.pollToDelete);
-        this.deletedPollIds.push(this.pollToDelete); // Add to deletedPollIds
+        this.deletedPollIds.push(this.pollToDelete);
         this.deleteSuccess = true;
         setTimeout(() => {
           this.deleteSuccess = false;
@@ -209,6 +224,9 @@ export default {
     },
     editPoll(pollId) {
       this.$emit('changeContent', 'UpdateCampaignsProfile', { pollId });
+    },
+    goToAuthorizedVoters(pollId) {
+      this.$emit('changeContent', 'AuthorizedVoters', { pollId });
     }
   },
   async mounted() {
