@@ -20,8 +20,8 @@
         </div>
         
         <div class="mb-4">
-          <label for="imageUrl" class="block text-gray-700 font-bold">Image URL</label>
-          <input type="text" placeholder="Image url" id="imageUrl" v-model="form.imageUrl" class="w-full mt-2 focus:outline-none p-2 border rounded">
+          <label for="imageFile" class="block text-gray-700 font-bold">Image File</label>
+          <input type="file" id="imageFile" @change="handleFileUpload" class="w-full mt-2 focus:outline-none p-2 border rounded">
         </div>
         
         <div class="mb-4">
@@ -59,8 +59,8 @@
     </div>
   </div>
 </template>
-
 <script>
+import axios from 'axios';
 import { createPoll } from '../../../clientFunctions';
 
 export default {
@@ -78,7 +78,8 @@ export default {
         description: ""
       },
       creatingCampaign: false,
-      creationSuccess: false
+      creationSuccess: false,
+      selectedFile: null
     };
   },
   methods: {
@@ -86,17 +87,37 @@ export default {
       this.currentContent = newContent;
       this.$emit("changeContent", newContent);
     },
+    handleFileUpload(event) {
+      this.selectedFile = event.target.files[0];
+    },
     async submitForm() {
       this.creatingCampaign = true;
       this.creationSuccess = false;
 
       try {
-        const { name, startDate, endDate, imageUrl, status, description } = this.form;
+        const { name, startDate, endDate, status, description } = this.form;
         const isPublic = status === 'public';
-        
+
+        // Upload file to IPFS via Pinata
+        let ipfsUrl = "";
+        if (this.selectedFile) {
+          const formData = new FormData();
+          formData.append('file', this.selectedFile);
+
+          const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', formData, {
+            maxBodyLength: 'Infinity',
+            headers: {
+              'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+              'pinata_api_key': '14251decbf5f9ea74604',
+              'pinata_secret_api_key': 'fea635b708ac83419415e1fc88474e5bb34ae08416685b30714d152dcd01516f'
+            }
+          });
+          ipfsUrl = `https://ipfs.io/ipfs/${response.data.IpfsHash}`;
+        }
+
         // Call createPoll function
-        await createPoll(imageUrl, name, description, new Date(startDate).getTime() / 1000, new Date(endDate).getTime() / 1000, isPublic);
-        
+        await createPoll(ipfsUrl, name, description, new Date(startDate).getTime() / 1000, new Date(endDate).getTime() / 1000, isPublic);
+
         // Display success message
         this.creationSuccess = true;
         setTimeout(() => {
@@ -113,7 +134,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-/* Add any custom styles if necessary */
-</style>

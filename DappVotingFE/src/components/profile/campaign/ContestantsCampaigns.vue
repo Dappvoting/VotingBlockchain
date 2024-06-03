@@ -60,15 +60,15 @@
         <form @submit.prevent="addContestant">
           <div class="mb-4">
             <label for="name" class="block text-gray-700">Name</label>
-            <input type="text" id="name" v-model="newContestant.name" class="w-full mt-2 p-2 border rounded focus:out">
+            <input type="text" id="name" v-model="newContestant.name" class="w-full mt-2 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
           </div>
-          <div class="mb-4">
+          <div class="mb-4" style="display: none;">
             <label for="description" class="block text-gray-700">Description</label>
-            <textarea id="description" v-model="newContestant.description" class="w-full mt-2 p-2 border rounded focus:out"></textarea>
+            <textarea id="description" v-model="newContestant.description" class="w-full mt-2 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"></textarea>
           </div>
           <div class="mb-4">
-            <label for="image" class="block text-gray-700">Image URL</label>
-            <input type="text" id="image" v-model="newContestant.image" class="w-full mt-2 p-2 border rounded focus:out">
+            <label for="imageFile" class="block text-gray-700">Image File</label>
+            <input type="file" id="imageFile" @change="handleFileUpload" class="w-full mt-2 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
           </div>
           <div class="flex justify-end gap-2">
             <button @click="showPopup = false" type="button" class="px-4 py-2 bg-gray-600 hover:opacity-75 text-white rounded">Cancel</button>
@@ -93,9 +93,9 @@
     </div>
   </div>
 </template>
-
 <script>
-import { contest } from '../../../clientFunctions'; // Import contest function
+import axios from 'axios';
+import { contest } from '../../../clientFunctions';
 import { loadAllPollTest } from '../../../apollo';
 
 export default {
@@ -115,38 +115,64 @@ export default {
         description: "",
         image: ""
       },
+      selectedFile: null,
       contestants: [],
       loading: true,
       startDate: null,
       endDate: null,
-      updateProcessing: false, // New data property for processing state
-      updateSuccess: false, // New data property for success state
+      updateProcessing: false,
+      updateSuccess: false,
     };
   },
   methods: {
     changeContent(newContent) {
       this.currentContent = newContent;
-      this.$emit("changeContent", newContent); // Emit event when content changes
+      this.$emit("changeContent", newContent);
+    },
+    handleFileUpload(event) {
+      this.selectedFile = event.target.files[0];
     },
     async addContestant() {
       this.updateProcessing = true;
       this.updateSuccess = false;
+      this.showPopup = false; // Hide the add contestant popup immediately
       try {
-        const { name, description, image } = this.newContestant;
-        await contest(this.pollId, name, image); // Call the contest function with pollId
+        const { name } = this.newContestant;
+        this.newContestant.description = ""; // Set description to empty string
+
+        // Upload file to IPFS via Pinata
+        let ipfsUrl = "";
+        if (this.selectedFile) {
+          const formData = new FormData();
+          formData.append('file', this.selectedFile);
+
+          const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', formData, {
+            maxBodyLength: 'Infinity',
+            headers: {
+              'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+              'pinata_api_key': '14251decbf5f9ea74604',
+              'pinata_secret_api_key': 'fea635b708ac83419415e1fc88474e5bb34ae08416685b30714d152dcd01516f'
+            }
+          });
+          ipfsUrl = `https://ipfs.io/ipfs/${response.data.IpfsHash}`;
+        }
+
+        // Call the contest function with pollId
+        await contest(this.pollId, name, ipfsUrl);
+
         console.log('Contestant added successfully');
-        this.updateSuccess = true; // Set success state to true
-        this.loadContestants(); // Reload contestants after adding a new one
+        this.updateSuccess = true;
+        this.loadContestants();
         setTimeout(() => {
           this.updateSuccess = false;
-        }, 2000); // Hide success message after 2 seconds
+        }, 2000);
+
       } catch (error) {
         console.error('Error adding contestant:', error);
       } finally {
         this.updateProcessing = false;
-        // After successful addition, close popup and reset form
-        this.showPopup = false;
         this.newContestant = { name: "", description: "", image: "" };
+        this.selectedFile = null;
       }
     },
     dispatchPolls(action) {
@@ -176,11 +202,11 @@ export default {
     }
   },
   mounted() {
-    this.loadContestants(); // Fetch contestants when component mounts
+    this.loadContestants();
   }
 };
 </script>
 
 <style scoped>
-/* Add any custom styles if necessary */
+/* Add your custom styles here */
 </style>

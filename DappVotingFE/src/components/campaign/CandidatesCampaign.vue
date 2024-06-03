@@ -75,10 +75,10 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import { loadAllPollTest } from "../../apollo";
-import { vote } from "../../clientFunctions"; // Đường dẫn tới file clientFunctions.js
+import { vote } from "../../clientFunctions"; // Adjust path to clientFunctions.js
 
 export default {
   name: "Candidates",
@@ -96,7 +96,7 @@ export default {
 
     const route = useRoute();
     const campaignId = route.params.id;
-    const walletAddress = localStorage.getItem('walletAddress'); // Assume user's wallet address is stored in localStorage
+    const walletAddress = localStorage.getItem('walletAddress').toLowerCase(); // Assume user's wallet address is stored in localStorage
 
     const dataLoaded = ref({ polls: false, contestants: false, votes: false, authorizedVoters: false });
 
@@ -122,7 +122,11 @@ export default {
           checkAllDataLoaded();
           break;
         case "AUTHORIZED_VOTERS_ADDED_LOADED":
-          authorizedVoters.value = action.authorizedVotersAdded.filter(voter => voter.pollId === campaignId);
+          const voterEntry = action.authorizedVotersAdded.find(voter => voter.pollId === campaignId);
+          if (voterEntry) {
+            authorizedVoters.value = voterEntry.voters.map(v => v.toLowerCase());
+          }
+          console.log(authorizedVoters.value);
           dataLoaded.value.authorizedVoters = true;
           checkAllDataLoaded();
           break;
@@ -159,6 +163,16 @@ export default {
         return;
       }
 
+      if (!poll.value.isPublic && authorizedVoters.value.length === 0) {
+        try {
+          await loadAllPollTest(dispatch);
+        } catch (error) {
+          console.error("Error loading authorized voters:", error);
+          showAlert.value = true;
+          return;
+        }
+      }
+
       if (!canVote.value) {
         showAlert.value = true;
         return;
@@ -175,12 +189,14 @@ export default {
         console.log(parseInt(campaignId), parseInt(contestantId));
         await vote(parseInt(campaignId), parseInt(contestantId));
         voteSuccess.value = true;
-        setTimeout(() => {
-          showPopup.value = false;
-        }, 1000);
+
+        // Reload poll data and update vote count after successful vote
+        await loadAllPollTest(dispatch);
+        showPopup.value = false;
       } catch (error) {
         console.error("Error casting vote:", error);
         showPopup.value = false;
+        showAlert.value = true; // Show alert if there's an error
       }
     };
 
@@ -193,7 +209,7 @@ export default {
     });
 
     const hasVoted = computed(() => {
-      return voted.value.some(vote => vote.voter === walletAddress);
+      return voted.value.some(vote => vote.voter.toLowerCase() === walletAddress);
     });
 
     const canVote = computed(() => {
@@ -201,7 +217,7 @@ export default {
         return true;
       }
       if (authorizedVoters.value.length > 0) {
-        return authorizedVoters.value.some(voter => voter.voters.includes(walletAddress));
+        return authorizedVoters.value.includes(walletAddress);
       }
       return false;
     });
@@ -228,5 +244,5 @@ export default {
 </script>
 
 <style scoped>
-/* Add any custom styles if necessary */
+/* Add your custom styles here */
 </style>

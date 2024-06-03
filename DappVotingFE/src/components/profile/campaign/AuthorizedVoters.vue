@@ -1,6 +1,6 @@
 <template>
   <div class="w-full bg-white min-h-screen rounded-lg shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] px-6">
-    <div class="flex justify-between items-center py-5">
+    <div class="flex justify-center items-center py-5">
       <span class="flex justify-center text-red-900 font-bold text-2xl">Authorized Voters</span>
     </div>
     <div class="mb-4">

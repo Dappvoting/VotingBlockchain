@@ -19,7 +19,7 @@
         <img class="w-full h-[200px] rounded-t-lg" :src="vote.poll.image" alt="" />
         <div class="flex flex-col p-4 gap-2">
           <span class="font-bold text-red-900 mb-2 line-clamp-1">{{ vote.poll.title }}</span>
-          <span class="text-sm text-gray-500 mb-4 line-clamp-3 font-semibold">{{ vote.poll.description }}</span>
+          <span class="text-sm text-gray-500 mb-4 line-clamp-3 font-semibold min-h-[60px]">{{ vote.poll.description }}</span>
           <div class="flex justify-between border-b pb-2">
             <span class="text-sm text-gray-500">Expired time:</span>
             <span class="text-sm text-gray-500 font-semibold">{{ formatDate(vote.poll.endsAt) }}</span>
